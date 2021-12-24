@@ -1,36 +1,34 @@
 local commons = import '../../../static/partials/functionapptest_commons.libsonnet';
 local vars = import 'secrets.libsonnet';
 function(
-    Pattern = "Test",
-    TestNumber = "1"
+    Pattern = "SQL Database to Azure Storage",
+    TestNumber = "1",
+    SourceFormat = "Azure SQL",
+    SourceType = "Azure SQL",
+    ExtractionSQL = "",
+    DataFilename = "SalesLT.Customer.parquet",
+    SchemaFileName = "SalesLT.Customer.json",
+    TargetFormat = "Parquet",
+    TargetType = "Azure Blob",
+    ADFPipeline = "GPL_AzureSqlTable_NA_AzureBlobStorage_Parquet_IRA"
     )
 {
-    
-
     local TaskMasterJson =     
     {
         "Source":{
-            "Type": "Azure SQL",
-            "Database": {
-                "SystemName": vars.AdsOpts_CD_Services_AzureSQLServer_Name+ ".database.windows.net",
-                "Name": vars.AdsOpts_CD_Services_AzureSQLServer_SampleDB_Name,
-                "AuthenticationType": "MSI"
-            },
-            "Extraction": {
-                "Type": "Table",
-                "FullOrIncremental": "Full",
-                "IncrementalType": "Full",
-                "TableSchema": "SalesLT",
-                "TableName": "SalesOrderHeader",
-                "ExtractionSQL": "",                        
-                "SQLStatement": ""
-            }
+            "Type": SourceType,
+            "IncrementalType": "Full",
+            "TableSchema": "SalesLT",
+            "TableName": "Customer",
+            "ExtractionSQL": ExtractionSQL,                   
+            "ChunkField":"",
+            "ChinkSize":0,
         },
         "Target":{
-            "Type":"Parquet",
+            "Type":TargetFormat,
             "RelativePath":"/Tests/"+Pattern+"/"+TestNumber,
-            "DataFileName":"SalesL.Customer.parquet",
-            "SchemaFileName":"SalesL.Customer.json"
+            "DataFileName": DataFilename,
+            "SchemaFileName": SchemaFileName
         }
     },
 
@@ -48,24 +46,28 @@ function(
     {
         "Container" : "datalakeraw" 
     },
-
-               
+             
     "TaskInstanceJson":std.manifestJson(TaskInstanceJson),
-    "TaskType":"SQL Database to Azure Storage",
+    "TaskType":Pattern,
     "DataFactoryName":vars.AdsOpts_CD_Services_DataFactory_Name,
     "DataFactoryResourceGroup":vars.AdsOpts_CD_ResourceGroup_Name,
     "DataFactorySubscriptionId":vars.AdsOpts_CD_Services_DataFactory_SubscriptionId,
     "TaskMasterJson":std.manifestJson(TaskMasterJson),       
     "TaskMasterId":TestNumber,
     "SourceSystemJSON":std.manifestJson(SourceSystemJson),
-    "SourceSystemType":"Azure SQL",
+    "SourceSystemType":SourceType,
     "SourceSystemServer":vars.AdsOpts_CD_Services_AzureSQLServer_Name + ".database.windows.net",
     "SourceKeyVaultBaseUrl":"https://" + vars.AdsOpts_CD_Services_KeyVault_Name +".vault.azure.net",
-    "SourceSystemAuthType":"MSI",   
+    "SourceSystemAuthType":"MSI",
+    "SourceSystemSecretName":"",
+    "SourceSystemUserName":"",   
     "TargetSystemJSON":std.manifestJson(TargetSystemJson),
-    "TargetSystemType":"Azure Blob",
+    "TargetSystemType":TargetType,
     "TargetSystemServer":"https://" + vars.AdsOpts_CD_Services_Storage_Blob_Name + ".blob.core.windows.net",
     "TargetKeyVaultBaseUrl":"https://" + vars.AdsOpts_CD_Services_KeyVault_Name +".vault.azure.net",
     "TargetSystemAuthType":"MSI",
+    "TargetSystemSecretName":"",
+	"TargetSystemUserName":"",
+    "ADFPipeline": ADFPipeline
 }+commons
 
