@@ -1,0 +1,30 @@
+name: Pull Request (Build & Test)
+
+on:
+  pull_request:
+    branches: [ $default-branch ]
+  push:
+    branches: [ $default-branch ]
+
+
+jobs:
+  build-function-app:
+    name: Build Function App
+    uses: arkahna/azure-data-services-go-fast-codebase/.github/workflows/build-component.yml@task/workflow-v2
+    with:
+      name: Function App
+      path: ./solution/FunctionApp/
+
+  build-web-app:
+    name: Build Web App
+    uses: arkahna/azure-data-services-go-fast-codebase/.github/workflows/build-component.yml@task/workflow-v2
+    with:
+      name: Function App
+      path: ./solution/WebApplication/
+
+  build-dbup-app:
+    name: Build DbUp Console App
+    uses: arkahna/azure-data-services-go-fast-codebase/.github/workflows/build-component.yml@task/workflow-v2
+    with:
+      name: DbUp Console App
+      path: ./solution/Database/ADSGoFastDbUp/AdsGoFastDbUp/  

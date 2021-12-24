@@ -65,7 +65,7 @@ namespace WebApplication.Controllers
             }
 
             ViewData["SubjectAreaId"] = new SelectList(_context.SubjectArea.OrderBy(x => x.SubjectAreaId), "SubjectAreaId", "SubjectAreaName");
-
+            ViewBag.returnUrl = Request.Headers["Referer"].ToString();
             TaskGroup taskGroup = new TaskGroup();
             taskGroup.ActiveYn = true;
             return View(taskGroup);
@@ -77,7 +77,7 @@ namespace WebApplication.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ChecksUserAccess]
-        public async Task<IActionResult> Create([Bind("TaskGroupId,TaskGroupName,TaskGroupPriority,TaskGroupConcurrency,TaskGroupJson,SubjectAreaId,ActiveYn")] TaskGroup taskGroup)
+        public async Task<IActionResult> Create(string returnUrl, [Bind("TaskGroupId,TaskGroupName,TaskGroupPriority,TaskGroupConcurrency,TaskGroupJson,SubjectAreaId,ActiveYn")] TaskGroup taskGroup)
         {
             if (ModelState.IsValid)
             {
@@ -87,7 +87,7 @@ namespace WebApplication.Controllers
                     return new ForbidResult();
                 }
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(IndexDataTable));
+                return Redirect(returnUrl);
             }
         ViewData["SubjectAreaId"] = new SelectList(_context.SubjectArea.OrderBy(x=>x.SubjectAreaId), "SubjectAreaId", "SubjectAreaId", taskGroup.SubjectAreaId);
             return View(taskGroup);
@@ -109,6 +109,7 @@ namespace WebApplication.Controllers
             if (!await CanPerformCurrentActionOnRecord(taskGroup))
                 return new ForbidResult();
         ViewData["SubjectAreaId"] = new SelectList(_context.SubjectArea.OrderBy(x=>x.SubjectAreaId), "SubjectAreaId", "SubjectAreaId", taskGroup.SubjectAreaId);
+            ViewBag.returnUrl = Request.Headers["Referer"].ToString();
             return View(taskGroup);
         }
 
@@ -118,7 +119,7 @@ namespace WebApplication.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ChecksUserAccess]
-        public async Task<IActionResult> Edit(long id, [Bind("TaskGroupId,TaskGroupName,TaskGroupPriority,TaskGroupConcurrency,TaskGroupJson,SubjectAreaId,ActiveYn")] TaskGroup taskGroup)
+        public async Task<IActionResult> Edit(long id, string returnUrl, [Bind("TaskGroupId,TaskGroupName,TaskGroupPriority,TaskGroupConcurrency,TaskGroupJson,SubjectAreaId,ActiveYn")] TaskGroup taskGroup)
         {
             if (id != taskGroup.TaskGroupId)
             {
@@ -147,7 +148,8 @@ namespace WebApplication.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(IndexDataTable));
+
+                return Redirect(returnUrl);
             }
         ViewData["SubjectAreaId"] = new SelectList(_context.SubjectArea.OrderBy(x=>x.SubjectAreaId), "SubjectAreaId", "SubjectAreaId", taskGroup.SubjectAreaId);
             return View(taskGroup);

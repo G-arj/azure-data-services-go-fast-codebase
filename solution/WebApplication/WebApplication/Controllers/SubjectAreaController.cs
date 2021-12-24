@@ -57,7 +57,7 @@ namespace WebApplication.Controllers
         public IActionResult Create()
         {
             ViewData["SubjectAreaFormId"] = new SelectList(_context.SubjectAreaForm.OrderBy(x=>x.SubjectAreaFormId), "SubjectAreaFormId", "SubjectAreaFormId");
-     SubjectArea subjectArea = new SubjectArea();
+            SubjectArea subjectArea = new SubjectArea();
             subjectArea.ActiveYn = true;
             return View(subjectArea);
         }
@@ -72,6 +72,7 @@ namespace WebApplication.Controllers
         {
             if (ModelState.IsValid)
             {
+                subjectArea.UpdatedBy = User.Identity.Name;
                 _context.Add(subjectArea);
                 if (!await CanPerformCurrentActionOnRecord(subjectArea))
                 {
@@ -80,7 +81,7 @@ namespace WebApplication.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(IndexDataTable));
             }
-        ViewData["SubjectAreaFormId"] = new SelectList(_context.SubjectAreaForm.OrderBy(x=>x.SubjectAreaFormId), "SubjectAreaFormId", "SubjectAreaFormId", subjectArea.SubjectAreaFormId);
+            ViewData["SubjectAreaFormId"] = new SelectList(_context.SubjectAreaForm.OrderBy(x=>x.SubjectAreaFormId), "SubjectAreaFormId", "SubjectAreaFormId", subjectArea.SubjectAreaFormId);
             return View(subjectArea);
         }
 
@@ -99,7 +100,7 @@ namespace WebApplication.Controllers
 
             if (!await CanPerformCurrentActionOnRecord(subjectArea))
                 return new ForbidResult();
-        ViewData["SubjectAreaFormId"] = new SelectList(_context.SubjectAreaForm.OrderBy(x=>x.SubjectAreaFormId), "SubjectAreaFormId", "SubjectAreaFormId", subjectArea.SubjectAreaFormId);
+            ViewData["SubjectAreaFormId"] = new SelectList(_context.SubjectAreaForm.OrderBy(x=>x.SubjectAreaFormId), "SubjectAreaFormId", "SubjectAreaFormId", subjectArea.SubjectAreaFormId);
             return View(subjectArea);
         }
 
@@ -120,6 +121,7 @@ namespace WebApplication.Controllers
             {
                 try
                 {
+                    subjectArea.UpdatedBy = User.Identity.Name;
                     _context.Update(subjectArea);
 
                     if (!await CanPerformCurrentActionOnRecord(subjectArea))

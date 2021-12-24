@@ -1,8 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebApplication.Services;
 using WebApplication.Framework;
@@ -49,10 +51,22 @@ namespace WebApplication.Controllers
             return View(sourceAndTargetSystems);
         }
 
+        private List<SelectListItem> GenerateItems()
+        {
+            return new List<SelectListItem>()
+            {
+                new SelectListItem { Selected = true, Text = "MSI", Value = "MSI"},
+                new SelectListItem { Selected = false, Text = "SQLAuth", Value = "SQLAuth"},
+                new SelectListItem { Selected = false, Text = "Key", Value = "Key"},
+                new SelectListItem { Selected = false, Text = "WindowsAuth", Value = "WindowsAuth"}
+            };
+        }
+
         // GET: SourceAndTargetSystems/Create
         public IActionResult Create()
         {
-     SourceAndTargetSystems sourceAndTargetSystems = new SourceAndTargetSystems();
+            SourceAndTargetSystems sourceAndTargetSystems = new SourceAndTargetSystems();
+            ViewData["AuthType"] = GenerateItems();
             sourceAndTargetSystems.ActiveYn = true;
             return View(sourceAndTargetSystems);
         }
@@ -90,7 +104,7 @@ namespace WebApplication.Controllers
             var sourceAndTargetSystems = await _context.SourceAndTargetSystems.FindAsync(id);
             if (sourceAndTargetSystems == null)
                 return NotFound();
-
+            ViewData["AuthType"] = GenerateItems();
             if (!await CanPerformCurrentActionOnRecord(sourceAndTargetSystems))
                 return new ForbidResult();
             return View(sourceAndTargetSystems);

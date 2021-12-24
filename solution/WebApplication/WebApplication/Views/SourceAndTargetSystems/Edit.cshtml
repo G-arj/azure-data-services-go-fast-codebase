@@ -38,7 +38,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="SystemAuthType" class="control-label"></label>
-                <input asp-for="SystemAuthType" class="form-control" />
+                <select asp-for="SystemAuthType" class="form-control" asp-items="@ViewBag.AuthType"></select>
                 <span asp-validation-for="SystemAuthType" class="text-danger"></span>
             </div>
             <div class="form-group">
