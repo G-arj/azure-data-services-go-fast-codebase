@@ -9,9 +9,11 @@ local tests =
         "ExtractionSQL":"",
         "DataFilename":"SalesLT.Customer.parquet",
         "SchemaFileName":"SalesLT.Customer.json",
+        "SourceSystemAuthType": "MSI",
         "TargetFormat":"Parquet",
         "TargetType": "Azure Blob", 
-        "ADFPipeline": "GPL_AzureSqlTable_NA_AzureBlobStorage_Parquet_IRA"
+        "ADFPipeline": "GPL_AzureSqlTable_NA_AzureBlobStorage_Parquet_IRA", 
+        "Description": "FulLoad"
     },
     {
         "Active": true,
@@ -22,55 +24,64 @@ local tests =
         "ExtractionSQL":"",
         "DataFilename":"SalesLT.Customer.parquet",
         "SchemaFileName":"SalesLT.Customer.json",
+        "SourceSystemAuthType": "MSI",
         "TargetFormat":"Parquet",
         "TargetType": "ADLS",
-        "ADFPipeline": "GPL_AzureSqlTable_NA_AzureBlobFS_Parquet_IRA"
+        "ADFPipeline": "GPL_AzureSqlTable_NA_AzureBlobFS_Parquet_IRA",
+        "Description": "FullLoad"
     },
     {
         "Active": true,
         "Pattern": "SQL Database to Azure Storage", 
         "TestNumber":2,
         "SourceFormat":"Table",
-        "SourceType":"SqlServer",
-        "ExtractionSQL":"",
+        "SourceType":"Azure SQL",
+        "ExtractionSQL":"Select top 10 * from SalesLT.Customer",
         "DataFilename":"SalesLT.Customer.parquet",
         "SchemaFileName":"SalesLT.Customer.json",
+        "SourceSystemAuthType": "MSI",
         "TargetFormat":"Parquet",
-        "TargetType": "Azure Blob",
-        "ADFPipeline": "GPL_AzureSqlTable_NA_AzureBlobStorage_Parquet_IRA"
-    },
+        "TargetType": "ADLS",
+        "ADFPipeline": "GPL_AzureSqlTable_NA_AzureBlobFS_Parquet_IRA",
+        "Description": "FullLoadUsingExtractionSql"
+    },    
     {
         "Active": true,
         "Pattern": "SQL Database to Azure Storage", 
         "TestNumber":3,
         "SourceFormat":"Table",
-        "SourceType":"SqlServer",
+        "SourceType":"SQL Server",
         "ExtractionSQL":"",
         "DataFilename":"SalesLT.Customer.parquet",
         "SchemaFileName":"SalesLT.Customer.json",
+        "SourceSystemAuthType": "SQLAuth",
         "TargetFormat":"Parquet",
-        "TargetType": "ADLS",
-        "ADFPipeline": "GPL_AzureSqlTable_NA_AzureBlobFS_Parquet_IRA"
-    },
+        "TargetType": "Azure Blob",
+        "ADFPipeline": "GPL_SqlServerTable_NA_AzureBlobStorage_Parquet_IRA",
+        "Description": "FullLoad"
+    },    
     {
         "Active": true,
         "Pattern": "SQL Database to Azure Storage", 
-        "TestNumber":1,
-        "SourceFormat":"SQL",
-        "SourceType":"Azure SQL",
-        "ExtractionSQL":"Select top 10 * from SalesLT.Customer",
+        "TestNumber":4,
+        "SourceFormat":"Table",
+        "SourceType":"SQL Server",
+        "ExtractionSQL":"",
         "DataFilename":"SalesLT.Customer.parquet",
         "SchemaFileName":"SalesLT.Customer.json",
+        "SourceSystemAuthType": "SQLAuth",
         "TargetFormat":"Parquet",
         "TargetType": "ADLS",
-        "ADFPipeline": "GPL_AzureSqlTable_NA_AzureBlobFS_Parquet_IRA"
-    },
+        "ADFPipeline": "GPL_SqlServerTable_NA_AzureBlobFS_Parquet_IRA",
+        "Description": "FullLoad"
+    }
 ];
 
 local template = import "./partials/functionapptest.libsonnet";
 [
 if(t.Active) then 
 template(
+    t.ADFPipeline,
     t.Pattern, 
     t.TestNumber,
     t.SourceFormat,
@@ -78,6 +89,7 @@ template(
     t.ExtractionSQL,
     t.DataFilename,
     t.SchemaFileName,
+    t.SourceSystemAuthType,
     t.TargetFormat,
     t.TargetType
 )

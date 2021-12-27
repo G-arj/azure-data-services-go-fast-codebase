@@ -1,6 +1,7 @@
 local commons = import '../../../static/partials/functionapptest_commons.libsonnet';
 local vars = import 'secrets.libsonnet';
 function(
+    ADFPipeline = "GPL_AzureSqlTable_NA_AzureBlobStorage_Parquet_IRA",
     Pattern = "SQL Database to Azure Storage",
     TestNumber = "1",
     SourceFormat = "Azure SQL",
@@ -8,9 +9,9 @@ function(
     ExtractionSQL = "",
     DataFilename = "SalesLT.Customer.parquet",
     SchemaFileName = "SalesLT.Customer.json",
+    SourceSystemAuthType = "MSI",
     TargetFormat = "Parquet",
-    TargetType = "Azure Blob",
-    ADFPipeline = "GPL_AzureSqlTable_NA_AzureBlobStorage_Parquet_IRA"
+    TargetType = "Azure Blob"    
     )
 {
     local TaskMasterJson =     
@@ -39,7 +40,9 @@ function(
 
     local SourceSystemJson = 
     {
-        "Database": vars.AdsOpts_CD_Services_AzureSQLServer_SampleDB_Name
+        "Database": vars.AdsOpts_CD_Services_AzureSQLServer_SampleDB_Name,
+        "UsernameKeyVaultSecretName":"",
+        "PasswordKeyVaultSecretName":""        
     },
 
     local TargetSystemJson = 
@@ -58,12 +61,12 @@ function(
     "SourceSystemType":SourceType,
     "SourceSystemServer":vars.AdsOpts_CD_Services_AzureSQLServer_Name + ".database.windows.net",
     "SourceKeyVaultBaseUrl":"https://" + vars.AdsOpts_CD_Services_KeyVault_Name +".vault.azure.net",
-    "SourceSystemAuthType":"MSI",
+    "SourceSystemAuthType":SourceSystemAuthType,
     "SourceSystemSecretName":"",
     "SourceSystemUserName":"",   
     "TargetSystemJSON":std.manifestJson(TargetSystemJson),
     "TargetSystemType":TargetType,
-    "TargetSystemServer":"https://" + vars.AdsOpts_CD_Services_Storage_Blob_Name + ".blob.core.windows.net",
+    "TargetSystemServer":if(TargetType == "Azure Blob") then "https://" + vars.AdsOpts_CD_Services_Storage_Blob_Name + ".blob.core.windows.net" else "https://" + vars.AdsOpts_CD_Services_Storage_ADLS_Name + ".dfs.core.windows.net",
     "TargetKeyVaultBaseUrl":"https://" + vars.AdsOpts_CD_Services_KeyVault_Name +".vault.azure.net",
     "TargetSystemAuthType":"MSI",
     "TargetSystemSecretName":"",
