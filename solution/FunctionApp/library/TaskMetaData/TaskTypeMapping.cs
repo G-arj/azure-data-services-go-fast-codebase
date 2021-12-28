@@ -47,7 +47,7 @@ namespace AdsGoFast
             }
             else
             {
-                throw (new Exception(string.Format("Failed to find TaskTypeMapping record for SourceSystemType: {0}, TargetSystemType {1},  SourceType: {2}, TargetType: {3},TaskDatafactoryIR: {4}, TaskExecutionType: {5}, TaskTypeId: ",SourceSystemType, TargetSystemType, SourceType, TargetType, TaskDatafactoryIR, TaskExecutionType, TaskTypeId.ToString()) ));
+                throw (new Exception(string.Format("Failed to find TaskTypeMapping record for SourceSystemType: {0}, TargetSystemType {1},  SourceType: {2}, TargetType: {3},TaskDatafactoryIR: {4}, TaskExecutionType: {5}, TaskTypeId:{6} ",SourceSystemType, TargetSystemType, SourceType, TargetType, TaskDatafactoryIR, TaskExecutionType, TaskTypeId.ToString()) ));
             }
 
             return ret;

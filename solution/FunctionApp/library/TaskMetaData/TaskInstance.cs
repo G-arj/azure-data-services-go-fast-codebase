@@ -94,7 +94,12 @@ namespace AdsGoFast.TaskMetaData
             T.CreateJsonObjectForADF(ExecutionUid);
             JObject Root = T.GetJsonObjectForADF();
 
-            if (T.ADFPipeline.StartsWith("AZ-Storage-Binary-AZ-Storage-Binary") || T.ADFPipeline.StartsWith("AZ-Storage-Cache-File-List") || T.ADFPipeline == "Cache-File-List-To-Email-Alert" || T.TaskExecutionType == "AF") /*|| T.ADFPipeline.Contains("SQL-AZ-Storage-Parquet") || T.ADFPipeline.Contains("AZ-SQL-StoredProcedure")*/
+            if (T.ADFPipeline.StartsWith("AZ-Storage-Binary-AZ-Storage-Binary") 
+                || T.ADFPipeline.StartsWith("AZ-Storage-Cache-File-List") 
+                || T.ADFPipeline == "Cache-File-List-To-Email-Alert" 
+                || T.TaskExecutionType == "AF"
+                || T.ADFPipeline.StartsWith("GPL_")
+            ) /*|| T.ADFPipeline.Contains("SQL-AZ-Storage-Parquet") || T.ADFPipeline.Contains("AZ-SQL-StoredProcedure")*/
             {
                 Root = T.ProcessRoot(ttm, system_schemas);
                 goto FinalTaskValidation;

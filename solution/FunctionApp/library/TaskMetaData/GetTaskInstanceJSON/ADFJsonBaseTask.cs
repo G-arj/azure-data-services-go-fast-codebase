@@ -157,6 +157,17 @@ namespace AdsGoFast.GetTaskInstanceJSON
             {
                 ["Type"] = this.SourceSystemType
             };
+
+            JObject System = new JObject
+            {
+                //Properties on Source System
+                ["SystemName"] = this.SourceSystemServer,
+                ["AuthenticationType"] = this.SourceSystemAuthType,
+                ["Type"] = this.SourceSystemType
+            };
+
+            Source["System"] = System;
+            
             //Validate SourceSystemJson based on JSON Schema
             string sourcesystem_schema = schemas.GetBySystemType(this.SourceSystemType).JsonSchema;
             _TaskIsValid = Shared.JsonHelpers.ValidateJsonUsingSchema(logging, sourcesystem_schema, this.SourceSystemJSON, "Failed to validate SourceSystem JSON for System Type: " + this.SourceSystemType + ". ");
@@ -245,6 +256,27 @@ namespace AdsGoFast.GetTaskInstanceJSON
             {
                 ["Type"] = this.TargetSystemType
             };
+           
+            JObject System = new JObject
+            {
+                //Properties on Source System
+                ["SystemName"] = this.TargetSystemServer,
+                ["AuthenticationType"] = this.TargetSystemAuthType,
+                ["Type"] = this.TargetSystemType
+            };
+
+
+
+            System.Merge(_TargetSystemJson, new JsonMergeSettings
+            {
+                // union array values together to avoid duplicates
+                MergeArrayHandling = MergeArrayHandling.Union
+            });
+            Target["System"] = System;
+
+
+
+
             //Validate SourceSystemJson based on JSON Schema
             string targetsystem_schema = schemas.GetBySystemType(this.TargetSystemType).JsonSchema;
             _TaskIsValid = Shared.JsonHelpers.ValidateJsonUsingSchema(logging, targetsystem_schema, this.TargetSystemJSON, "Failed to validate TargetSystem JSON for System Type: " + this.TargetSystemId + ". ");

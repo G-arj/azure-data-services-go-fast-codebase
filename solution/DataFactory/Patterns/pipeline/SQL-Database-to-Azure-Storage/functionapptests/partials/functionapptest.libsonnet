@@ -17,13 +17,13 @@ function(
     local TaskMasterJson =     
     {
         "Source":{
-            "Type": SourceType,
+            "Type": SourceFormat,
             "IncrementalType": "Full",
             "TableSchema": "SalesLT",
             "TableName": "Customer",
             "ExtractionSQL": ExtractionSQL,                   
             "ChunkField":"",
-            "ChinkSize":0,
+            "ChunkSize":0,
         },
         "Target":{
             "Type":TargetFormat,

@@ -1,0 +1,71 @@
+{
+  "TaskObject": {
+    "TaskInstanceId": 1,
+    "TaskMasterId": 2,
+    "TaskStatus": "Untried",
+    "TaskType": "SQL Database to Azure Storage",
+    "Enabled": 1,
+    "ExecutionUid": "55e90cc9-88ba-459c-9455-2a1e77aa3025",
+    "NumberOfRetries": 3,
+    "DegreeOfCopyParallelism": 1,
+    "KeyVaultBaseUrl": "https://adsgfkvjkcgkaibkungm.vault.azure.net",
+    "ScheduleMasterId": "2",
+    "TaskGroupConcurrency": "10",
+    "TaskGroupPriority": 0,
+    "TaskExecutionType": "ADF",
+    "DataFactory": {
+      "Id": 1,
+      "Name": "adsgfadfjkcgkaibkungm",
+      "ResourceGroup": "AdsTestDemo",
+      "SubscriptionId": "035a1364-f00d-48e2-b582-4fe125905ee3",
+      "ADFPipeline": "GPL_AzureSqlTable_NA_AzureBlobFS_Parquet_IRA",
+      "TaskDatafactoryIR": "IRA"
+    },
+    "Source": {
+      "Type": "Table",
+      "System": {
+        "SystemName": "adsgfsvrjkcgkaibkungm.database.windows.net",
+        "AuthenticationType": "MSI",
+        "Type": "Azure SQL"
+      },
+      "Database": {
+        "SystemName": "adsgfsvrjkcgkaibkungm.database.windows.net",
+        "Name": "AdsGfSample",
+        "AuthenticationType": "MSI"
+      },
+      "ChinkSize": 0,
+      "ChunkField": "",
+      "ExtractionSQL": "Select top 10 * from SalesLT.Customer",
+      "IncrementalType": "Full",
+      "TableName": "Customer",
+      "TableSchema": "SalesLT",
+      "Extraction": {
+        "Type": "Table",
+        "IncrementalType": "Full",
+        "ChunkField": "",
+        "ChunkSize": 0,
+        "TableSchema": "SalesLT",
+        "TableName": "Customer",
+        "IncrementalSQLStatement": "",
+        "SQLStatement": "SELECT * FROM SalesLT.Customer"
+      },
+      "Execute": {}
+    },
+    "Target": {
+      "Type": "Parquet",
+      "System": {
+        "SystemName": "https://adlsjkcgkaibkungm.dfs.core.windows.net",
+        "AuthenticationType": "MSI",
+        "Type": "ADLS",
+        "Container": "datalakeraw"
+      },
+      "SystemId": 3,
+      "StorageAccountName": "https://adlsjkcgkaibkungm.dfs.core.windows.net",
+      "StorageAccountAccessMethod": "MSI",
+      "StorageAccountContainer": "datalakeraw",
+      "RelativePath": "/Tests/SQL Database to Azure Storage/2",
+      "DataFileName": "SalesLT.Customer.parquet",
+      "SchemaFileName": "SalesLT.Customer.json"
+    }
+  }
+}

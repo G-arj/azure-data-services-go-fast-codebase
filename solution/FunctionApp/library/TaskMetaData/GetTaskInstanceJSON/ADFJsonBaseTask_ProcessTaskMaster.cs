@@ -61,11 +61,10 @@ namespace AdsGoFast.GetTaskInstanceJSON
 
         public void ProcessTaskMaster_Mapping_XX_SQL_AZ_Storage_Parquet()
         {
-            JObject Source = (JObject)_JsonObjectForADF["Source"];
-            JObject Target = (JObject)_JsonObjectForADF["Target"];
-            JObject Extraction = new JObject();
+            JObject Source = ((JObject)_JsonObjectForADF["Source"]) == null ? new JObject() : (JObject)_JsonObjectForADF["Source"]; 
+            JObject Target = ((JObject)_JsonObjectForADF["Target"]) == null ? new JObject() : (JObject)_JsonObjectForADF["Target"];            
 
-            Extraction.Merge(_TaskMasterJson["Source"], new JsonMergeSettings
+            Source.Merge(_TaskMasterJson["Source"], new JsonMergeSettings
             {
                 // union array values together to avoid duplicates
                 MergeArrayHandling = MergeArrayHandling.Union
@@ -76,7 +75,41 @@ namespace AdsGoFast.GetTaskInstanceJSON
                 // union array values together to avoid duplicates
                 MergeArrayHandling = MergeArrayHandling.Union
             });
+
+
+            JObject Extraction = ((JObject)Source["Extraction"]) == null ? new JObject() : (JObject)Source["Extraction"];
+
+            Extraction["Type"] = Shared.JsonHelpers.GetStringValueFromJSON(logging, "Type", _TaskMasterJsonSource, "", true);
+            Extraction["IncrementalType"] = ProcessTaskMaster_Mapping_XX_SQL_AZ_Storage_Parquet_IncrementalType();            
+            Extraction["ChunkField"] = Shared.JsonHelpers.GetStringValueFromJSON(logging, "ChunkField", _TaskMasterJsonSource, "", true);
+            Extraction["ChunkField"] = Shared.JsonHelpers.GetStringValueFromJSON(logging, "ChunkField", _TaskMasterJsonSource, "", true);
+            Extraction["ChunkSize"] = System.Convert.ToInt32(Shared.JsonHelpers.GetDynamicValueFromJSON(logging, "ChunkSize", _TaskMasterJsonSource, "0", false));
+            Extraction["TableSchema"] = Shared.JsonHelpers.GetStringValueFromJSON(logging, "TableSchema", _TaskMasterJsonSource, "", true);  
+            Extraction["TableName"] = Shared.JsonHelpers.GetStringValueFromJSON(logging, "TableName", _TaskMasterJsonSource, "", true);
+
+            Extraction["IncrementalSQLStatement"] = ProcessTaskMaster_Mapping_XX_SQL_AZ_Storage_Parquet_CreateIncrementalSQLStatement(Extraction);
+            Extraction["SQLStatement"] = ProcessTaskMaster_Mapping_XX_SQL_AZ_Storage_Parquet_CreateSQLStatement(Extraction);
+
+
             Source["Extraction"] = Extraction;
+
+            JObject Execute = new JObject();
+            if (Shared.JsonHelpers.CheckForJSONProperty(logging, "StoredProcedure", _TaskMasterJsonSource))
+            {
+                string _storedProcedure = _TaskMasterJsonSource["StoredProcedure"].ToString();
+                if (_storedProcedure.Length > 0)
+                {
+                    string _spParameters = string.Empty;
+                    if (Shared.JsonHelpers.CheckForJSONProperty(logging, "Parameters", _TaskMasterJsonSource))
+                    {
+                        _spParameters = _TaskMasterJsonSource["Parameters"].ToString();
+                    }
+                    _storedProcedure = string.Format("Exec {0} {1} {2} {3}", _storedProcedure, _spParameters, Environment.NewLine, " Select 1");
+
+                }
+                Execute["StoredProcedure"] = _storedProcedure;
+            }
+            Source["Execute"] = Execute;           
 
             _JsonObjectForADF["Source"] = Source;
             _JsonObjectForADF["Target"] = Target;
@@ -84,7 +117,193 @@ namespace AdsGoFast.GetTaskInstanceJSON
 
         }
 
-        
+        public string ProcessTaskMaster_Mapping_XX_SQL_AZ_Storage_Parquet_IncrementalType()
+        {
+            string _Type = Shared.JsonHelpers.GetStringValueFromJSON(logging, "Type", _TaskMasterJsonSource, "", true);
+            if (!string.IsNullOrWhiteSpace(_Type))
+            {
+                JToken _IncrementalType = Shared.JsonHelpers.GetStringValueFromJSON(logging, "IncrementalType", _TaskMasterJsonSource, "", true);
+                Int32 _ChunkSize = System.Convert.ToInt32(Shared.JsonHelpers.GetDynamicValueFromJSON(logging, "ChunkSize", _TaskMasterJsonSource, "0", false));
+                if (_IncrementalType.ToString() == "Full" && _ChunkSize==0)
+                {
+                    _Type = "Full";
+                }
+                else if (_IncrementalType.ToString() == "Full" && _ChunkSize > 0)
+                {
+                    _Type = "Full-Chunk";
+                }
+                else if (_IncrementalType.ToString() == "Watermark" && _ChunkSize==0)
+                {
+                    _Type = "Watermark";
+                }
+                else if (_IncrementalType.ToString() == "Watermark" && _ChunkSize > 0)
+                {
+                    _Type = "Watermark-Chunk";
+                }                             
+            }
+
+            return _Type;
+        }
+
+        public string ProcessTaskMaster_Mapping_XX_SQL_AZ_Storage_Parquet_CreateIncrementalSQLStatement(JObject Extraction)
+        {
+            string _SQLStatement = "";
+
+            if (Extraction["IncrementalType"] != null)
+            {
+
+                if (Extraction["IncrementalType"].ToString().ToLower() == "full")
+                {
+                    _SQLStatement = "";
+                }
+
+                if (Extraction["IncrementalType"].ToString().ToLower() == "full-chunk")
+                {
+                    _SQLStatement = @$"
+                       SELECT 
+		                    CAST(CEILING(count(*)/{Extraction["ChunkSize"]} + 0.00001) as int) as  batchcount
+	                    FROM [{Extraction["TableSchema"]}].[{Extraction["TableName"]}] 
+                    ";
+                }
+
+                if (Extraction["IncrementalType"].ToString().ToLower() == "watermark" && Extraction["IncrementalColumnType"].ToString().ToLower() == "datetime")
+                {
+                    _SQLStatement = @$"
+                        SELECT 
+	                        MAX([{Extraction["IncrementalField"]}]) AS newWatermark
+                        FROM 
+	                        [{Extraction["TableSchema"]}].[{Extraction["TableName"]}] 
+                        WHERE [{Extraction["IncrementalField"]}] > CAST('{Extraction["IncrementalValue"]}' as datetime)
+                    ";
+                }
+
+                if (Extraction["IncrementalType"].ToString().ToLower() == "watermark" && Extraction["IncrementalColumnType"].ToString().ToLower() != "datetime")
+                {
+                    _SQLStatement = @$"
+                        SELECT 
+	                        MAX({Extraction["IncrementalField"]}]) AS newWatermark
+                        FROM 
+	                        [{Extraction["TableSchema"]}].[{Extraction["TableName"]}] 
+                        WHERE [{Extraction["IncrementalField"]}] > {Extraction["IncrementalValue"]}
+                    ";
+                }
+
+                if (Extraction["IncrementalType"].ToString().ToLower() == "watermark-chunk" && Extraction["IncrementalColumnType"].ToString().ToLower() == "datetime")
+                {
+                    _SQLStatement = @$"
+                        SELECT MAX([{Extraction["IncrementalField"]}]) AS newWatermark, 
+		                       CAST(CASE when count(*) = 0 then 0 else CEILING(count(*)/{Extraction["ChunkSize"]} + 0.00001) end as int) as  batchcount
+	                    FROM  [{Extraction["TableSchema"]}].[{Extraction["TableName"]}] 
+	                    WHERE [{Extraction["IncrementalField"]}] > CAST('{Extraction["IncrementalValue"]}' as datetime)
+                    ";
+                }
+
+                if (Extraction["IncrementalType"].ToString().ToLower() == "watermark-chunk" && Extraction["IncrementalColumnType"].ToString().ToLower() != "datetime")
+                {
+                    _SQLStatement = @$"
+                        SELECT MAX([{Extraction["IncrementalField"]}]) AS newWatermark, 
+		                       CAST(CASE when count(*) = 0 then 0 else CEILING(count(*)/{Extraction["ChunkSize"]} + 0.00001) end as int) as  batchcount
+	                    FROM  [{Extraction["TableSchema"]}].[{Extraction["TableName"]}] 
+	                    WHERE [{Extraction["IncrementalField"]}] > {Extraction["IncrementalValue"]}
+                    ";
+                }
+
+            }
+
+            return _SQLStatement;
+        }
+
+        public string ProcessTaskMaster_Mapping_XX_SQL_AZ_Storage_Parquet_CreateSQLStatement(JObject Extraction)
+        {
+            string _SQLStatement = "";
+            JObject TmSource = (JObject)_TaskMasterJsonSource["Source"];
+            if (Extraction["IncrementalType"] != null)
+            {
+                string _IncrementalType = (string)Extraction["IncrementalType"];
+                Int32 _ChunkSize = (Int32)Extraction["ChunkSize"];
+                JToken _IncrementalField = Shared.JsonHelpers.GetStringValueFromJSON(logging, "IncrementalField", _TaskMasterJsonSource, "", true);
+                JToken _IncrementalColumnType = Shared.JsonHelpers.GetStringValueFromJSON(logging, "IncrementalColumnType", _TaskMasterJsonSource, "", true);
+                JToken _ChunkField = (string)Extraction["ChunkField"];
+                JToken _TableSchema = Extraction["TableSchema"];
+                JToken _TableName = Extraction["TableName"];
+                string _ExtractionSQL = Shared.JsonHelpers.GetStringValueFromJSON(logging, "ExtractionSQL", Extraction, "", false);               
+
+
+                //If Extraction SQL Explicitly set then overide _SQLStatement with that explicit value
+                if (!string.IsNullOrWhiteSpace(_ExtractionSQL.ToString()))
+                {
+                    _SQLStatement = _ExtractionSQL.ToString();
+                    goto EndOfSQLStatementSet;
+                }
+
+
+                //Chunk branch
+                if (_ChunkSize > 0)
+                {
+                    if (_IncrementalType.ToString() == "Full" && _ChunkSize == 0)
+                    {
+                        _SQLStatement = string.Format("SELECT * FROM {0}.{1}", _TableSchema, _TableName);
+                    }
+                    else if (_IncrementalType.ToString() == "Full" && _ChunkSize > 0)
+                    {
+                        _SQLStatement = string.Format("SELECT * FROM {0}.{1} WHERE CAST({2} AS BIGINT) %  <batchcount> = <item> -1. ", _TableSchema, _TableName, _ChunkField);
+                    }
+                    else if (_IncrementalType.ToString() == "Watermark" && _ChunkSize == 0)
+                    {
+                        if (_IncrementalColumnType.ToString() == "DateTime")
+                        {
+                            DateTime _IncrementalValueDateTime = (DateTime)_TaskInstanceJson["IncrementalValue"];
+                            _SQLStatement = string.Format("SELECT * FROM {0}.{1} WHERE {2} > Cast('{3}' as datetime) AND {2} <= Cast('<newWatermark>' as datetime)", _TableSchema, _TableName, _IncrementalField, _IncrementalValueDateTime.ToString("yyyy-MM-dd HH:mm:ss.fff"));
+                        }
+                        else if (_IncrementalColumnType.ToString() == "BigInt")
+                        {
+                            int _IncrementalValueBigInt = (int)_TaskInstanceJson["IncrementalValue"];
+                            _SQLStatement = string.Format("SELECT * FROM {0}.{1} WHERE {2} > Cast('{3}' as bigint) AND {2} <= cast('<newWatermark>' as bigint)", _TableSchema, _TableName, _IncrementalField, _IncrementalValueBigInt);
+                        }
+                    }
+                    else if (_IncrementalType.ToString() == "Watermark" && !string.IsNullOrWhiteSpace(_TaskMasterJsonSource["Source"]["ChunkSize"].ToString()))
+                    {
+                        if (_IncrementalColumnType.ToString() == "DateTime")
+                        {
+                            DateTime _IncrementalValueDateTime = (DateTime)_TaskInstanceJson["IncrementalValue"];
+                            _SQLStatement = string.Format("SELECT * FROM {0}.{1} WHERE {2} > Cast('{3}' as datetime) AND {2} <= Cast('<newWatermark>' as datetime) AND CAST({4} AS BIGINT) %  <batchcount> = <item> -1.", _TableSchema, _TableName, _IncrementalField, _IncrementalValueDateTime.ToString("yyyy-MM-dd HH:mm:ss.fff"), _ChunkField);
+                        }
+                        else if (_IncrementalColumnType.ToString() == "BigInt")
+                        {
+                            int _IncrementalValueBigInt = (int)_TaskInstanceJson["IncrementalValue"];
+                            _SQLStatement = string.Format("SELECT * FROM {0}.{1} WHERE {2} > Cast('{3}' as bigint) AND {2} <= Cast('<newWatermark>' as bigint) AND CAST({4} AS BIGINT) %  <batchcount> = <item> -1.", _TableSchema, _TableName, _IncrementalField, _IncrementalValueBigInt, _ChunkField);
+                        }
+                    }
+                }
+                else
+                //Non Chunk
+                {
+                    if (_IncrementalType.ToString() == "Full")
+                    {
+                        _SQLStatement = string.Format("SELECT * FROM {0}.{1}", _TableSchema, _TableName);
+                    }
+                    else if (_IncrementalType.ToString() == "Watermark")
+                    {
+                        if (_IncrementalColumnType.ToString() == "DateTime")
+                        {
+                            DateTime _IncrementalValueDateTime = (DateTime)_TaskInstanceJson["IncrementalValue"];
+                            _SQLStatement = string.Format("SELECT * FROM {0}.{1} WHERE {2} > Cast('{3}' as datetime) AND {2} <= Cast('<newWatermark>' as datetime)", _TableSchema, _TableName, _IncrementalField, _IncrementalValueDateTime.ToString("yyyy-MM-dd HH:mm:ss.fff"));
+                        }
+                        else if (_IncrementalColumnType.ToString() == "BigInt")
+                        {
+                            int _IncrementalValueBigInt = (int)_TaskInstanceJson["IncrementalValue"];
+                            _SQLStatement = string.Format("SELECT * FROM {0}.{1} WHERE {2} > Cast('{3}' as bigint) AND {2} <= cast('<newWatermark>' as bigint)", _TableSchema, _TableName, _IncrementalField, _IncrementalValueBigInt);
+                        }
+                    }
+                }
+
+            }
+
+        EndOfSQLStatementSet:
+            return _SQLStatement;
+        }
+
+
         public void ProcessTaskMaster_Mapping_AZ_SQL_StoredProcedure()
         {
             AdsGoFast.GetTaskInstanceJSON.TaskMasterJson.AZ_SQL_StoredProcedure.TaskMasterJson
@@ -150,7 +369,7 @@ namespace AdsGoFast.GetTaskInstanceJSON
             JObject Target = (JObject)_JsonObjectForADF["Target"];
 
             Target["Type"] = TaskMasterJsonObject.Type;
-            Target["TableSchema"] = TaskMasterJsonObject.Type;
+            Target["TableSchema"] = TaskMasterJsonObject.TableSchema;
             Target["TableName"] = TaskMasterJsonObject.TableSchema;
             Target["StagingTableSchema"] = TaskMasterJsonObject.StagingTableSchema;
             Target["StagingTableName"] = TaskMasterJsonObject.StagingTableName;

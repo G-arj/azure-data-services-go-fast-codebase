@@ -72,8 +72,13 @@ namespace AdsGoFast.Console
             foreach (var TBase in tis)
             {
                 JArray TIsJson = new JArray();
-                AdsGoFast.TaskMetaData.TaskInstancesStatic.GetActive_ADFJSON_ProcessTask(TBase, TIsJson, InvalidTIs, (Guid)activityLogItem.ExecutionUid, ttm, system_schemas, LogHelper);
-                string FileFullPath = "../../../UnitTestResults/";
+                try
+                {
+                    AdsGoFast.TaskMetaData.TaskInstancesStatic.GetActive_ADFJSON_ProcessTask(TBase, TIsJson, InvalidTIs, (Guid)activityLogItem.ExecutionUid, ttm, system_schemas, LogHelper);
+                }
+                catch { 
+                }
+                string FileFullPath = "../../../UnitTestResults/Todo/";
                 // Determine whether the directory exists.
                 if (!System.IO.Directory.Exists(FileFullPath))
                 {
@@ -81,11 +86,14 @@ namespace AdsGoFast.Console
                     System.IO.DirectoryInfo di = System.IO.Directory.CreateDirectory(FileFullPath);
                 }
 
-                JObject obj = new JObject();
-                obj["TaskObject"] = TIsJson[0];
+                if (TIsJson.Count > 0)
+                {
+                    JObject obj = new JObject();
+                    obj["TaskObject"] = TIsJson[0];
 
-                FileFullPath = FileFullPath + TBase.TaskType.ToString() + "_" + TBase.ADFPipeline.ToString() + "_" + TBase.TaskMasterId.ToString() + ".json";
-                System.IO.File.WriteAllText(FileFullPath, Newtonsoft.Json.JsonConvert.SerializeObject(obj, Newtonsoft.Json.Formatting.Indented, new Newtonsoft.Json.JsonSerializerSettings { NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore }));
+                    FileFullPath = FileFullPath + TBase.TaskType.ToString() + "_" + TBase.ADFPipeline.ToString() + "_" + TBase.TaskMasterId.ToString() + ".json";
+                    System.IO.File.WriteAllText(FileFullPath, Newtonsoft.Json.JsonConvert.SerializeObject(obj, Newtonsoft.Json.Formatting.Indented, new Newtonsoft.Json.JsonSerializerSettings { NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore }));
+                }
             }
            
         }

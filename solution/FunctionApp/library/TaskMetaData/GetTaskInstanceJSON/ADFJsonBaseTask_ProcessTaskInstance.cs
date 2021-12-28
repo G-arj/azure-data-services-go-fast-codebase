@@ -53,6 +53,7 @@ namespace AdsGoFast.GetTaskInstanceJSON
             {
                 if (Shared.JsonHelpers.CheckForJSONProperty(logging, "Extraction", (JObject)Source))
                 {
+
                     JObject Extraction = (JObject)Source["Extraction"];
 
                     Shared.JsonHelpers.JsonObjectPropertyList ExtractionPL = new Shared.JsonHelpers.JsonObjectPropertyList() {                                        
@@ -77,8 +78,8 @@ namespace AdsGoFast.GetTaskInstanceJSON
                         }
                     }
 
-                    Extraction["IncrementalType"] = TaskMetaData.TaskInstancesStatic.IncrementalType(_TaskMasterJson);
-                    Extraction["SQLStatement"] = TaskMetaData.TaskInstancesStatic.CreateSQLStatement(_TaskMasterJson, _TaskInstanceJson, logging);
+                    //Extraction["IncrementalType"] = TaskMetaData.TaskInstancesStatic.IncrementalType(_TaskMasterJson);
+                    //Extraction["SQLStatement"] = TaskMetaData.TaskInstancesStatic.CreateSQLStatement(_TaskMasterJson, _TaskInstanceJson, logging);
 
                     Source["Extraction"] = Extraction;
                 }

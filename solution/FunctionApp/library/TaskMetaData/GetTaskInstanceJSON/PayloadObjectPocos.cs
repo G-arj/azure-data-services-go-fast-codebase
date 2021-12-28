@@ -13,7 +13,7 @@ namespace AdsGoFast.GetTaskInstanceJSON.PayloadObjectPocos
     class TaskObject
     {
         /// <summary>
-        /// Root Object - Mandatory - Al fields required
+        /// Root Object - Mandatory - All fields required
         /// </summary>
         public class Task
         {

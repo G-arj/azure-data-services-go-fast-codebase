@@ -1,0 +1,6 @@
+function()	
+{
+    "formatSettings": {
+        "type": "BinaryReadSettings"
+    }
+}
