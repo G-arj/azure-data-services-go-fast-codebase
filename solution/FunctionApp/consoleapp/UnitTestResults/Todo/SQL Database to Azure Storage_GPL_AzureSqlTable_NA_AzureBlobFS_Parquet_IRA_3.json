@@ -1,0 +1,83 @@
+{
+  "TaskObject": {
+    "TaskInstanceId": 1,
+    "TaskMasterId": 3,
+    "TaskStatus": "Untried",
+    "TaskType": "SQL Database to Azure Storage",
+    "Enabled": 1,
+    "ExecutionUid": "535939f8-42a4-44b3-bd8a-17ebf3dfed26",
+    "NumberOfRetries": 3,
+    "DegreeOfCopyParallelism": 1,
+    "KeyVaultBaseUrl": "https://adsgfkvjkcgkaibkungm.vault.azure.net",
+    "ScheduleMasterId": "2",
+    "TaskGroupConcurrency": "10",
+    "TaskGroupPriority": 0,
+    "TaskExecutionType": "ADF",
+    "DataFactory": {
+      "Id": 1,
+      "Name": "adsgfadfjkcgkaibkungm",
+      "ResourceGroup": "AdsTestDemo",
+      "SubscriptionId": "035a1364-f00d-48e2-b582-4fe125905ee3",
+      "ADFPipeline": "GPL_AzureSqlTable_NA_AzureBlobFS_Parquet_IRA",
+      "TaskDatafactoryIR": "IRA"
+    },
+    "Source": {
+      "Type": "Table",
+      "Instance": {
+        "TargetRelativePath": "/Tests/SQL Database to Azure Storage/3/"
+      },
+      "System": {
+        "SystemName": "adsgfsvrjkcgkaibkungm.database.windows.net",
+        "AuthenticationType": "MSI",
+        "Type": "Azure SQL"
+      },
+      "Database": {
+        "SystemName": "adsgfsvrjkcgkaibkungm.database.windows.net",
+        "Name": "AdsGfSample",
+        "AuthenticationType": "MSI"
+      },
+      "ChunkField": "CustomerID",
+      "ChunkSize": 100,
+      "ExtractionSQL": "Select top 10 * from SalesLT.Customer",
+      "IncrementalColumnType": "",
+      "IncrementalField": "",
+      "IncrementalType": "Full",
+      "IncrementalValue": "0",
+      "TableName": "Customer",
+      "TableSchema": "SalesLT",
+      "Extraction": {
+        "Type": "Table",
+        "IncrementalType": "Full_Chunk",
+        "IncrementalColumnType": "",
+        "IncrementalValue": "0",
+        "IncrementalField": "",
+        "ChunkField": "CustomerID",
+        "ChunkSize": 100,
+        "TableSchema": "SalesLT",
+        "TableName": "Customer",
+        "IncrementalSQLStatement": "\r\n                       SELECT \r\n\t\t                    CAST(CEILING(count(*)/100 + 0.00001) as int) as  batchcount\r\n\t                    FROM [SalesLT].[Customer] \r\n                    ",
+        "SQLStatement": ""
+      },
+      "Execute": {}
+    },
+    "Target": {
+      "Type": "Parquet",
+      "Instance": {
+        "TargetRelativePath": "/Tests/SQL Database to Azure Storage/3/"
+      },
+      "System": {
+        "SystemName": "https://adlsjkcgkaibkungm.dfs.core.windows.net",
+        "AuthenticationType": "MSI",
+        "Type": "ADLS",
+        "Container": "datalakeraw"
+      },
+      "SystemId": 3,
+      "StorageAccountName": "https://adlsjkcgkaibkungm.dfs.core.windows.net",
+      "StorageAccountAccessMethod": "MSI",
+      "StorageAccountContainer": "datalakeraw",
+      "DataFileName": "SalesLT.Customer.parquet",
+      "RelativePath": "/Tests/SQL Database to Azure Storage/3",
+      "SchemaFileName": "SalesLT.Customer.json"
+    }
+  }
+}

@@ -97,7 +97,7 @@
     }    ,
     {
         "Folder": "Azure-Storage-to-Azure-Storage",                
-        "GFPIR": "Azure",
+        "GFPIR": "IRA",
         "SourceType": "AzureBlobStorage",
         "SourceFormat": "Binary",
         "TargetType": "AzureBlobStorage",
@@ -105,7 +105,7 @@
     },
     {
         "Folder": "Azure-Storage-to-Azure-Storage",                
-        "GFPIR": "Azure",
+        "GFPIR": "IRA",
         "SourceType": "AzureBlobStorage",
         "SourceFormat": "Binary",
         "TargetType": "AzureBlobFS",
@@ -113,7 +113,7 @@
     },
     {
         "Folder": "Azure-Storage-to-Azure-Storage",                
-        "GFPIR": "Azure",
+        "GFPIR": "IRA",
         "SourceType": "AzureBlobFS",
         "SourceFormat": "Binary",
         "TargetType": "AzureBlobStorage",
@@ -121,7 +121,7 @@
     },
     {
         "Folder": "Azure-Storage-to-Azure-Storage",                
-        "GFPIR": "Azure",
+        "GFPIR": "IRA",
         "SourceType": "AzureBlobFS",
         "SourceFormat": "Binary",
         "TargetType": "AzureBlobFS",
@@ -129,7 +129,7 @@
     },
     {
         "Folder": "Azure-Storage-to-Azure-Storage",                
-        "GFPIR": "Azure",
+        "GFPIR": "IRA",
         "SourceType": "AzureBlobStorage",
         "SourceFormat": "Excel",
         "TargetType": "AzureBlobStorage",
@@ -137,7 +137,7 @@
     },
     {
         "Folder": "Azure-Storage-to-Azure-Storage",                
-        "GFPIR": "Azure",
+        "GFPIR": "IRA",
         "SourceType": "AzureBlobStorage",
         "SourceFormat": "Excel",
         "TargetType": "AzureBlobFS",
@@ -145,7 +145,7 @@
     },
     {
         "Folder": "Azure-Storage-to-Azure-Storage",                
-        "GFPIR": "Azure",
+        "GFPIR": "IRA",
         "SourceType": "AzureBlobFS",
         "SourceFormat": "Excel",
         "TargetType": "AzureBlobStorage",
@@ -153,7 +153,7 @@
     },
     {
         "Folder": "Azure-Storage-to-Azure-Storage",                
-        "GFPIR": "Azure",
+        "GFPIR": "IRA",
         "SourceType": "AzureBlobFS",
         "SourceFormat": "Excel",
         "TargetType": "AzureBlobFS",
@@ -161,7 +161,7 @@
     },
     {
         "Folder": "Azure-Storage-to-Azure-Storage",                
-        "GFPIR": "Azure",
+        "GFPIR": "IRA",
         "SourceType": "AzureBlobStorage",
         "SourceFormat": "Parquet",
         "TargetType": "AzureBlobStorage",
@@ -169,7 +169,7 @@
     },
     {
         "Folder": "Azure-Storage-to-Azure-Storage",                
-        "GFPIR": "Azure",
+        "GFPIR": "IRA",
         "SourceType": "AzureBlobStorage",
         "SourceFormat": "Parquet",
         "TargetType": "AzureBlobFS",
@@ -177,7 +177,7 @@
     },
     {
         "Folder": "Azure-Storage-to-Azure-Storage",                
-        "GFPIR": "Azure",
+        "GFPIR": "IRA",
         "SourceType": "AzureBlobFS",
         "SourceFormat": "Parquet",
         "TargetType": "AzureBlobStorage",
@@ -185,7 +185,7 @@
     },
     {
         "Folder": "Azure-Storage-to-Azure-Storage",                
-        "GFPIR": "Azure",
+        "GFPIR": "IRA",
         "SourceType": "AzureBlobFS",
         "SourceFormat": "Parquet",
         "TargetType": "AzureBlobFS",
@@ -193,7 +193,7 @@
     },
     {
         "Folder": "Azure-Storage-to-Azure-Storage",                
-        "GFPIR": "Azure",
+        "GFPIR": "IRA",
         "SourceType": "AzureBlobStorage",
         "SourceFormat": "DelimitedText",
         "TargetType": "AzureBlobStorage",
@@ -201,7 +201,7 @@
     },
     {
         "Folder": "Azure-Storage-to-Azure-Storage",                
-        "GFPIR": "Azure",
+        "GFPIR": "IRA",
         "SourceType": "AzureBlobStorage",
         "SourceFormat": "DelimitedText",
         "TargetType": "AzureBlobFS",
@@ -209,7 +209,7 @@
     },
     {
         "Folder": "Azure-Storage-to-Azure-Storage",                
-        "GFPIR": "Azure",
+        "GFPIR": "IRA",
         "SourceType": "AzureBlobFS",
         "SourceFormat": "DelimitedText",
         "TargetType": "AzureBlobStorage",
@@ -217,7 +217,7 @@
     },
     {
         "Folder": "Azure-Storage-to-Azure-Storage",                
-        "GFPIR": "Azure",
+        "GFPIR": "IRA",
         "SourceType": "AzureBlobFS",
         "SourceFormat": "DelimitedText",
         "TargetType": "AzureBlobFS",
@@ -225,7 +225,7 @@
     },
     {
         "Folder": "Azure-Storage-to-Azure-Storage",                
-        "GFPIR": "Azure",
+        "GFPIR": "IRA",
         "SourceType": "AzureBlobStorage",
         "SourceFormat": "Excel",
         "TargetType": "AzureBlobStorage",
@@ -233,7 +233,7 @@
     },
     {
         "Folder": "Azure-Storage-to-Azure-Storage",                
-        "GFPIR": "Azure",
+        "GFPIR": "IRA",
         "SourceType": "AzureBlobStorage",
         "SourceFormat": "Excel",
         "TargetType": "AzureBlobFS",
@@ -241,7 +241,7 @@
     },
     {
         "Folder": "Azure-Storage-to-Azure-Storage",                
-        "GFPIR": "Azure",
+        "GFPIR": "IRA",
         "SourceType": "AzureBlobFS",
         "SourceFormat": "Excel",
         "TargetType": "AzureBlobStorage",
@@ -249,7 +249,7 @@
     },
     {
         "Folder": "Azure-Storage-to-Azure-Storage",                
-        "GFPIR": "Azure",
+        "GFPIR": "IRA",
         "SourceType": "AzureBlobFS",
         "SourceFormat": "Excel",
         "TargetType": "AzureBlobFS",

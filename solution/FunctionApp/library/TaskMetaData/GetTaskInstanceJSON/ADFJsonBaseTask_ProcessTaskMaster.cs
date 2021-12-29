@@ -80,7 +80,10 @@ namespace AdsGoFast.GetTaskInstanceJSON
             JObject Extraction = ((JObject)Source["Extraction"]) == null ? new JObject() : (JObject)Source["Extraction"];
 
             Extraction["Type"] = Shared.JsonHelpers.GetStringValueFromJSON(logging, "Type", _TaskMasterJsonSource, "", true);
-            Extraction["IncrementalType"] = ProcessTaskMaster_Mapping_XX_SQL_AZ_Storage_Parquet_IncrementalType();            
+            Extraction["IncrementalType"] = ProcessTaskMaster_Mapping_XX_SQL_AZ_Storage_Parquet_IncrementalType();
+            Extraction["IncrementalColumnType"] = Shared.JsonHelpers.GetStringValueFromJSON(logging, "IncrementalColumnType", _TaskMasterJsonSource, "", true);
+            Extraction["IncrementalValue"] = Shared.JsonHelpers.GetStringValueFromJSON(logging, "IncrementalValue", _TaskMasterJsonSource, "", true);
+            Extraction["IncrementalField"] = Shared.JsonHelpers.GetStringValueFromJSON(logging, "IncrementalField", _TaskMasterJsonSource, "", true);
             Extraction["ChunkField"] = Shared.JsonHelpers.GetStringValueFromJSON(logging, "ChunkField", _TaskMasterJsonSource, "", true);
             Extraction["ChunkField"] = Shared.JsonHelpers.GetStringValueFromJSON(logging, "ChunkField", _TaskMasterJsonSource, "", true);
             Extraction["ChunkSize"] = System.Convert.ToInt32(Shared.JsonHelpers.GetDynamicValueFromJSON(logging, "ChunkSize", _TaskMasterJsonSource, "0", false));
@@ -130,7 +133,7 @@ namespace AdsGoFast.GetTaskInstanceJSON
                 }
                 else if (_IncrementalType.ToString() == "Full" && _ChunkSize > 0)
                 {
-                    _Type = "Full-Chunk";
+                    _Type = "Full_Chunk";
                 }
                 else if (_IncrementalType.ToString() == "Watermark" && _ChunkSize==0)
                 {
@@ -138,7 +141,7 @@ namespace AdsGoFast.GetTaskInstanceJSON
                 }
                 else if (_IncrementalType.ToString() == "Watermark" && _ChunkSize > 0)
                 {
-                    _Type = "Watermark-Chunk";
+                    _Type = "Watermark_Chunk";
                 }                             
             }
 
@@ -157,7 +160,7 @@ namespace AdsGoFast.GetTaskInstanceJSON
                     _SQLStatement = "";
                 }
 
-                if (Extraction["IncrementalType"].ToString().ToLower() == "full-chunk")
+                if (Extraction["IncrementalType"].ToString().ToLower() == "full_chunk")
                 {
                     _SQLStatement = @$"
                        SELECT 
@@ -181,14 +184,14 @@ namespace AdsGoFast.GetTaskInstanceJSON
                 {
                     _SQLStatement = @$"
                         SELECT 
-	                        MAX({Extraction["IncrementalField"]}]) AS newWatermark
+	                        MAX([{Extraction["IncrementalField"]}]) AS newWatermark
                         FROM 
 	                        [{Extraction["TableSchema"]}].[{Extraction["TableName"]}] 
                         WHERE [{Extraction["IncrementalField"]}] > {Extraction["IncrementalValue"]}
                     ";
                 }
 
-                if (Extraction["IncrementalType"].ToString().ToLower() == "watermark-chunk" && Extraction["IncrementalColumnType"].ToString().ToLower() == "datetime")
+                if (Extraction["IncrementalType"].ToString().ToLower() == "watermark_chunk" && Extraction["IncrementalColumnType"].ToString().ToLower() == "datetime")
                 {
                     _SQLStatement = @$"
                         SELECT MAX([{Extraction["IncrementalField"]}]) AS newWatermark, 
@@ -198,7 +201,7 @@ namespace AdsGoFast.GetTaskInstanceJSON
                     ";
                 }
 
-                if (Extraction["IncrementalType"].ToString().ToLower() == "watermark-chunk" && Extraction["IncrementalColumnType"].ToString().ToLower() != "datetime")
+                if (Extraction["IncrementalType"].ToString().ToLower() == "watermark_chunk" && Extraction["IncrementalColumnType"].ToString().ToLower() != "datetime")
                 {
                     _SQLStatement = @$"
                         SELECT MAX([{Extraction["IncrementalField"]}]) AS newWatermark, 

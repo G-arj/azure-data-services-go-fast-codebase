@@ -77,7 +77,7 @@ namespace AdsGoFast.Console
                     AdsGoFast.TaskMetaData.TaskInstancesStatic.GetActive_ADFJSON_ProcessTask(TBase, TIsJson, InvalidTIs, (Guid)activityLogItem.ExecutionUid, ttm, system_schemas, LogHelper);
                 }
                 catch { 
-                }
+                } 
                 string FileFullPath = "../../../UnitTestResults/Todo/";
                 // Determine whether the directory exists.
                 if (!System.IO.Directory.Exists(FileFullPath))

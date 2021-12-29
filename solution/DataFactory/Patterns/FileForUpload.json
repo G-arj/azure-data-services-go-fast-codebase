@@ -1,60 +1,83 @@
 {
-  "Active": true,
-  "Description": "GPL_AzureBlobStorage_Parquet_AzureSqlTable_NA_IRA",
-  "JsonSchema": "GPL_AzureBlobStorage_Parquet_AzureSqlTable_NA",
   "TaskObject": {
-    "TaskInstanceId": 75,
-    "TaskMasterId": 12,
+    "TaskInstanceId": 1,
+    "TaskMasterId": 0,
     "TaskStatus": "Untried",
-    "TaskType": "Azure Storage to SQL Database",
+    "TaskType": "SQL Database to Azure Storage",
     "Enabled": 1,
-    "ExecutionUid": "2c5924ee-b855-4d2b-bb7e-4f5dde4c4dd3",
-    "NumberOfRetries": 111,
+    "ExecutionUid": "d0b2d050-375b-4670-94b6-918db547f2f7",
+    "NumberOfRetries": 3,
     "DegreeOfCopyParallelism": 1,
-    "KeyVaultBaseUrl": "https://adsgfkvjkcgkaibkungm.vault.azure.net/",
-    "ScheduleMasterId": 2,
-    "TaskGroupConcurrency": 10,
+    "KeyVaultBaseUrl": "https://adsgfkvjkcgkaibkungm.vault.azure.net",
+    "ScheduleMasterId": "2",
+    "TaskGroupConcurrency": "10",
     "TaskGroupPriority": 0,
-    "Source": {
-      "Type": "Parquet",
-      "SystemId": 3,
-      "StorageAccountName": "https://adlsjkcgkaibkungm.blob.core.windows.net",
-      "StorageAccountAccessMethod": "MSI",
-      "StorageAccountContainer": "datalakeraw",
-      "RelativePath": "/samples/",
-      "DataFileName": "SalesLT.Customer.chunk_1.parquet",
-      "SchemaFileName": "SalesLT.Customer.json",
-      "SkipLineCount": 0,
-      "MaxConcorrentConnections": 10,
-      "Recursively": null,
-      "DeleteAfterCompletion": null,
-      "UserId": null,
-      "Host": null,
-      "PasswordKeyVaultSecretName": null
-    },
-    "Target": {
-      "Type": "Table",
-      "StagingTableSchema": "dbo",
-      "StagingTableName": "stg_customer_7",
-      "AutoCreateTable": "true",
-      "TableSchema": "dbo",
-      "TableName": "customer_7",
-      "PreCopySQL": "IF OBJECT_ID('dbo.stg_customer_7') IS NOT NULL \r\n Truncate Table stg_customer_7",
-      "PostCopySQL": "",
-      "MergeSQL": "",
-      "AutoGenerateMerge": "true",
-      "Database": {
-        "SystemName": "adsgfsvrjkcgkaibkungm.database.windows.net",
-        "Name": "AdsGfStaging",
-        "AuthenticationType": "MSI"
-      }
-    },
+    "TaskExecutionType": "ADF",
     "DataFactory": {
       "Id": 1,
-      "Name": "adsgofastdatakakeacceladf",
+      "Name": "adsgfadfjkcgkaibkungm",
       "ResourceGroup": "AdsTestDemo",
       "SubscriptionId": "035a1364-f00d-48e2-b582-4fe125905ee3",
-      "ADFPipeline": "GPL_AzureBlobStorage_Parquet_AzureSqlTable_NA_IRA"
+      "ADFPipeline": "GPL_AzureSqlTable_NA_AzureBlobStorage_Parquet_IRA",
+      "TaskDatafactoryIR": "IRA"
+    },
+    "Source": {
+      "Type": "Table",
+      "Instance": {
+        "TargetRelativePath": "/Tests/SQL Database to Azure Storage/0/"
+      },
+      "System": {
+        "SystemName": "adsgfsvrjkcgkaibkungm.database.windows.net",
+        "AuthenticationType": "MSI",
+        "Type": "Azure SQL"
+      },
+      "Database": {
+        "SystemName": "adsgfsvrjkcgkaibkungm.database.windows.net",
+        "Name": "AdsGfSample",
+        "AuthenticationType": "MSI"
+      },
+      "ChunkField": "",
+      "ChunkSize": 0,
+      "ExtractionSQL": "",
+      "IncrementalColumnType": "",
+      "IncrementalField": "",
+      "IncrementalType": "Full",
+      "IncrementalValue": "0",
+      "TableName": "Customer",
+      "TableSchema": "SalesLT",
+      "Extraction": {
+        "Type": "Table",
+        "IncrementalType": "Full",
+        "IncrementalColumnType": "",
+        "IncrementalValue": "0",
+        "IncrementalField": "",
+        "ChunkField": "",
+        "ChunkSize": 0,
+        "TableSchema": "SalesLT",
+        "TableName": "Customer",
+        "IncrementalSQLStatement": "",
+        "SQLStatement": "SELECT * FROM SalesLT.Customer"
+      },
+      "Execute": {}
+    },
+    "Target": {
+      "Type": "Parquet",
+      "Instance": {
+        "TargetRelativePath": "/Tests/SQL Database to Azure Storage/0/"
+      },
+      "System": {
+        "SystemName": "https://blobjkcgkaibkungm.blob.core.windows.net",
+        "AuthenticationType": "MSI",
+        "Type": "Azure Blob",
+        "Container": "datalakeraw"
+      },
+      "SystemId": 3,
+      "StorageAccountName": "https://blobjkcgkaibkungm.blob.core.windows.net",
+      "StorageAccountAccessMethod": "MSI",
+      "StorageAccountContainer": "datalakeraw",
+      "RelativePath": "/Tests/SQL Database to Azure Storage/0",
+      "DataFileName": "SalesLT.Customer.parquet",
+      "SchemaFileName": "SalesLT.Customer.json"
     }
   }
 }

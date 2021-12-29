@@ -1,9 +1,8 @@
 local tests =
 [
     {
-        "Active": true,
-        "Pattern": "SQL Database to Azure Storage", 
-        "TestNumber":0,
+        "Active": true,        
+        "Pattern": "SQL Database to Azure Storage",         
         "SourceFormat":"Table",
         "SourceType":"Azure SQL",
         "ExtractionSQL":"",
@@ -13,12 +12,17 @@ local tests =
         "TargetFormat":"Parquet",
         "TargetType": "Azure Blob", 
         "ADFPipeline": "GPL_AzureSqlTable_NA_AzureBlobStorage_Parquet_IRA", 
-        "Description": "FulLoad"
+        "Description": "FulLoad",
+        "ChunkField":"",
+        "ChunkSize":0,
+        "IncrementalType": "Full",
+        "IncrementalField":"",
+        "IncrementalColumnType":"",
+        "IncrementalValue":"0"
     },
     {
         "Active": true,
-        "Pattern": "SQL Database to Azure Storage", 
-        "TestNumber":1,
+        "Pattern": "SQL Database to Azure Storage",         
         "SourceFormat":"Table",
         "SourceType":"Azure SQL",
         "ExtractionSQL":"",
@@ -28,12 +32,17 @@ local tests =
         "TargetFormat":"Parquet",
         "TargetType": "ADLS",
         "ADFPipeline": "GPL_AzureSqlTable_NA_AzureBlobFS_Parquet_IRA",
-        "Description": "FullLoad"
+        "Description": "FullLoad",
+        "ChunkField":"",
+        "ChunkSize":0,
+         "IncrementalType": "Full",
+        "IncrementalField":"",
+        "IncrementalColumnType":"",
+        "IncrementalValue":"0"
     },
     {
         "Active": true,
-        "Pattern": "SQL Database to Azure Storage", 
-        "TestNumber":2,
+        "Pattern": "SQL Database to Azure Storage",         
         "SourceFormat":"Table",
         "SourceType":"Azure SQL",
         "ExtractionSQL":"Select top 10 * from SalesLT.Customer",
@@ -43,12 +52,57 @@ local tests =
         "TargetFormat":"Parquet",
         "TargetType": "ADLS",
         "ADFPipeline": "GPL_AzureSqlTable_NA_AzureBlobFS_Parquet_IRA",
-        "Description": "FullLoadUsingExtractionSql"
+        "Description": "FullLoadUsingExtractionSql",
+        "ChunkField":"",
+        "ChunkSize":0,
+        "IncrementalType": "Full",
+        "IncrementalField":"",
+        "IncrementalColumnType":"",
+        "IncrementalValue":"0"
     },    
     {
         "Active": true,
-        "Pattern": "SQL Database to Azure Storage", 
-        "TestNumber":3,
+        "Pattern": "SQL Database to Azure Storage",         
+        "SourceFormat":"Table",
+        "SourceType":"Azure SQL",
+        "ExtractionSQL":"Select top 10 * from SalesLT.Customer",
+        "DataFilename":"SalesLT.Customer.parquet",
+        "SchemaFileName":"SalesLT.Customer.json",
+        "SourceSystemAuthType": "MSI",
+        "TargetFormat":"Parquet",
+        "TargetType": "ADLS",
+        "ADFPipeline": "GPL_AzureSqlTable_NA_AzureBlobFS_Parquet_IRA",
+        "Description": "FullLoadWithChunk",
+        "ChunkField":"CustomerID",
+        "ChunkSize":100,
+        "IncrementalType": "Full",
+        "IncrementalField":"",
+        "IncrementalColumnType":"",
+        "IncrementalValue":"0"
+    },    
+    {
+        "Active": true,
+        "Pattern": "SQL Database to Azure Storage",         
+        "SourceFormat":"Table",
+        "SourceType":"Azure SQL",
+        "ExtractionSQL":"Select top 10 * from SalesLT.Customer",
+        "DataFilename":"SalesLT.Customer.parquet",
+        "SchemaFileName":"SalesLT.Customer.json",
+        "SourceSystemAuthType": "MSI",
+        "TargetFormat":"Parquet",
+        "TargetType": "ADLS",
+        "ADFPipeline": "GPL_AzureSqlTable_NA_AzureBlobFS_Parquet_IRA",
+        "Description": "IncrementalLoad",
+        "ChunkField":"",
+        "ChunkSize":0,
+        "IncrementalType": "Watermark",
+        "IncrementalField":"CustomerID",
+        "IncrementalColumnType":"int",
+        "IncrementalValue":"10"
+    },    
+    {
+        "Active": true,
+        "Pattern": "SQL Database to Azure Storage",         
         "SourceFormat":"Table",
         "SourceType":"SQL Server",
         "ExtractionSQL":"",
@@ -58,12 +112,17 @@ local tests =
         "TargetFormat":"Parquet",
         "TargetType": "Azure Blob",
         "ADFPipeline": "GPL_SqlServerTable_NA_AzureBlobStorage_Parquet_IRA",
-        "Description": "FullLoad"
+        "Description": "FullLoad",
+        "ChunkField":"",
+        "ChunkSize":0,
+        "IncrementalType": "Full",
+        "IncrementalField":"",
+        "IncrementalColumnType":"",
+        "IncrementalValue":"0"
     },    
     {
         "Active": true,
-        "Pattern": "SQL Database to Azure Storage", 
-        "TestNumber":4,
+        "Pattern": "SQL Database to Azure Storage",         
         "SourceFormat":"Table",
         "SourceType":"SQL Server",
         "ExtractionSQL":"",
@@ -73,17 +132,23 @@ local tests =
         "TargetFormat":"Parquet",
         "TargetType": "ADLS",
         "ADFPipeline": "GPL_SqlServerTable_NA_AzureBlobFS_Parquet_IRA",
-        "Description": "FullLoad"
+        "Description": "FullLoad",
+        "ChunkField":"",
+        "ChunkSize":0,
+        "IncrementalType": "Full",
+        "IncrementalField":"",
+        "IncrementalColumnType":"",
+        "IncrementalValue":"0"
     }
 ];
 
 local template = import "./partials/functionapptest.libsonnet";
-[
-if(t.Active) then 
+
+local process = function(index, t)
 template(
     t.ADFPipeline,
     t.Pattern, 
-    t.TestNumber,
+    index,//t.TestNumber,
     t.SourceFormat,
     t.SourceType,
     t.ExtractionSQL,
@@ -91,8 +156,15 @@ template(
     t.SchemaFileName,
     t.SourceSystemAuthType,
     t.TargetFormat,
-    t.TargetType
-)
-for t in tests if t.Active == true  
-  
-]
+    t.TargetType,
+    t.ChunkField,
+    t.ChunkSize,
+    t.IncrementalType,
+    t.IncrementalField,
+    t.IncrementalColumnType,
+    t.IncrementalValue
+);
+
+
+std.mapWithIndex(process, tests)
+

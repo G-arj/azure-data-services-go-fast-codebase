@@ -1,7 +1,8 @@
 {
   "profiles": {
     "AdsGoFast_Console": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "commandLineArgs": "../../../../UnitTests/tests.json ../../../UnitTestResults/Todo/ "
     }
   }
 }

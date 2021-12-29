@@ -1,5 +1,5 @@
 local commons = import '../../../static/partials/functionapptest_commons.libsonnet';
-local vars = import 'secrets.libsonnet';
+local vars = import '../../../static/partials/secrets.libsonnet';
 function(
     ADFPipeline = "GPL_AzureSqlTable_NA_AzureBlobStorage_Parquet_IRA",
     Pattern = "SQL Database to Azure Storage",
@@ -11,19 +11,28 @@ function(
     SchemaFileName = "SalesLT.Customer.json",
     SourceSystemAuthType = "MSI",
     TargetFormat = "Parquet",
-    TargetType = "Azure Blob"    
+    TargetType = "Azure Blob", 
+    ChunkField = "",
+    ChunkSize = 0,
+    IncrementalType = "Full",
+    IncrementalField = "",
+    IncrementalColumnType = "",
+    IncrementalValue = "0"
     )
 {
     local TaskMasterJson =     
     {
         "Source":{
             "Type": SourceFormat,
-            "IncrementalType": "Full",
+            "IncrementalType": IncrementalType,
+            "IncrementalColumnType":IncrementalColumnType,
+            "IncrementalField":IncrementalField,
+            "IncrementalValue":IncrementalValue,
             "TableSchema": "SalesLT",
             "TableName": "Customer",
             "ExtractionSQL": ExtractionSQL,                   
-            "ChunkField":"",
-            "ChunkSize":0,
+            "ChunkField":ChunkField,
+            "ChunkSize":ChunkSize
         },
         "Target":{
             "Type":TargetFormat,

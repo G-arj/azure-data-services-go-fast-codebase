@@ -8,4 +8,4 @@ foreach ($opts in $adsopts) {
 $SubscriptionId = $obj.AdsOpts_CD_ResourceGroup_Id.Split("/")
 $obj | Add-Member "AdsOpts_CD_Services_DataFactory_SubscriptionId" $SubscriptionId[2]
 
-$obj | ConvertTo-Json | Set-Content ('./partials/secrets.libsonnet')
+$obj | ConvertTo-Json | Set-Content ('./pipeline/static/partials/secrets.libsonnet')

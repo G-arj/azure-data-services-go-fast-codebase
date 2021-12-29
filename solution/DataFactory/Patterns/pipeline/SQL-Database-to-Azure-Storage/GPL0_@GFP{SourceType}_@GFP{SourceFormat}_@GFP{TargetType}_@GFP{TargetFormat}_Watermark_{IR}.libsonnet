@@ -13,12 +13,18 @@ local pipeline =  {
 			{
 				"name": "Set SQLStatement",
 				"type": "SetVariable",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Pipeline AF Log - Copy Start",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}],
 				"userProperties": [],
 				"typeProperties": {
 					"variableName": "SQLStatement",
 					"value": {
-						"value": "@replace(replace(replace(pipeline().parameters.TaskObject.Source.Extraction.SQLStatement,'<batchcount>',string(pipeline().parameters.BatchCount)),'<item>',string(pipeline().parameters.Item)),'<newWatermark>',pipeline().parameters.NewWaterMark)",
+						"value": "@replace(\n replace(\n  replace(\n   pipeline().parameters.TaskObject.Source.Extraction.SQLStatement,\n   '<batchcount>',\n   string(pipeline().parameters.BatchCount)\n   ),\n '<item>',string(pipeline().parameters.Item)),\n '<newWatermark>',string(pipeline().parameters.NewWaterMark)\n)",
 						"type": "Expression"
 					}
 				}
@@ -28,7 +34,7 @@ local pipeline =  {
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Pipeline AF Log - Copy Start",
+						"activity": "Set SQLStatement",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -95,7 +101,7 @@ local pipeline =  {
 					"functionName": "TaskExecutionSchemaFile",
 					"method": "POST",
 					"body": {
-						"value": "@json(\n concat(\n '{\"TaskInstanceId\":\"', \n string(pipeline().parameters.TaskObject.TaskInstanceId), \n '\",\"ExecutionUid\":\"', \n string(pipeline().parameters.TaskObject.ExecutionUid), \n '\",\"RunId\":\"', \n string(pipeline().RunId), \n '\",\"StorageAccountName\":\"', \n string(pipeline().parameters.TaskObject.Target.StorageAccountName), \n '\",\"StorageAccountContainer\":\"', \n string(pipeline().parameters.TaskObject.Target.StorageAccountContainer), \n '\",\"RelativePath\":\"', \n string(pipeline().parameters.TaskObject.Target.RelativePath), \n '\",\"SchemaFileName\":\"', \n string(pipeline().parameters.TaskObject.Target.SchemaFileName), \n '\",\"SourceType\":\"', \n string(pipeline().parameters.TaskObject.Source.Type), \n '\",\"TargetType\":\"', \n if(\n    contains(\n    string(pipeline().parameters.TaskObject.Target.StorageAccountName),\n    '.dfs.core.windows.net'\n    ),\n   'ADLS',\n   'Azure Blob'), \n '\",\"Data\":',\n string(activity('Get Parquet Metadata').output),\n ',\"MetadataType\":\"Parquet\"}')\n)",
+						"value": "@json(\n concat(\n '{\"TaskInstanceId\":\"', \n string(pipeline().parameters.TaskObject.TaskInstanceId), \n '\",\"ExecutionUid\":\"', \n string(pipeline().parameters.TaskObject.ExecutionUid), \n '\",\"RunId\":\"', \n string(pipeline().RunId), \n '\",\"StorageAccountName\":\"', \n string(pipeline().parameters.TaskObject.Target.System.SystemName), \n '\",\"StorageAccountContainer\":\"', \n string(pipeline().parameters.TaskObject.Target.System.Container), \n '\",\"RelativePath\":\"', \n string(pipeline().parameters.TaskObject.Target.System.TargetRelativePath), \n '\",\"SchemaFileName\":\"', \n string(pipeline().parameters.TaskObject.Target.SchemaFileName), \n '\",\"SourceType\":\"', \n string(pipeline().parameters.TaskObject.Source.System.Type), \n '\",\"TargetType\":\"', \n if(\n    contains(\n    string(pipeline().parameters.TaskObject.Target.System.SystemName),\n    '.dfs.core.windows.net'\n    ),\n   'ADLS',\n   'Azure Blob'), \n '\",\"Data\":',\n string(activity('Get Parquet Metadata').output),\n ',\"MetadataType\":\"Parquet\"}')\n)",
 						"type": "Expression"
 					}
 				},

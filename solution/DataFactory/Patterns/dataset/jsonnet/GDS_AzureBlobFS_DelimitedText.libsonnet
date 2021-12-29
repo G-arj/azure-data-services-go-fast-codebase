@@ -25,7 +25,7 @@ function(GFPIR="IRA")
 			"StorageAccountContainerName": {
 				"type": "string"
 			},
-			"FirstRownAsHeader": {
+			"FirstRowAsHeader": {
 				"type": "bool"
 			}
 		},

@@ -1,7 +1,7 @@
 {
   "TaskObject": {
     "TaskInstanceId": 1,
-    "TaskMasterId": 3,
+    "TaskMasterId": 4,
     "TaskStatus": "Untried",
     "TaskType": "SQL Database to Azure Storage",
     "Enabled": 1,
@@ -18,7 +18,7 @@
       "Name": "adsgfadfjkcgkaibkungm",
       "ResourceGroup": "AdsTestDemo",
       "SubscriptionId": "035a1364-f00d-48e2-b582-4fe125905ee3",
-      "ADFPipeline": "GPL_SqlServerTable_NA_AzureBlobStorage_Parquet_IRA",
+      "ADFPipeline": "GPL_SqlServerTable_NA_AzureBlobFS_Parquet_IRA",
       "TaskDatafactoryIR": "IRA"
     },
     "Source": {
@@ -43,11 +43,11 @@
       "Execute": {}
     },
     "Target": {
-      "Type": "Azure Blob",
-      "StorageAccountName": "https://blobjkcgkaibkungm.blob.core.windows.net",
+      "Type": "ADLS",
+      "StorageAccountName": "https://adlsjkcgkaibkungm.dfs.core.windows.net",
       "StorageAccountContainer": "datalakeraw",
       "StorageAccountAccessMethod": "MSI",
-      "RelativePath": "/Tests/SQL Database to Azure Storage/3/",
+      "RelativePath": "/Tests/SQL Database to Azure Storage/4/",
       "DataFileName": "SalesLT.Customer.parquet",
       "SchemaFileName": "SalesLT.Customer.json",
       "FirstRowAsHeader": null,

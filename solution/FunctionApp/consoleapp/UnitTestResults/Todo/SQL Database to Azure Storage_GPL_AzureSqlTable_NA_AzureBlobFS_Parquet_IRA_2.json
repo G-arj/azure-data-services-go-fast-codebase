@@ -5,7 +5,7 @@
     "TaskStatus": "Untried",
     "TaskType": "SQL Database to Azure Storage",
     "Enabled": 1,
-    "ExecutionUid": "55e90cc9-88ba-459c-9455-2a1e77aa3025",
+    "ExecutionUid": "535939f8-42a4-44b3-bd8a-17ebf3dfed26",
     "NumberOfRetries": 3,
     "DegreeOfCopyParallelism": 1,
     "KeyVaultBaseUrl": "https://adsgfkvjkcgkaibkungm.vault.azure.net",
@@ -23,6 +23,9 @@
     },
     "Source": {
       "Type": "Table",
+      "Instance": {
+        "TargetRelativePath": "/Tests/SQL Database to Azure Storage/2/"
+      },
       "System": {
         "SystemName": "adsgfsvrjkcgkaibkungm.database.windows.net",
         "AuthenticationType": "MSI",
@@ -33,15 +36,21 @@
         "Name": "AdsGfSample",
         "AuthenticationType": "MSI"
       },
-      "ChinkSize": 0,
       "ChunkField": "",
+      "ChunkSize": 0,
       "ExtractionSQL": "Select top 10 * from SalesLT.Customer",
+      "IncrementalColumnType": "",
+      "IncrementalField": "",
       "IncrementalType": "Full",
+      "IncrementalValue": "0",
       "TableName": "Customer",
       "TableSchema": "SalesLT",
       "Extraction": {
         "Type": "Table",
         "IncrementalType": "Full",
+        "IncrementalColumnType": "",
+        "IncrementalValue": "0",
+        "IncrementalField": "",
         "ChunkField": "",
         "ChunkSize": 0,
         "TableSchema": "SalesLT",
@@ -53,6 +62,9 @@
     },
     "Target": {
       "Type": "Parquet",
+      "Instance": {
+        "TargetRelativePath": "/Tests/SQL Database to Azure Storage/2/"
+      },
       "System": {
         "SystemName": "https://adlsjkcgkaibkungm.dfs.core.windows.net",
         "AuthenticationType": "MSI",
@@ -63,8 +75,8 @@
       "StorageAccountName": "https://adlsjkcgkaibkungm.dfs.core.windows.net",
       "StorageAccountAccessMethod": "MSI",
       "StorageAccountContainer": "datalakeraw",
-      "RelativePath": "/Tests/SQL Database to Azure Storage/2",
       "DataFileName": "SalesLT.Customer.parquet",
+      "RelativePath": "/Tests/SQL Database to Azure Storage/2",
       "SchemaFileName": "SalesLT.Customer.json"
     }
   }

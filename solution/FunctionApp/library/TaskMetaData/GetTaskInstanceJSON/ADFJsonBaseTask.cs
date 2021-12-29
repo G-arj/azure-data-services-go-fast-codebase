@@ -137,7 +137,7 @@ namespace AdsGoFast.GetTaskInstanceJSON
         }
 
 
-        //Processing Core ***/
+        /***** Processing Core ***/
         public JObject ProcessRoot(TaskTypeMappings ttm,SourceAndTargetSystem_JsonSchemas system_schemas)
         {
             CreateInternalObjectsForProcessingJsonFields();
@@ -157,6 +157,9 @@ namespace AdsGoFast.GetTaskInstanceJSON
             {
                 ["Type"] = this.SourceSystemType
             };
+
+            JObject Instance = _TaskInstanceJson;
+            Source["Instance"] = Instance;
 
             JObject System = new JObject
             {
@@ -265,7 +268,8 @@ namespace AdsGoFast.GetTaskInstanceJSON
                 ["Type"] = this.TargetSystemType
             };
 
-
+            JObject Instance = _TaskInstanceJson;
+            Target["Instance"] = Instance;
 
             System.Merge(_TargetSystemJson, new JsonMergeSettings
             {
