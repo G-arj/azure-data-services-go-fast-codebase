@@ -316,13 +316,13 @@ namespace AdsGoFast.GetTaskInstanceJSON
             JObject Source = ((JObject)_JsonObjectForADF["Source"]) == null ? new JObject() : (JObject)_JsonObjectForADF["Source"];
             JObject Target = ((JObject)_JsonObjectForADF["Target"]) == null ? new JObject() : (JObject)_JsonObjectForADF["Target"];
 
-            Source.Merge(_JsonObjectForADF["Source"], new JsonMergeSettings
+            Source.Merge(_TaskMasterJson["Source"], new JsonMergeSettings
             {
                 // union array values together to avoid duplicates
                 MergeArrayHandling = MergeArrayHandling.Union
             });
 
-            Target.Merge(_JsonObjectForADF["Target"], new JsonMergeSettings
+            Target.Merge(_TaskMasterJson["Target"], new JsonMergeSettings
             {
                 // union array values together to avoid duplicates
                 MergeArrayHandling = MergeArrayHandling.Union

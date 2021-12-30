@@ -110,7 +110,8 @@ function()
           "TableName",
           "PreCopySQL",
           "PostCopySQL",
-          "AutoGenerateMerge"
+          "AutoGenerateMerge",
+          "MergeSQL"
       ]
   }
 }

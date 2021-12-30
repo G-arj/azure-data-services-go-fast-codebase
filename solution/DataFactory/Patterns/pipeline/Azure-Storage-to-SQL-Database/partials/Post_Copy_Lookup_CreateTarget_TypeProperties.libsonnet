@@ -26,7 +26,7 @@ if (TargetType=="AzureSqlTable"&&TargetFormat=="NA") then
                 "type": "Expression"
             },
             "Server": {
-                "value": "@pipeline().parameters.TaskObject.Target.System.ServerName",
+                "value": "@pipeline().parameters.TaskObject.Target.System.SystemServer",
                 "type": "Expression"
             },
             "Database": {

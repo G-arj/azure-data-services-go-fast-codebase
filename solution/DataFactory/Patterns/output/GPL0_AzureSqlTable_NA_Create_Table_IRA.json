@@ -30,7 +30,7 @@
               "typeProperties": {
                 "body": {
                   "type": "Expression",
-                  "value": "@json(concat('{\"TaskInstanceId\":\"', string(pipeline().parameters.TaskObject.TaskInstanceId), '\",\"ExecutionUid\":\"', string(pipeline().parameters.TaskObject.ExecutionUid), '\",\"RunId\":\"', string(pipeline().RunId), '\",\"TableSchema\":\"',string(pipeline().parameters.TaskObject.Target.TableSchema), '\",\"TableName\":\"', string(pipeline().parameters.TaskObject.Target.TableName),'\",\"StorageAccountName\":\"', string(pipeline().parameters.TaskObject.Source.StorageAccountName), '\",\"StorageAccountContainer\":\"', string(pipeline().parameters.TaskObject.Source.StorageAccountContainer), '\",\"RelativePath\":\"', string(pipeline().parameters.TaskObject.Source.RelativePath), '\",\"SchemaFileName\":\"', string(pipeline().parameters.TaskObject.Source.SchemaFileName), '\"}'))"
+                  "value": "@json(concat('{\"TaskInstanceId\":\"', string(pipeline().parameters.TaskObject.TaskInstanceId), '\",\"ExecutionUid\":\"', string(pipeline().parameters.TaskObject.ExecutionUid), '\",\"RunId\":\"', string(pipeline().RunId), '\",\"TableSchema\":\"',string(pipeline().parameters.TaskObject.Target.TableSchema), '\",\"TableName\":\"', string(pipeline().parameters.TaskObject.Target.TableName),'\",\"StorageAccountName\":\"', string(pipeline().parameters.TaskObject.Source.System.SystemServer), '\",\"StorageAccountContainer\":\"', string(pipeline().parameters.TaskObject.Source.System.Container), '\",\"RelativePath\":\"', string(pipeline().parameters.TaskObject.Source.RelativePath), '\",\"SchemaFileName\":\"', string(pipeline().parameters.TaskObject.Source.SchemaFileName), '\"}'))"
                 },
                 "functionName": "GetSQLCreateStatementFromSchema",
                 "method": "POST"
@@ -60,7 +60,7 @@
                   "parameters": {
                     "Database": {
                       "type": "Expression",
-                      "value": "@pipeline().parameters.TaskObject.Target.Database.Name"
+                      "value": "@pipeline().parameters.TaskObject.Target.System.Database"
                     },
                     "Schema": {
                       "type": "Expression",
@@ -68,7 +68,7 @@
                     },
                     "Server": {
                       "type": "Expression",
-                      "value": "@pipeline().parameters.TaskObject.Target.Database.SystemName"
+                      "value": "@pipeline().parameters.TaskObject.Target.System.SystemServer"
                     },
                     "Table": {
                       "type": "Expression",
@@ -151,7 +151,7 @@
               "typeProperties": {
                 "body": {
                   "type": "Expression",
-                  "value": "@json(concat('{\"TaskInstanceId\":\"', string(pipeline().parameters.TaskObject.TaskInstanceId), '\",\"ExecutionUid\":\"', string(pipeline().parameters.TaskObject.ExecutionUid), '\",\"RunId\":\"', string(pipeline().RunId), '\",\"TableSchema\":\"',string(pipeline().parameters.TaskObject.Target.StagingTableSchema), '\",\"TableName\":\"', string(pipeline().parameters.TaskObject.Target.StagingTableName),'\",\"StorageAccountName\":\"', string(pipeline().parameters.TaskObject.Source.StorageAccountName), '\",\"StorageAccountContainer\":\"', string(pipeline().parameters.TaskObject.Source.StorageAccountContainer), '\",\"RelativePath\":\"', string(pipeline().parameters.TaskObject.Source.RelativePath), '\",\"SchemaFileName\":\"', string(pipeline().parameters.TaskObject.Source.SchemaFileName), '\",\"DropIfExist\":\"True\"}'))"
+                  "value": "@json(concat('{\"TaskInstanceId\":\"', string(pipeline().parameters.TaskObject.TaskInstanceId), '\",\"ExecutionUid\":\"', string(pipeline().parameters.TaskObject.ExecutionUid), '\",\"RunId\":\"', string(pipeline().RunId), '\",\"TableSchema\":\"',string(pipeline().parameters.TaskObject.Target.StagingTableSchema), '\",\"TableName\":\"', string(pipeline().parameters.TaskObject.Target.StagingTableName),'\",\"StorageAccountName\":\"', string(pipeline().parameters.TaskObject.Source.System.SystemServer), '\",\"StorageAccountContainer\":\"', string(pipeline().parameters.TaskObject.Source.System.Container), '\",\"RelativePath\":\"', string(pipeline().parameters.TaskObject.Source.RelativePath), '\",\"SchemaFileName\":\"', string(pipeline().parameters.TaskObject.Source.SchemaFileName), '\",\"DropIfExist\":\"True\"}'))"
                 },
                 "functionName": "GetSQLCreateStatementFromSchema",
                 "method": "POST"
@@ -181,7 +181,7 @@
                   "parameters": {
                     "Database": {
                       "type": "Expression",
-                      "value": "@pipeline().parameters.TaskObject.Target.Database.Name"
+                      "value": "@pipeline().parameters.TaskObject.Target.System.Database"
                     },
                     "Schema": {
                       "type": "Expression",
@@ -189,7 +189,7 @@
                     },
                     "Server": {
                       "type": "Expression",
-                      "value": "@pipeline().parameters.TaskObject.Target.Database.SystemName"
+                      "value": "@pipeline().parameters.TaskObject.Target.System.SystemServer"
                     },
                     "Table": {
                       "type": "Expression",

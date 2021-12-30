@@ -5,7 +5,7 @@
     "TaskStatus": "Untried",
     "TaskType": "SQL Database to Azure Storage",
     "Enabled": 1,
-    "ExecutionUid": "38b276a7-2c8a-4fcd-aaaa-57cdaf2207f2",
+    "ExecutionUid": "599b3f12-9674-41ad-a030-759b7a6e45fa",
     "NumberOfRetries": 3,
     "DegreeOfCopyParallelism": 1,
     "KeyVaultBaseUrl": "https://adsgfkvjkcgkaibkungm.vault.azure.net",
@@ -22,38 +22,49 @@
       "TaskDatafactoryIR": "IRA"
     },
     "Source": {
-      "Type": "Azure SQL",
-      "Database": {
-        "SystemName": "adsgfsvrjkcgkaibkungm.database.windows.net",
-        "Name": "AdsGfSample",
-        "AuthenticationType": "MSI"
-      },
-      "Extraction": {
+      "System": {
+        "SystemId": 1,
+        "SystemServer": "adsgfsvrjkcgkaibkungm.database.windows.net",
+        "AuthenticationType": "MSI",
         "Type": "Azure SQL",
-        "IncrementalType": "Full",
-        "IncrementalField": "",
-        "IncrementalColumnType": "",
-        "ChunkField": "",
-        "ChunkSize": null,
-        "TableSchema": "SalesLT",
-        "TableName": "Customer",
-        "SQLStatement": "SELECT * FROM SalesLT.Customer",
-        "IncrementalSQLStatement": ""
+        "Username": "",
+        "Database": "AdsGfSample",
+        "PasswordKeyVaultSecretName": "",
+        "UsernameKeyVaultSecretName": ""
       },
+      "Instance": {
+        "TargetRelativePath": "/Tests/SQL Database to Azure Storage/0/"
+      },
+      "ChunkField": "",
+      "ChunkSize": 0,
+      "ExtractionSQL": "",
+      "IncrementalColumnType": "",
+      "IncrementalField": "",
+      "IncrementalType": "Full",
+      "IncrementalValue": "0",
+      "TableName": "Customer",
+      "TableSchema": "SalesLT",
+      "Type": "Table",
+      "IncrementalSQLStatement": "",
+      "SQLStatement": "SELECT * FROM SalesLT.Customer",
       "Execute": {}
     },
     "Target": {
-      "Type": "Azure Blob",
-      "StorageAccountName": "https://blobjkcgkaibkungm.blob.core.windows.net",
-      "StorageAccountContainer": "datalakeraw",
-      "StorageAccountAccessMethod": "MSI",
-      "RelativePath": "/Tests/SQL Database to Azure Storage/0/",
+      "System": {
+        "SystemId": 3,
+        "SystemServer": "https://blobjkcgkaibkungm.blob.core.windows.net",
+        "AuthenticationType": "MSI",
+        "Type": "Azure Blob",
+        "Username": "",
+        "Container": "datalakeraw"
+      },
+      "Instance": {
+        "TargetRelativePath": "/Tests/SQL Database to Azure Storage/0/"
+      },
       "DataFileName": "SalesLT.Customer.parquet",
+      "RelativePath": "/Tests/SQL Database to Azure Storage/0",
       "SchemaFileName": "SalesLT.Customer.json",
-      "FirstRowAsHeader": null,
-      "SheetName": null,
-      "SkipLineCount": null,
-      "MaxConcorrentConnections": null
+      "Type": "Parquet"
     }
   }
 }

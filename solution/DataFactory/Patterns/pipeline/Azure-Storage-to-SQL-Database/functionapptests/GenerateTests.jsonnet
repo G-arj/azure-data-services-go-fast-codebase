@@ -3,38 +3,33 @@ local tests =
     {
         "Active": true,        
         "Pattern": "Azure Storage to SQL Database",         
-        "SourceFormat":"Parquet",
-        "SourceType":"Azure Blob",        
-        "ExtractionSQL":"",
-        "DataFilename":"SalesLT.Customer.parquet",
-        "SchemaFileName":"SalesLT.Customer.json",
         "SourceSystemAuthType": "MSI",
-        "TargetFormat":"Table",
-        "TargetType": "Azure SQL", 
-        "ADFPipeline": "GPL_AzureBlobStorage_Parquet_AzureSqlTable_NA_IRA", 
-        "Description": "FullLoad",            
-        "SkipLineCount":"",
-        "MaxConcorrentConnections":0,
-        "Recursively":"false",
-        "DeleteAfterCompletion":""
-    },
-    {
-        "Active": true,        
-        "Pattern": "Azure Storage to SQL Database",         
+        
         "SourceFormat":"Parquet",
         "SourceType":"ADLS",        
-        "ExtractionSQL":"",
         "DataFilename":"SalesLT.Customer.parquet",
-        "SchemaFileName":"SalesLT.Customer.json",
-        "SourceSystemAuthType": "MSI",
-        "TargetFormat":"Table",
-        "TargetType": "Azure SQL", 
-        "ADFPipeline": "GPL_AzureBlobFS_Parquet_AzureSqlTable_NA_IRA", 
-        "Description": "FullLoad",            
+        "SchemaFileName":"SalesLT.Customer.json", 
         "SkipLineCount":"",
+        "SheetName":"",
         "MaxConcorrentConnections":0,
         "Recursively":"false",
-        "DeleteAfterCompletion":""
+        "DeleteAfterCompletion":"",
+        
+        "TargetFormat":"Table",
+        "TargetType": "Azure SQL", 
+        "TableSchema":"dbo",
+        "TableName":"Customer",
+        "StagingTableSchema":"dbo",
+        "StagingTableName":"stg_Customer",
+        "AutoCreateTable": "true",
+        "PreCopySQL": "",
+        "PostCopySQL": "",
+        "AutoGenerateMerge": "true",
+        "MergeSQL":"", 
+        
+        "Description": "FullLoad",  
+        "ADFPipeline": "GPL_AzureBlobFS_Parquet_AzureSqlTable_NA_IRA", 
+       
     }
 ];
 
@@ -47,16 +42,25 @@ template(
     index,//t.TestNumber,
     t.SourceFormat,
     t.SourceType,
-    t.ExtractionSQL,
     t.DataFilename,
     t.SchemaFileName,
     t.SourceSystemAuthType,
-    t.TargetFormat,
-    t.TargetType,
     t.SkipLineCount,
+    t.SheetName,
     t.MaxConcorrentConnections,
     t.Recursively,
-    t.DeleteAfterCompletion
+    t.DeleteAfterCompletion,
+    t.TargetFormat,
+    t.TargetType,
+    t.TableSchema,
+    t.TableName,
+    t.StagingTableSchema,
+    t.StagingTableName,
+    t.AutoCreateTable,
+    t.PreCopySQL,
+    t.PostCopySQL,
+    t.AutoGenerateMerge,
+    t.MergeSQL
 );
 
 

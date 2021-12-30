@@ -24,11 +24,11 @@
               },
               "FileSystem": {
                 "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Source.StorageAccountContainer"
+                "value": "@pipeline().parameters.TaskObject.Source.System.Container"
               },
               "StorageAccountEndpoint": {
                 "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Source.StorageAccountName"
+                "value": "@pipeline().parameters.TaskObject.Source.System.SystemServer"
               }
             },
             "referenceName": "GDS_AzureBlobFS_Binary_IRA",
@@ -49,11 +49,11 @@
               },
               "FileSystem": {
                 "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Target.StorageAccountContainer"
+                "value": "@pipeline().parameters.TaskObject.Target.System.Container"
               },
               "StorageAccountEndpoint": {
                 "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Target.StorageAccountName"
+                "value": "@pipeline().parameters.TaskObject.Target.System.SystemServer"
               }
             },
             "referenceName": "GDS_AzureBlobFS_Binary_IRA",

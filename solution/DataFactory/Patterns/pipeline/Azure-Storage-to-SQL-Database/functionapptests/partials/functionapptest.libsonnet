@@ -6,16 +6,25 @@ function(
     TestNumber = "1",
     SourceFormat = "Azure SQL",
     SourceType = "Azure SQL",
-    ExtractionSQL = "",
     DataFilename = "SalesLT.Customer.parquet",
     SchemaFileName = "SalesLT.Customer.json",
     SourceSystemAuthType = "MSI",
-    TargetFormat = "Parquet",
-    TargetType = "Azure Blob",     
     SkipLineCount = "",
+    SheetName = "",
     MaxConcorrentConnections = 0,
     Recursively = "false",
-    DeleteAfterCompletion = ""
+    DeleteAfterCompletion = "",
+    TargetFormat = "Parquet",
+    TargetType = "Azure Blob", 
+    TableSchema,
+    TableName,
+    StagingTableSchema,
+    StagingTableName,
+    AutoCreateTable,
+    PreCopySQL,
+    PostCopySQL,
+    AutoGenerateMerge,
+    MergeSQL
     )
 {
     local TaskMasterJson =     
@@ -32,9 +41,17 @@ function(
         },
         "Target":{
             "Type":TargetFormat,
-            "RelativePath":"/Tests/"+Pattern+"/"+TestNumber,
             "DataFileName": DataFilename,
-            "SchemaFileName": SchemaFileName
+            "SchemaFileName": SchemaFileName,
+            "TableSchema":TableSchema,
+            "TableName":TableName+TestNumber,
+            "StagingTableSchema":StagingTableSchema,
+            "StagingTableName":StagingTableName+TestNumber,
+            "AutoCreateTable":AutoCreateTable,
+            "PreCopySQL":PreCopySQL,
+            "PostCopySQL":PostCopySQL,
+            "AutoGenerateMerge":AutoGenerateMerge,
+            "MergeSQL":MergeSQL
         }
     },
 
@@ -56,6 +73,7 @@ function(
     },
              
     "TaskInstanceJson":std.manifestJson(TaskInstanceJson),
+    "TaskTypeId":1,
     "TaskType":Pattern,
     "DataFactoryName":vars.AdsOpts_CD_Services_DataFactory_Name,
     "DataFactoryResourceGroup":vars.AdsOpts_CD_ResourceGroup_Name,

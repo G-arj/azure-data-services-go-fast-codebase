@@ -134,7 +134,16 @@ else if (SourceType=="AzureBlobFS" && SourceFormat == "Parquet" && TargetType=="
         "type": "ParquetSource",
         "storeSettings": {
             "type": "AzureBlobFSReadSettings",
-            "recursive": true
+            "recursive": false,
+            "wildcardFolderPath": {
+                                      "value": "@pipeline().parameters.TaskObject.Source.RelativePath",
+                                      "type": "Expression"
+                                  },
+            "wildcardFileName": {
+                                      "value": "@concat(\n    pipeline().parameters.TaskObject.Source.DataFileName,\n    '*.parquet'\n)",
+                                      "type": "Expression"
+                                  },
+            "enablePartitionDiscovery": false
         },
         "formatSettings": {
             "type": "AzureBlobFSReadSettings"
@@ -288,10 +297,19 @@ else if (SourceType=="AzureBlobStorage" && SourceFormat == "Parquet" && TargetTy
         "type": "ParquetSource",
         "storeSettings": {
             "type": "AzureBlobStorageReadSettings",
-            "recursive": true
+            "recursive": true,
+            "wildcardFolderPath": {
+                                      "value": "@pipeline().parameters.TaskObject.Source.RelativePath",
+                                      "type": "Expression"
+                                  },
+            "wildcardFileName": {
+                                      "value": "@concat(\n    pipeline().parameters.TaskObject.Source.DataFileName,\n    '*.parquet'\n)",
+                                      "type": "Expression"
+                                  },
+            "enablePartitionDiscovery": false
         },
         "formatSettings": {
-            "type": "AzureBlobFSReadSettings"
+            "type": "AzureBlobStorageReadSettings"
         }
     },
     "sink": {

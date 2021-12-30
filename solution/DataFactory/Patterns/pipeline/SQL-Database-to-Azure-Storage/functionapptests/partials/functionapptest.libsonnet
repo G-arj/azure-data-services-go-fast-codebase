@@ -61,6 +61,7 @@ function(
              
     "TaskInstanceJson":std.manifestJson(TaskInstanceJson),
     "TaskType":Pattern,
+    "TaskTypeId":3,
     "DataFactoryName":vars.AdsOpts_CD_Services_DataFactory_Name,
     "DataFactoryResourceGroup":vars.AdsOpts_CD_ResourceGroup_Name,
     "DataFactorySubscriptionId":vars.AdsOpts_CD_Services_DataFactory_SubscriptionId,

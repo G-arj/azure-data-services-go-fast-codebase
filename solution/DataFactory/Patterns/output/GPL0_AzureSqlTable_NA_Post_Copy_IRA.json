@@ -28,7 +28,7 @@
                   "parameters": {
                     "Database": {
                       "type": "Expression",
-                      "value": "@pipeline().parameters.TaskObject.Target.Database.Name"
+                      "value": "@pipeline().parameters.TaskObject.Target.System.Database"
                     },
                     "Schema": {
                       "type": "Expression",
@@ -36,7 +36,7 @@
                     },
                     "Server": {
                       "type": "Expression",
-                      "value": "@pipeline().parameters.TaskObject.Target.Database.SystemName"
+                      "value": "@pipeline().parameters.TaskObject.Target.System.SystemServer"
                     },
                     "Table": {
                       "type": "Expression",
@@ -123,7 +123,7 @@
                   "parameters": {
                     "Database": {
                       "type": "Expression",
-                      "value": "@pipeline().parameters.TaskObject.Target.Database.Name"
+                      "value": "@pipeline().parameters.TaskObject.Target.System.Database"
                     },
                     "Schema": {
                       "type": "Expression",
@@ -131,7 +131,7 @@
                     },
                     "Server": {
                       "type": "Expression",
-                      "value": "@pipeline().parameters.TaskObject.Target.Database.SystemName"
+                      "value": "@pipeline().parameters.TaskObject.Target.System.SystemServer"
                     },
                     "Table": {
                       "type": "Expression",
@@ -226,7 +226,7 @@
                   "parameters": {
                     "Database": {
                       "type": "Expression",
-                      "value": "@pipeline().parameters.TaskObject.Target.Database.Name"
+                      "value": "@pipeline().parameters.TaskObject.Target.System.Database"
                     },
                     "Schema": {
                       "type": "Expression",
@@ -234,7 +234,7 @@
                     },
                     "Server": {
                       "type": "Expression",
-                      "value": "@pipeline().parameters.TaskObject.Target.Database.SystemName"
+                      "value": "@pipeline().parameters.TaskObject.Target.System.SystemServer"
                     },
                     "Table": {
                       "type": "Expression",
@@ -343,7 +343,7 @@
                   "parameters": {
                     "Database": {
                       "type": "Expression",
-                      "value": "@pipeline().parameters.TaskObject.Target.Database.Name"
+                      "value": "@pipeline().parameters.TaskObject.Target.System.Database"
                     },
                     "Schema": {
                       "type": "Expression",
@@ -351,7 +351,7 @@
                     },
                     "Server": {
                       "type": "Expression",
-                      "value": "@pipeline().parameters.TaskObject.Target.Database.SystemName"
+                      "value": "@pipeline().parameters.TaskObject.Target.System.SystemServer"
                     },
                     "Table": {
                       "type": "Expression",
@@ -397,7 +397,7 @@
                   "parameters": {
                     "Database": {
                       "type": "Expression",
-                      "value": "@pipeline().parameters.TaskObject.Target.Database.Name"
+                      "value": "@pipeline().parameters.TaskObject.Target.System.Database"
                     },
                     "Schema": {
                       "type": "Expression",
@@ -405,7 +405,7 @@
                     },
                     "Server": {
                       "type": "Expression",
-                      "value": "@pipeline().parameters.TaskObject.Target.Database.SystemName"
+                      "value": "@pipeline().parameters.TaskObject.Target.System.SystemServer"
                     },
                     "Table": {
                       "type": "Expression",

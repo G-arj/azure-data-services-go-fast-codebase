@@ -3,7 +3,6 @@
     "NumberOfRetries":3,
     "ScheduleMasterId":"2",
     "TaskStatus":"Untried",
-    "TaskTypeId":3,
     "TaskExecutionType":"ADF",            
     "DataFactoryId":1,    
     "DegreeOfCopyParallelism":1,

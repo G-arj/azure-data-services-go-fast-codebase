@@ -24,11 +24,11 @@
               },
               "StorageAccountContainerName": {
                 "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Source.StorageAccountContainer"
+                "value": "@pipeline().parameters.TaskObject.Source.System.Container"
               },
               "StorageAccountEndpoint": {
                 "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Source.StorageAccountName"
+                "value": "@pipeline().parameters.TaskObject.Source.System.SystemServer"
               }
             },
             "referenceName": "GDS_AzureBlobStorage_Parquet_IRA",
@@ -53,11 +53,11 @@
               },
               "StorageAccountContainerName": {
                 "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Target.StorageAccountContainer"
+                "value": "@pipeline().parameters.TaskObject.Target.System.Container"
               },
               "StorageAccountEndpoint": {
                 "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Target.StorageAccountName"
+                "value": "@pipeline().parameters.TaskObject.Target.System.SystemServer"
               }
             },
             "referenceName": "GDS_AzureBlobFS_DelimitedText_IRA",

@@ -13,7 +13,7 @@ if (TargetType=="AzureBlobFS"&&TargetFormat=="Parquet") then
         "type": "Expression"
       },
       "FileName": {
-        "value": "@replace(pipeline().parameters.TaskObject.Target.DataFileName,'.parquet',concat('.chunk_', string(pipeline().parameters.Item),'.parquet'))",
+        "value": "@if(equals(pipeline().parameters.TaskObject.Source.ChunkSize,0),\n    pipeline().parameters.TaskObject.Target.DataFileName,\n    replace(\n        pipeline().parameters.TaskObject.Target.DataFileName,\n        '.parquet',\n        concat('.chunk_', string(pipeline().parameters.Item),'.parquet')\n    )\n)",
         "type": "Expression"
       },
       "StorageAccountEndpoint": {
@@ -48,7 +48,7 @@ else if (TargetType=="AzureBlobStorage"&&TargetFormat=="Parquet") then
         "type": "Expression"
       },
       "FileName": {
-        "value": "@replace(pipeline().parameters.TaskObject.Target.DataFileName,'.parquet',concat('.chunk_', string(pipeline().parameters.Item),'.parquet'))",
+        "value": "@if(equals(pipeline().parameters.TaskObject.Source.ChunkSize,0),\n    pipeline().parameters.TaskObject.Target.DataFileName,\n    replace(\n        pipeline().parameters.TaskObject.Target.DataFileName,\n        '.parquet',\n        concat('.chunk_', string(pipeline().parameters.Item),'.parquet')\n    )\n)",
         "type": "Expression"
       },
       "StorageAccountEndpoint": {

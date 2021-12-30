@@ -85,7 +85,7 @@
               "typeProperties": {
                 "body": {
                   "type": "Expression",
-                  "value": "@json(\n concat('{\"TaskInstanceId\":\"', \n  string(pipeline().parameters.TaskObject.TaskInstanceId), \n  '\",\"ExecutionUid\":\"', \n  string(pipeline().parameters.TaskObject.ExecutionUid), \n  '\",\"RunId\":\"', \n  string(pipeline().RunId), \n  '\",\"StorageAccountName\":\"', \n  string(pipeline().parameters.TaskObject.Source.StorageAccountName), \n  '\",\"StorageAccountContainer\":\"', \n  string(pipeline().parameters.TaskObject.Source.StorageAccountContainer), \n  '\",\"RelativePath\":\"', \n  string(pipeline().parameters.TaskObject.Source.RelativePath), \n  '\",\"SchemaFileName\":\"', \n  string(pipeline().parameters.TaskObject.Source.SchemaFileName), \n  '\",\"SourceType\":\"', \n  if(\n     contains(string(pipeline().parameters.TaskObject.Source.StorageAccountName),'.dfs.core.windows.net'),\n     'ADLS',\n     'Azure Blob'\n    ), \n  '\",\"TargetType\":\"', \n  string(pipeline().parameters.TaskObject.Target.Type), \n  '\",\"MetadataType\":\"Parquet\"}')\n)"
+                  "value": "@json(\n concat('{\"TaskInstanceId\":\"', \n  string(pipeline().parameters.TaskObject.TaskInstanceId), \n  '\",\"ExecutionUid\":\"', \n  string(pipeline().parameters.TaskObject.ExecutionUid), \n  '\",\"RunId\":\"', \n  string(pipeline().RunId), \n  '\",\"StorageAccountName\":\"', \n  string(pipeline().parameters.TaskObject.Source.System.SystemServer), \n  '\",\"StorageAccountContainer\":\"', \n  string(pipeline().parameters.TaskObject.Source.System.Container), \n  '\",\"RelativePath\":\"', \n  string(pipeline().parameters.TaskObject.Source.RelativePath), \n  '\",\"SchemaFileName\":\"', \n  string(pipeline().parameters.TaskObject.Source.SchemaFileName), \n  '\",\"SourceType\":\"', \n  if(\n     contains(string(pipeline().parameters.TaskObject.Source.System.SystemServer),'.dfs.core.windows.net'),\n     'ADLS',\n     'Azure Blob'\n    ), \n  '\",\"TargetType\":\"', \n  string(pipeline().parameters.TaskObject.Target.Type), \n  '\",\"MetadataType\":\"Parquet\"}')\n)"
                 },
                 "functionName": "GetSourceTargetMapping",
                 "method": "POST"
@@ -118,11 +118,11 @@
               },
               "StorageAccountContainerName": {
                 "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Source.StorageAccountContainer"
+                "value": "@pipeline().parameters.TaskObject.Source.System.Container"
               },
               "StorageAccountEndpoint": {
                 "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Source.StorageAccountName"
+                "value": "@pipeline().parameters.TaskObject.Source.System.SystemServer"
               }
             },
             "referenceName": "GDS_AzureBlobStorage_Json_IRA",
@@ -135,7 +135,7 @@
             "parameters": {
               "Database": {
                 "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Target.Database.Name"
+                "value": "@pipeline().parameters.TaskObject.Target.System.Database"
               },
               "Schema": {
                 "type": "Expression",
@@ -143,7 +143,7 @@
               },
               "Server": {
                 "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Target.Database.SystemName"
+                "value": "@pipeline().parameters.TaskObject.Target.System.SystemServer"
               },
               "Table": {
                 "type": "Expression",
