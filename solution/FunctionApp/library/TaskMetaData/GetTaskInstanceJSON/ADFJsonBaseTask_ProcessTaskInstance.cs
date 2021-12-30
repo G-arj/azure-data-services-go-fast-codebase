@@ -40,60 +40,18 @@ namespace AdsGoFast.GetTaskInstanceJSON
 
             JObject Source = (JObject)_JsonObjectForADF["Source"];
             JObject Target = (JObject)_JsonObjectForADF["Target"];
+            JObject Instance = new JObject();
 
-            Shared.JsonHelpers.JsonObjectPropertyList SourcePL = new Shared.JsonHelpers.JsonObjectPropertyList() {
-                                        { "SourceRelativePath", "RelativePath",false,false},
-                                        { "IncrementalField", "IncrementalField",false,false},
-                                        { "IncrementalColumnType", "IncrementalColumnType",false,false},
-                                        { "IncrementalValue", "IncrementalValue",false,false}
-            };            
-            Shared.JsonHelpers.BuildJsonObjectWithValidation(logging, ref SourcePL,_TaskInstanceJson.ToString(), ref Source);
-
-            if (TaskType == "SQL Database to Azure Storage")
+            Instance.Merge(_TaskInstanceJson, new JsonMergeSettings
             {
-                if (Shared.JsonHelpers.CheckForJSONProperty(logging, "Extraction", (JObject)Source))
-                {
+                // union array values together to avoid duplicates
+                MergeArrayHandling = MergeArrayHandling.Union
+            });
 
-                    JObject Extraction = (JObject)Source["Extraction"];
+            Source["Instance"] = Instance;
+            Target["Instance"] = Instance;
 
-                    Shared.JsonHelpers.JsonObjectPropertyList ExtractionPL = new Shared.JsonHelpers.JsonObjectPropertyList() {                                        
-                                        { "IncrementalField", "IncrementalField",false,false},
-                                        { "IncrementalColumnType", "IncrementalColumnType",false,false},
-                                        { "IncrementalValue", "IncrementalValue",false,false}
-                    };                    
 
-                    Shared.JsonHelpers.BuildJsonObjectWithValidation(logging, ref ExtractionPL, _TaskInstanceJson.ToString(), ref Extraction);
-
-                    if (_TaskInstanceJson["IncrementalColumnType"] != null)
-                    {
-                        if (_TaskInstanceJson["IncrementalColumnType"].ToString() == "DateTime")
-                        {
-                            DateTime _IncrementalValue = (DateTime)_TaskInstanceJson["IncrementalValue"];
-                            Extraction["IncrementalValue"] = _IncrementalValue.ToString("yyyy-MM-dd HH:mm:ss.fff");//JObject.Parse(T.TaskInstanceJson)["IncrementalValue"].ToString();
-                        }
-                        else if (_TaskInstanceJson["IncrementalColumnType"].ToString() == "BigInt")
-                        {
-                            int _IncrementalValue = (int)_TaskInstanceJson["IncrementalValue"];
-                            Extraction["IncrementalValue"] = _IncrementalValue.ToString();//JObject.Parse(T.TaskInstanceJson)["IncrementalValue"].ToString();
-                        }
-                    }
-
-                    //Extraction["IncrementalType"] = TaskMetaData.TaskInstancesStatic.IncrementalType(_TaskMasterJson);
-                    //Extraction["SQLStatement"] = TaskMetaData.TaskInstancesStatic.CreateSQLStatement(_TaskMasterJson, _TaskInstanceJson, logging);
-
-                    Source["Extraction"] = Extraction;
-                }
-
-            }
-
-            Shared.JsonHelpers.JsonObjectPropertyList TargetPL = new Shared.JsonHelpers.JsonObjectPropertyList() {
-                                        { "TargetRelativePath", "RelativePath",false,false} };
-            Shared.JsonHelpers.BuildJsonObjectWithValidation(logging, ref TargetPL, _TaskInstanceJson.ToString(), ref Target);
-
-            _JsonObjectForADF["Source"] = Source;
-            _JsonObjectForADF["Target"] = Target;        
-
-        
         }
     }
 }

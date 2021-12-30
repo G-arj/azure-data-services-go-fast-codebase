@@ -8,19 +8,19 @@ function(GenerateArm="false",GFPIR="IRA")
   "type": "DatasetReference",
   "parameters": {
     "Schema": {
-      "value": "@pipeline().parameters.TaskObject.Source.Extraction.TableSchema",
+      "value": "@pipeline().parameters.TaskObject.Source.TableSchema",
       "type": "Expression"
     },
     "Table": {
-      "value": "@pipeline().parameters.TaskObject.Source.Extraction.TableName",
+      "value": "@pipeline().parameters.TaskObject.Source.TableName",
       "type": "Expression"
     },
     "Server": {
-      "value": "@pipeline().parameters.TaskObject.Source.Database.SystemName",
+      "value": "@pipeline().parameters.TaskObject.Source.System.SystemServer",
       "type": "Expression"
     },
     "Database": {
-      "value": "@pipeline().parameters.TaskObject.Source.Database.Name",
+      "value": "@pipeline().parameters.TaskObject.Source.System.Database",
       "type": "Expression"
     }
   }

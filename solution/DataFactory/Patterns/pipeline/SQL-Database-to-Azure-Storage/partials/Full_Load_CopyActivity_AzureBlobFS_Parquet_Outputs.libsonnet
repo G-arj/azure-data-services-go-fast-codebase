@@ -9,7 +9,7 @@ function(GenerateArm="false",GFPIR="IRA")
       "type": "DatasetReference",
       "parameters": {
         "RelativePath": {
-          "value": "@pipeline().parameters.TaskObject.Target.System.TargetRelativePath",
+          "value": "@pipeline().parameters.TaskObject.Target.Instance.TargetRelativePath",
           "type": "Expression"
         },
         "FileName": {
@@ -17,7 +17,7 @@ function(GenerateArm="false",GFPIR="IRA")
           "type": "Expression"
         },
         "StorageAccountEndpoint": {
-          "value": "@pipeline().parameters.TaskObject.Target.System.SystemName",
+          "value": "@pipeline().parameters.TaskObject.Target.System.SystemServer",
           "type": "Expression"
         },
         "StorageAccountContainerName": {

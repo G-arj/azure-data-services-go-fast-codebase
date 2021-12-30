@@ -15,11 +15,11 @@ function (GenerateArm=false, Type = "AzureBlobStorage", GFPIR = "{IRA}", SourceO
             "type": "Expression"
         },
         "StorageAccountEndpoint": {
-            "value": "@pipeline().parameters.TaskObject.%(SourceOrTarget)s.StorageAccountName" % { SourceOrTarget : SourceOrTarget},
+            "value": "@pipeline().parameters.TaskObject.%(SourceOrTarget)s.System.SystemServer" % { SourceOrTarget : SourceOrTarget},
             "type": "Expression"
         },
         "StorageAccountContainerName": {
-            "value": "@pipeline().parameters.TaskObject.%(SourceOrTarget)s.StorageAccountContainer" % { SourceOrTarget : SourceOrTarget},
+            "value": "@pipeline().parameters.TaskObject.%(SourceOrTarget)s.System.Container" % { SourceOrTarget : SourceOrTarget},
             "type": "Expression"
         },
         "FirstRowAsHeader": {

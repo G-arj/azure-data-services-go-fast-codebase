@@ -18,11 +18,11 @@ local referenceName = "GDS_AzureSqlTable_NA_",
         "type": "Expression"
       },
       "Server": {
-        "value": "@pipeline().parameters.TaskObject.Target.Database.SystemName",
+        "value": "@pipeline().parameters.TaskObject.Target.System.ServerName",
         "type": "Expression"
       },
       "Database": {
-        "value": "@pipeline().parameters.TaskObject.Target.Database.Name",
+        "value": "@pipeline().parameters.TaskObject.Target.System.Database",
         "type": "Expression"
       }
     }

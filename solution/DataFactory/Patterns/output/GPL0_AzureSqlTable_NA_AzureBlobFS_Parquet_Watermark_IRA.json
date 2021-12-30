@@ -16,7 +16,7 @@
         "typeProperties": {
           "value": {
             "type": "Expression",
-            "value": "@replace(\n replace(\n  replace(\n   pipeline().parameters.TaskObject.Source.Extraction.SQLStatement,\n   '<batchcount>',\n   string(pipeline().parameters.BatchCount)\n   ),\n '<item>',string(pipeline().parameters.Item)),\n '<newWatermark>',string(pipeline().parameters.NewWaterMark)\n)"
+            "value": "@replace(\n replace(\n  replace(\n   pipeline().parameters.TaskObject.Source.SQLStatement,\n   '<batchcount>',\n   string(pipeline().parameters.BatchCount)\n   ),\n '<item>',string(pipeline().parameters.Item)),\n '<newWatermark>',string(pipeline().parameters.NewWaterMark)\n)"
           },
           "variableName": "SQLStatement"
         },
@@ -36,19 +36,19 @@
             "parameters": {
               "Database": {
                 "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Source.Database.Name"
+                "value": "@pipeline().parameters.TaskObject.Source.System.Database"
               },
               "Schema": {
                 "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Source.Extraction.TableSchema"
+                "value": "@pipeline().parameters.TaskObject.Source.TableSchema"
               },
               "Server": {
                 "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Source.Database.SystemName"
+                "value": "@pipeline().parameters.TaskObject.Source.System.SystemServer"
               },
               "Table": {
                 "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Source.Extraction.TableName"
+                "value": "@pipeline().parameters.TaskObject.Source.TableName"
               }
             },
             "referenceName": "GDS_AzureSqlTable_NA_IRA",
@@ -65,15 +65,15 @@
               },
               "RelativePath": {
                 "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Target.RelativePath"
+                "value": "@pipeline().parameters.TaskObject.Target.Instance.TargetRelativePath"
               },
               "StorageAccountContainerName": {
                 "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Target.StorageAccountContainer"
+                "value": "@pipeline().parameters.TaskObject.Target.System.Container"
               },
               "StorageAccountEndpoint": {
                 "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Target.StorageAccountName"
+                "value": "@pipeline().parameters.TaskObject.Target.System.SystemServer"
               }
             },
             "referenceName": "GDS_AzureBlobFS_Parquet_IRA",
@@ -168,7 +168,7 @@
         "typeProperties": {
           "body": {
             "type": "Expression",
-            "value": "@json(\n concat(\n '{\"TaskInstanceId\":\"', \n string(pipeline().parameters.TaskObject.TaskInstanceId), \n '\",\"ExecutionUid\":\"', \n string(pipeline().parameters.TaskObject.ExecutionUid), \n '\",\"RunId\":\"', \n string(pipeline().RunId), \n '\",\"StorageAccountName\":\"', \n string(pipeline().parameters.TaskObject.Target.StorageAccountName), \n '\",\"StorageAccountContainer\":\"', \n string(pipeline().parameters.TaskObject.Target.StorageAccountContainer), \n '\",\"RelativePath\":\"', \n string(pipeline().parameters.TaskObject.Target.RelativePath), \n '\",\"SchemaFileName\":\"', \n string(pipeline().parameters.TaskObject.Target.SchemaFileName), \n '\",\"SourceType\":\"', \n string(pipeline().parameters.TaskObject.Source.System.Type), \n '\",\"TargetType\":\"', \n if(\n    contains(\n    string(pipeline().parameters.TaskObject.Target.StorageAccountName),\n    '.dfs.core.windows.net'\n    ),\n   'ADLS',\n   'Azure Blob'), \n '\",\"Data\":',\n string(activity('Get Parquet Metadata').output),\n ',\"MetadataType\":\"Parquet\"}')\n)"
+            "value": "@json(\n concat(\n '{\"TaskInstanceId\":\"', \n string(pipeline().parameters.TaskObject.TaskInstanceId), \n '\",\"ExecutionUid\":\"', \n string(pipeline().parameters.TaskObject.ExecutionUid), \n '\",\"RunId\":\"', \n string(pipeline().RunId), \n '\",\"StorageAccountName\":\"', \n string(pipeline().parameters.TaskObject.Target.System.SystemServer), \n '\",\"StorageAccountContainer\":\"', \n string(pipeline().parameters.TaskObject.Target.System.Container), \n '\",\"RelativePath\":\"', \n string(pipeline().parameters.TaskObject.Target.Instance.TargetRelativePath), \n '\",\"SchemaFileName\":\"', \n string(pipeline().parameters.TaskObject.Target.SchemaFileName), \n '\",\"SourceType\":\"', \n string(pipeline().parameters.TaskObject.Source.System.Type), \n '\",\"TargetType\":\"', \n if(\n    contains(\n    string(pipeline().parameters.TaskObject.Target.System.SystemServer),\n    '.dfs.core.windows.net'\n    ),\n   'ADLS',\n   'Azure Blob'), \n '\",\"Data\":',\n string(activity('Get Parquet Metadata').output),\n ',\"MetadataType\":\"Parquet\"}')\n)"
           },
           "functionName": "TaskExecutionSchemaFile",
           "method": "POST"
@@ -202,15 +202,15 @@
               },
               "RelativePath": {
                 "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Target.RelativePath"
+                "value": "@pipeline().parameters.TaskObject.Target.Instance.TargetRelativePath"
               },
               "StorageAccountContainerName": {
                 "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Target.StorageAccountContainer"
+                "value": "@pipeline().parameters.TaskObject.Target.System.Container"
               },
               "StorageAccountEndpoint": {
                 "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Target.StorageAccountName"
+                "value": "@pipeline().parameters.TaskObject.Target.System.SystemServer"
               }
             },
             "referenceName": "GDS_AzureBlobFS_Parquet_IRA",

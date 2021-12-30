@@ -20,10 +20,10 @@ namespace AdsGoFast.GetTaskInstanceJSON
         {
 
             //Validate TaskmasterJson based on JSON Schema
-            var mapping = ttm.GetMapping(SourceSystemType, TargetSystemType, _TaskMasterJsonSource["Type"].ToString(), _TaskMasterJsonTarget["Type"].ToString(), TaskDatafactoryIR, TaskExecutionType, TaskTypeId);            
+            var mapping = ttm.GetMapping(SourceSystemType, TargetSystemType, _TaskMasterJsonSource["Type"].ToString(), _TaskMasterJsonTarget["Type"].ToString(), TaskDatafactoryIR, TaskExecutionType, TaskTypeId);
             string mapping_schema = mapping.TaskMasterJsonSchema;
             _TaskIsValid = Shared.JsonHelpers.ValidateJsonUsingSchema(logging, mapping_schema, this.TaskMasterJson, "Failed to validate TaskMaster JSON for TaskTypeMapping: " + mapping.MappingName + ". ");
-            
+
             if (_TaskIsValid)
             {
                 if (TaskType == "SQL Database to Azure Storage")
@@ -43,7 +43,7 @@ namespace AdsGoFast.GetTaskInstanceJSON
                     ProcessTaskMaster_Default();
                     goto ProcessTaskMasterEnd;
                 }
-                
+
                 //Default Processing Branch              
                 {
                     ProcessTaskMaster_Default();
@@ -61,8 +61,8 @@ namespace AdsGoFast.GetTaskInstanceJSON
 
         public void ProcessTaskMaster_Mapping_XX_SQL_AZ_Storage_Parquet()
         {
-            JObject Source = ((JObject)_JsonObjectForADF["Source"]) == null ? new JObject() : (JObject)_JsonObjectForADF["Source"]; 
-            JObject Target = ((JObject)_JsonObjectForADF["Target"]) == null ? new JObject() : (JObject)_JsonObjectForADF["Target"];            
+            JObject Source = ((JObject)_JsonObjectForADF["Source"]) == null ? new JObject() : (JObject)_JsonObjectForADF["Source"];
+            JObject Target = ((JObject)_JsonObjectForADF["Target"]) == null ? new JObject() : (JObject)_JsonObjectForADF["Target"];
 
             Source.Merge(_TaskMasterJson["Source"], new JsonMergeSettings
             {
@@ -76,25 +76,9 @@ namespace AdsGoFast.GetTaskInstanceJSON
                 MergeArrayHandling = MergeArrayHandling.Union
             });
 
-
-            JObject Extraction = ((JObject)Source["Extraction"]) == null ? new JObject() : (JObject)Source["Extraction"];
-
-            Extraction["Type"] = Shared.JsonHelpers.GetStringValueFromJSON(logging, "Type", _TaskMasterJsonSource, "", true);
-            Extraction["IncrementalType"] = ProcessTaskMaster_Mapping_XX_SQL_AZ_Storage_Parquet_IncrementalType();
-            Extraction["IncrementalColumnType"] = Shared.JsonHelpers.GetStringValueFromJSON(logging, "IncrementalColumnType", _TaskMasterJsonSource, "", true);
-            Extraction["IncrementalValue"] = Shared.JsonHelpers.GetStringValueFromJSON(logging, "IncrementalValue", _TaskMasterJsonSource, "", true);
-            Extraction["IncrementalField"] = Shared.JsonHelpers.GetStringValueFromJSON(logging, "IncrementalField", _TaskMasterJsonSource, "", true);
-            Extraction["ChunkField"] = Shared.JsonHelpers.GetStringValueFromJSON(logging, "ChunkField", _TaskMasterJsonSource, "", true);
-            Extraction["ChunkField"] = Shared.JsonHelpers.GetStringValueFromJSON(logging, "ChunkField", _TaskMasterJsonSource, "", true);
-            Extraction["ChunkSize"] = System.Convert.ToInt32(Shared.JsonHelpers.GetDynamicValueFromJSON(logging, "ChunkSize", _TaskMasterJsonSource, "0", false));
-            Extraction["TableSchema"] = Shared.JsonHelpers.GetStringValueFromJSON(logging, "TableSchema", _TaskMasterJsonSource, "", true);  
-            Extraction["TableName"] = Shared.JsonHelpers.GetStringValueFromJSON(logging, "TableName", _TaskMasterJsonSource, "", true);
-
-            Extraction["IncrementalSQLStatement"] = ProcessTaskMaster_Mapping_XX_SQL_AZ_Storage_Parquet_CreateIncrementalSQLStatement(Extraction);
-            Extraction["SQLStatement"] = ProcessTaskMaster_Mapping_XX_SQL_AZ_Storage_Parquet_CreateSQLStatement(Extraction);
-
-
-            Source["Extraction"] = Extraction;
+            Source["IncrementalType"] = ProcessTaskMaster_Mapping_XX_SQL_AZ_Storage_Parquet_IncrementalType();
+            Source["IncrementalSQLStatement"] = ProcessTaskMaster_Mapping_XX_SQL_AZ_Storage_Parquet_CreateIncrementalSQLStatement(Source);
+            Source["SQLStatement"] = ProcessTaskMaster_Mapping_XX_SQL_AZ_Storage_Parquet_CreateSQLStatement(Source);          
 
             JObject Execute = new JObject();
             if (Shared.JsonHelpers.CheckForJSONProperty(logging, "StoredProcedure", _TaskMasterJsonSource))
@@ -112,7 +96,7 @@ namespace AdsGoFast.GetTaskInstanceJSON
                 }
                 Execute["StoredProcedure"] = _storedProcedure;
             }
-            Source["Execute"] = Execute;           
+            Source["Execute"] = Execute;
 
             _JsonObjectForADF["Source"] = Source;
             _JsonObjectForADF["Target"] = Target;
@@ -127,7 +111,7 @@ namespace AdsGoFast.GetTaskInstanceJSON
             {
                 JToken _IncrementalType = Shared.JsonHelpers.GetStringValueFromJSON(logging, "IncrementalType", _TaskMasterJsonSource, "", true);
                 Int32 _ChunkSize = System.Convert.ToInt32(Shared.JsonHelpers.GetDynamicValueFromJSON(logging, "ChunkSize", _TaskMasterJsonSource, "0", false));
-                if (_IncrementalType.ToString() == "Full" && _ChunkSize==0)
+                if (_IncrementalType.ToString() == "Full" && _ChunkSize == 0)
                 {
                     _Type = "Full";
                 }
@@ -135,14 +119,14 @@ namespace AdsGoFast.GetTaskInstanceJSON
                 {
                     _Type = "Full_Chunk";
                 }
-                else if (_IncrementalType.ToString() == "Watermark" && _ChunkSize==0)
+                else if (_IncrementalType.ToString() == "Watermark" && _ChunkSize == 0)
                 {
                     _Type = "Watermark";
                 }
                 else if (_IncrementalType.ToString() == "Watermark" && _ChunkSize > 0)
                 {
                     _Type = "Watermark_Chunk";
-                }                             
+                }
             }
 
             return _Type;
@@ -229,7 +213,7 @@ namespace AdsGoFast.GetTaskInstanceJSON
                 JToken _ChunkField = (string)Extraction["ChunkField"];
                 JToken _TableSchema = Extraction["TableSchema"];
                 JToken _TableName = Extraction["TableName"];
-                string _ExtractionSQL = Shared.JsonHelpers.GetStringValueFromJSON(logging, "ExtractionSQL", Extraction, "", false);               
+                string _ExtractionSQL = Shared.JsonHelpers.GetStringValueFromJSON(logging, "ExtractionSQL", Extraction, "", false);
 
 
                 //If Extraction SQL Explicitly set then overide _SQLStatement with that explicit value
@@ -319,7 +303,7 @@ namespace AdsGoFast.GetTaskInstanceJSON
             Source["Execute"] = Execute;
             _JsonObjectForADF["Source"] = Source;
 
-       }
+        }
 
 
         /// <summary>
@@ -327,10 +311,10 @@ namespace AdsGoFast.GetTaskInstanceJSON
         /// </summary>
 
         public void ProcessTaskMaster_Default()
-        {            
+        {
 
-            JObject Source = (JObject)_TaskMasterJson["Source"];
-            JObject Target = (JObject)_TaskMasterJson["Target"];
+            JObject Source = ((JObject)_JsonObjectForADF["Source"]) == null ? new JObject() : (JObject)_JsonObjectForADF["Source"];
+            JObject Target = ((JObject)_JsonObjectForADF["Target"]) == null ? new JObject() : (JObject)_JsonObjectForADF["Target"];
 
             Source.Merge(_JsonObjectForADF["Source"], new JsonMergeSettings
             {
@@ -347,45 +331,6 @@ namespace AdsGoFast.GetTaskInstanceJSON
             _JsonObjectForADF["Source"] = Source;
             _JsonObjectForADF["Target"] = Target;
         }
-
-
-        public void ProcessTaskMaster_SourceSystem_TypeIsStorage_TaskSourceTypeIsCSV()
-        {
-            AdsGoFast.GetTaskInstanceJSON.TaskMasterJson.SourceSystemTypeIsStorageAndTaskSourceTypeIsCSV TaskMasterJsonObject = JsonConvert.DeserializeObject<AdsGoFast.GetTaskInstanceJSON.TaskMasterJson.SourceSystemTypeIsStorageAndTaskSourceTypeIsCSV>(JsonConvert.SerializeObject(_TaskMasterJsonSource));
-
-            JObject Source = (JObject)_JsonObjectForADF["Source"];
-
-            Source["Type"] = TaskMasterJsonObject.Type;
-            Source["DataFileName"] = TaskMasterJsonObject.DataFileName;
-            Source["SchemaFileName"] = TaskMasterJsonObject.SchemaFileName;
-            Source["FirstRowAsHeader"] = TaskMasterJsonObject.FirstRowAsHeader;
-            Source["SheetName"] = TaskMasterJsonObject.SheetName;
-            Source["SkipLineCount"] = TaskMasterJsonObject.SkipLineCount;
-
-            _JsonObjectForADF["Source"] = Source;
-        }
-
-        public void ProcessTaskMaster_Target_TypeIsSQL()
-        {
-            AdsGoFast.GetTaskInstanceJSON.TaskMasterJson.TargetSystemTypeIsSQL TaskMasterJsonObject = JsonConvert.DeserializeObject<AdsGoFast.GetTaskInstanceJSON.TaskMasterJson.TargetSystemTypeIsSQL>(JsonConvert.SerializeObject(_TaskMasterJsonTarget));
-
-            JObject Target = (JObject)_JsonObjectForADF["Target"];
-
-            Target["Type"] = TaskMasterJsonObject.Type;
-            Target["TableSchema"] = TaskMasterJsonObject.TableSchema;
-            Target["TableName"] = TaskMasterJsonObject.TableSchema;
-            Target["StagingTableSchema"] = TaskMasterJsonObject.StagingTableSchema;
-            Target["StagingTableName"] = TaskMasterJsonObject.StagingTableName;
-            Target["AutoCreateTable"] = TaskMasterJsonObject.AutoGenerateMerge;
-            Target["PreCopySQL"] = TaskMasterJsonObject.PreCopySQL;
-            Target["PostCopySQL"] = TaskMasterJsonObject.PostCopySQL;
-            Target["MergeSQL"] = TaskMasterJsonObject.MergeSQL;
-            Target["AutoGenerateMerge"] = TaskMasterJsonObject.AutoGenerateMerge;
-            Target["DynamicMapping"] = TaskMasterJsonObject.DynamicMapping;
-
-            _JsonObjectForADF["Target"] = Target;
-        }
-
 
     }
 }

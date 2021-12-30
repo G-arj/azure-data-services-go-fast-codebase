@@ -151,47 +151,26 @@ namespace AdsGoFast.GetTaskInstanceJSON
 
         /***** Process Source *****/
         public void ProcessSourceSystem(SourceAndTargetSystem_JsonSchemas schemas)
-        {
-            bool Processed = false;
-            JObject Source = new JObject
-            {
-                ["Type"] = this.SourceSystemType
-            };
-
-            JObject Instance = _TaskInstanceJson;
-            Source["Instance"] = Instance;
+        {            
+            JObject Source = ((JObject)_JsonObjectForADF["Source"]) == null ? new JObject() : (JObject)_JsonObjectForADF["Source"];
 
             JObject System = new JObject
             {
                 //Properties on Source System
-                ["SystemName"] = this.SourceSystemServer,
+                ["SystemId"] = (Int32)this.SourceSystemId,
+                ["SystemServer"] = this.SourceSystemServer,
                 ["AuthenticationType"] = this.SourceSystemAuthType,
-                ["Type"] = this.SourceSystemType
-            };
+                ["Type"] = this.SourceSystemType,
+                ["Username"] = this.SourceSystemUserName
 
-            Source["System"] = System;
-            
+            };
+                       
             //Validate SourceSystemJson based on JSON Schema
             string sourcesystem_schema = schemas.GetBySystemType(this.SourceSystemType).JsonSchema;
             _TaskIsValid = Shared.JsonHelpers.ValidateJsonUsingSchema(logging, sourcesystem_schema, this.SourceSystemJSON, "Failed to validate SourceSystem JSON for System Type: " + this.SourceSystemType + ". ");
 
-
-            if (SourceSystemType == "ADLS" || SourceSystemType == "Azure Blob" || SourceSystemType == "File")
-            {
-                ProcessSourceSystem_TypeIsStorage(ref Source);
-                Processed = true;
-            }
-
-            if (SourceSystemType == "Azure SQL" || SourceSystemType == "SQL Server")
-            {
-                ProcessSourceSystem_TypeIsSQL(ref Source);
-                Processed = true;
-            }
-
-            if (!Processed)
-            {
-                ProcessSourceSystem_Default(ref Source);                
-            }
+            ProcessSourceSystem_Default(ref System);
+            Source["System"] = System;
             _JsonObjectForADF["Source"] = Source;
 
         }
@@ -255,59 +234,39 @@ namespace AdsGoFast.GetTaskInstanceJSON
         /***** Process Target *****/
         public void ProcessTargetSystem(SourceAndTargetSystem_JsonSchemas schemas)
         {
-            JObject Target = new JObject
-            {
-                ["Type"] = this.TargetSystemType
-            };
-           
+            JObject Target = ((JObject)_JsonObjectForADF["Target"]) == null ? new JObject() : (JObject)_JsonObjectForADF["Target"];
+
             JObject System = new JObject
             {
-                //Properties on Source System
-                ["SystemName"] = this.TargetSystemServer,
+                //Properties on Target System
+                ["SystemId"] = (Int32)this.TargetSystemId,
+                ["SystemServer"] = this.TargetSystemServer,
                 ["AuthenticationType"] = this.TargetSystemAuthType,
-                ["Type"] = this.TargetSystemType
-            };
+                ["Type"] = this.TargetSystemType,
+                ["Username"] = this.SourceSystemUserName
 
-            JObject Instance = _TaskInstanceJson;
-            Target["Instance"] = Instance;
+            };            
 
-            System.Merge(_TargetSystemJson, new JsonMergeSettings
-            {
-                // union array values together to avoid duplicates
-                MergeArrayHandling = MergeArrayHandling.Union
-            });
+            //Validate TargetSystemJson based on JSON Schema
+            string Targetsystem_schema = schemas.GetBySystemType(this.TargetSystemType).JsonSchema;
+            _TaskIsValid = Shared.JsonHelpers.ValidateJsonUsingSchema(logging, Targetsystem_schema, this.TargetSystemJSON, "Failed to validate TargetSystem JSON for System Type: " + this.TargetSystemType + ". ");
+
+            ProcessTargetSystem_Default(ref System);
             Target["System"] = System;
 
+            _JsonObjectForADF["Target"] = Target;
 
+        }
 
-
-            //Validate SourceSystemJson based on JSON Schema
-            string targetsystem_schema = schemas.GetBySystemType(this.TargetSystemType).JsonSchema;
-            _TaskIsValid = Shared.JsonHelpers.ValidateJsonUsingSchema(logging, targetsystem_schema, this.TargetSystemJSON, "Failed to validate TargetSystem JSON for System Type: " + this.TargetSystemId + ". ");
-
-            if (TargetSystemType == "ADLS" || TargetSystemType == "Azure Blob" || TargetSystemType == "File")
-            {
-                ProcessTargetSystem_TypeIsStorage(ref Target);
-                goto ProcessTargetSystemEnd;
-            }
-
-            if (TargetSystemType == "Azure SQL" || TargetSystemType == "SQL Server")
-            {
-                ProcessTargetSystem_TypeIsSQL(ref Target);
-                goto ProcessTargetSystemEnd;
-            }
-        
-            //Default Processing Branch
+        public void ProcessTargetSystem_Default(ref JObject Target)
+        {
             Target.Merge(_TargetSystemJson, new JsonMergeSettings
             {
                 // union array values together to avoid duplicates
                 MergeArrayHandling = MergeArrayHandling.Union
             });
-
-            ProcessTargetSystemEnd:
-                _JsonObjectForADF["Target"] = Target;
-
         }
+
 
         public void ProcessTargetSystem_TypeIsStorage(ref JObject Target)
         {

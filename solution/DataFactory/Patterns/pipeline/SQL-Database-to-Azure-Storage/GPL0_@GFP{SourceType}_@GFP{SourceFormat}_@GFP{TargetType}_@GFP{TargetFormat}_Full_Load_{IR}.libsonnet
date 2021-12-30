@@ -22,7 +22,7 @@ local pipeline = {
 				"typeProperties": {
 					"variableName": "SQLStatement",
 					"value": {
-						"value": "@replace(replace(pipeline().parameters.TaskObject.Source.Extraction.SQLStatement,'<batchcount>',string(pipeline().parameters.BatchCount)),'<item>',string(pipeline().parameters.Item))",
+						"value": "@replace(replace(pipeline().parameters.TaskObject.Source.SQLStatement,'<batchcount>',string(pipeline().parameters.BatchCount)),'<item>',string(pipeline().parameters.Item))",
 						"type": "Expression"
 					}
 				}
@@ -99,7 +99,7 @@ local pipeline = {
 					"functionName": "TaskExecutionSchemaFile",
 					"method": "POST",
 					"body": {
-						"value": "@json(\n concat('{\"TaskInstanceId\":\"', \n string(pipeline().parameters.TaskObject.TaskInstanceId), \n '\",\"ExecutionUid\":\"', \n string(pipeline().parameters.TaskObject.ExecutionUid), \n '\",\"RunId\":\"', \n string(pipeline().RunId), \n '\",\"StorageAccountName\":\"', \n string(pipeline().parameters.TaskObject.Target.System.SystemName), \n '\",\"StorageAccountContainer\":\"', \n string(pipeline().parameters.TaskObject.Target.System.Container), \n '\",\"RelativePath\":\"', \n string(pipeline().parameters.TaskObject.Target.System.TargetRelativePath), \n '\",\"SchemaFileName\":\"', \n string(pipeline().parameters.TaskObject.Target.SchemaFileName), \n '\",\"SourceType\":\"', \n string(pipeline().parameters.TaskObject.Source.System.Type), \n '\",\"TargetType\":\"', \n if(\n    contains(\n    string(pipeline().parameters.TaskObject.Target.System.SystemName),\n    '.dfs.core.windows.net'\n    ),\n   'ADLS',\n   'Azure Blob'),  \n '\",\"Data\":',\n string(activity('Get Parquet Metadata').output),\n ',\"MetadataType\":\"Parquet\"}')\n)",
+						"value": "@json(\n concat('{\"TaskInstanceId\":\"', \n string(pipeline().parameters.TaskObject.TaskInstanceId), \n '\",\"ExecutionUid\":\"', \n string(pipeline().parameters.TaskObject.ExecutionUid), \n '\",\"RunId\":\"', \n string(pipeline().RunId), \n '\",\"StorageAccountName\":\"', \n string(pipeline().parameters.TaskObject.Target.System.SystemServer), \n '\",\"StorageAccountContainer\":\"', \n string(pipeline().parameters.TaskObject.Target.System.Container), \n '\",\"RelativePath\":\"', \n string(pipeline().parameters.TaskObject.Target.Instance.TargetRelativePath), \n '\",\"SchemaFileName\":\"', \n string(pipeline().parameters.TaskObject.Target.SchemaFileName), \n '\",\"SourceType\":\"', \n string(pipeline().parameters.TaskObject.Source.System.Type), \n '\",\"TargetType\":\"', \n if(\n    contains(\n    string(pipeline().parameters.TaskObject.Target.System.SystemServer),\n    '.dfs.core.windows.net'\n    ),\n   'ADLS',\n   'Azure Blob'),  \n '\",\"Data\":',\n string(activity('Get Parquet Metadata').output),\n ',\"MetadataType\":\"Parquet\"}')\n)",
 						"type": "Expression"
 					}
 				},

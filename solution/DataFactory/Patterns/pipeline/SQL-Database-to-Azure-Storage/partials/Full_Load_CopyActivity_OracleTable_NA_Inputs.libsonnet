@@ -8,11 +8,11 @@ function(GenerateArm="false",GFPIR="IRA")
     "type": "DatasetReference",
     "parameters": {
       "TableSchema": {
-        "value": "@pipeline().parameters.TaskObject.Source.Extraction.TableSchema",
+        "value": "@pipeline().parameters.TaskObject.Source.TableSchema",
         "type": "Expression"
       },
       "TableName": {
-        "value": "@pipeline().parameters.TaskObject.Source.Extraction.TableName",
+        "value": "@pipeline().parameters.TaskObject.Source.TableName",
         "type": "Expression"
       },
       "KeyVaultBaseUrl": {
@@ -20,19 +20,19 @@ function(GenerateArm="false",GFPIR="IRA")
         "type": "Expression"
       },
       "PasswordSecret": {
-        "value": "@pipeline().parameters.TaskObject.Source.Database.PasswordKeyVaultSecretName",
+        "value": "@pipeline().parameters.TaskObject.Source.System.PasswordKeyVaultSecretName",
         "type": "Expression"
       },
       "Server": {
-        "value": "@pipeline().parameters.TaskObject.Source.Database.SystemName",
+        "value": "@pipeline().parameters.TaskObject.Source.System.SystemServer",
         "type": "Expression"
       },
       "Database": {
-        "value": "@pipeline().parameters.TaskObject.Source.Database.Name",
+        "value": "@pipeline().parameters.TaskObject.Source.System.Database",
         "type": "Expression"
       },
       "UserName": {
-        "value": "@pipeline().parameters.TaskObject.Source.Database.Username",
+        "value": "@pipeline().parameters.TaskObject.Source.System.Username",
         "type": "Expression"
       }
     }

@@ -7,7 +7,7 @@ function (GenerateArm=false, Type = "AzureBlobStorage", GFPIR = "{IRA}", SourceO
     "type": "DatasetReference",
     "parameters": {
         "StorageAccountEndpoint": {
-            "value": "@pipeline().parameters.TaskObject.%(SourceOrTarget)s.StorageAccountName" % { SourceOrTarget : SourceOrTarget},
+            "value": "@pipeline().parameters.TaskObject.%(SourceOrTarget)s.System.SystemServer" % { SourceOrTarget : SourceOrTarget},
             "type": "Expression"
         },
         "Directory": {
@@ -15,7 +15,7 @@ function (GenerateArm=false, Type = "AzureBlobStorage", GFPIR = "{IRA}", SourceO
             "type": "Expression"
         },
         "FileSystem": {
-            "value": "@pipeline().parameters.TaskObject.%(SourceOrTarget)s.StorageAccountContainer" % { SourceOrTarget : SourceOrTarget},
+            "value": "@pipeline().parameters.TaskObject.%(SourceOrTarget)s.System.Container" % { SourceOrTarget : SourceOrTarget},
             "type": "Expression"
         },
         "File": {

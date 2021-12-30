@@ -18,11 +18,11 @@ local referenceName = "GDS_AzureBlobFS_Excel_",
               "type": "Expression"
           },
           "StorageAccountEndpoint": {
-              "value": "@pipeline().parameters.TaskObject.Source.StorageAccountName",
+              "value": "@pipeline().parameters.TaskObject.Source.System.SystemServer",
               "type": "Expression"
           },
           "StorageAccountContainerName": {
-              "value": "@pipeline().parameters.TaskObject.Source.StorageAccountContainer",
+              "value": "@pipeline().parameters.TaskObject.Source.System.Container",
               "type": "Expression"
           },
           "SheetName": {

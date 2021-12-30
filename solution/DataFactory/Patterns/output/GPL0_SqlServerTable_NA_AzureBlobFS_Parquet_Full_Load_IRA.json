@@ -16,7 +16,7 @@
         "typeProperties": {
           "value": {
             "type": "Expression",
-            "value": "@replace(replace(pipeline().parameters.TaskObject.Source.Extraction.SQLStatement,'<batchcount>',string(pipeline().parameters.BatchCount)),'<item>',string(pipeline().parameters.Item))"
+            "value": "@replace(replace(pipeline().parameters.TaskObject.Source.SQLStatement,'<batchcount>',string(pipeline().parameters.BatchCount)),'<item>',string(pipeline().parameters.Item))"
           },
           "variableName": "SQLStatement"
         },
@@ -36,7 +36,7 @@
             "parameters": {
               "Database": {
                 "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Source.Database.Name"
+                "value": "@pipeline().parameters.TaskObject.Source.System.Database"
               },
               "KeyVaultBaseUrl": {
                 "type": "Expression",
@@ -44,23 +44,23 @@
               },
               "PasswordSecret": {
                 "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Source.Database.PasswordKeyVaultSecretName"
+                "value": "@pipeline().parameters.TaskObject.Source.System.PasswordKeyVaultSecretName"
               },
               "Server": {
                 "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Source.Database.SystemName"
+                "value": "@pipeline().parameters.TaskObject.Source.System.SystemServer"
               },
               "TableName": {
                 "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Source.Extraction.TableName"
+                "value": "@pipeline().parameters.TaskObject.Source.TableName"
               },
               "TableSchema": {
                 "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Source.Extraction.TableSchema"
+                "value": "@pipeline().parameters.TaskObject.Source.TableSchema"
               },
               "UserName": {
                 "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Source.Database.Username"
+                "value": "@pipeline().parameters.TaskObject.Source.System.Username"
               }
             },
             "referenceName": "GDS_SqlServerTable_NA_IRA",
@@ -77,15 +77,15 @@
               },
               "RelativePath": {
                 "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Target.RelativePath"
+                "value": "@pipeline().parameters.TaskObject.Target.Instance.TargetRelativePath"
               },
               "StorageAccountContainerName": {
                 "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Target.StorageAccountContainer"
+                "value": "@pipeline().parameters.TaskObject.Target.System.Container"
               },
               "StorageAccountEndpoint": {
                 "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Target.StorageAccountName"
+                "value": "@pipeline().parameters.TaskObject.Target.System.SystemServer"
               }
             },
             "referenceName": "GDS_AzureBlobFS_Parquet_IRA",
@@ -180,7 +180,7 @@
         "typeProperties": {
           "body": {
             "type": "Expression",
-            "value": "@json(\n concat('{\"TaskInstanceId\":\"', \n string(pipeline().parameters.TaskObject.TaskInstanceId), \n '\",\"ExecutionUid\":\"', \n string(pipeline().parameters.TaskObject.ExecutionUid), \n '\",\"RunId\":\"', \n string(pipeline().RunId), \n '\",\"StorageAccountName\":\"', \n string(pipeline().parameters.TaskObject.Target.StorageAccountName), \n '\",\"StorageAccountContainer\":\"', \n string(pipeline().parameters.TaskObject.Target.StorageAccountContainer), \n '\",\"RelativePath\":\"', \n string(pipeline().parameters.TaskObject.Target.RelativePath), \n '\",\"SchemaFileName\":\"', \n string(pipeline().parameters.TaskObject.Target.SchemaFileName), \n '\",\"SourceType\":\"', \n string(pipeline().parameters.TaskObject.Source.System.Type), \n '\",\"TargetType\":\"', \n if(\n    contains(\n    string(pipeline().parameters.TaskObject.Target.StorageAccountName),\n    '.dfs.core.windows.net'\n    ),\n   'ADLS',\n   'Azure Blob'),  \n '\",\"Data\":',\n string(activity('Get Parquet Metadata').output),\n ',\"MetadataType\":\"Parquet\"}')\n)"
+            "value": "@json(\n concat('{\"TaskInstanceId\":\"', \n string(pipeline().parameters.TaskObject.TaskInstanceId), \n '\",\"ExecutionUid\":\"', \n string(pipeline().parameters.TaskObject.ExecutionUid), \n '\",\"RunId\":\"', \n string(pipeline().RunId), \n '\",\"StorageAccountName\":\"', \n string(pipeline().parameters.TaskObject.Target.System.SystemServer), \n '\",\"StorageAccountContainer\":\"', \n string(pipeline().parameters.TaskObject.Target.System.Container), \n '\",\"RelativePath\":\"', \n string(pipeline().parameters.TaskObject.Target.Instance.TargetRelativePath), \n '\",\"SchemaFileName\":\"', \n string(pipeline().parameters.TaskObject.Target.SchemaFileName), \n '\",\"SourceType\":\"', \n string(pipeline().parameters.TaskObject.Source.System.Type), \n '\",\"TargetType\":\"', \n if(\n    contains(\n    string(pipeline().parameters.TaskObject.Target.System.SystemServer),\n    '.dfs.core.windows.net'\n    ),\n   'ADLS',\n   'Azure Blob'),  \n '\",\"Data\":',\n string(activity('Get Parquet Metadata').output),\n ',\"MetadataType\":\"Parquet\"}')\n)"
           },
           "functionName": "TaskExecutionSchemaFile",
           "method": "POST"
@@ -214,15 +214,15 @@
               },
               "RelativePath": {
                 "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Target.RelativePath"
+                "value": "@pipeline().parameters.TaskObject.Target.Instance.TargetRelativePath"
               },
               "StorageAccountContainerName": {
                 "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Target.StorageAccountContainer"
+                "value": "@pipeline().parameters.TaskObject.Target.System.Container"
               },
               "StorageAccountEndpoint": {
                 "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Target.StorageAccountName"
+                "value": "@pipeline().parameters.TaskObject.Target.System.SystemServer"
               }
             },
             "referenceName": "GDS_AzureBlobFS_Parquet_IRA",

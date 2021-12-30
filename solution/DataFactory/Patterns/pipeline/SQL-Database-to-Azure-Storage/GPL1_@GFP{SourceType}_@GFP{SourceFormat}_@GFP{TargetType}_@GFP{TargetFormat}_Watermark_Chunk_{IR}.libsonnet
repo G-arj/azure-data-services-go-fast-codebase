@@ -26,7 +26,7 @@ local pipeline = {
 					"waitOnCompletion": false,
 					"parameters": {
 						"Body": {
-							"value": "@json(concat('{\"TaskInstanceId\":\"', string(pipeline().parameters.TaskObject.TaskInstanceId), '\",\"ExecutionUid\":\"', string(pipeline().parameters.TaskObject.ExecutionUid), '\",\"RunId\":\"', string(pipeline().RunId), '\",\"TaskMasterId\":\"', string(pipeline().parameters.TaskObject.TaskMasterId),'\",\"TaskMasterWaterMarkColumnType\":\"', string(pipeline().parameters.TaskObject.Source.Extraction.IncrementalColumnType),'\",\"WaterMarkValue\":\"', string(pipeline().parameters.NewWatermark), '\"}'))",
+							"value": "@json(concat('{\"TaskInstanceId\":\"', string(pipeline().parameters.TaskObject.TaskInstanceId), '\",\"ExecutionUid\":\"', string(pipeline().parameters.TaskObject.ExecutionUid), '\",\"RunId\":\"', string(pipeline().RunId), '\",\"TaskMasterId\":\"', string(pipeline().parameters.TaskObject.TaskMasterId),'\",\"TaskMasterWaterMarkColumnType\":\"', string(pipeline().parameters.TaskObject.Source.IncrementalColumnType),'\",\"WaterMarkValue\":\"', string(pipeline().parameters.NewWatermark), '\"}'))",
 							"type": "Expression"
 						},
 						"FunctionName": "WaterMark",

@@ -9,7 +9,7 @@ if (TargetType=="AzureBlobFS"&&TargetFormat=="Parquet") then
     "type": "DatasetReference",
     "parameters": {
       "RelativePath": {
-        "value": "@pipeline().parameters.TaskObject.Target.System.TargetRelativePath",
+        "value": "@pipeline().parameters.TaskObject.Target.Instance.TargetRelativePath",
         "type": "Expression"
       },
       "FileName": {
@@ -17,7 +17,7 @@ if (TargetType=="AzureBlobFS"&&TargetFormat=="Parquet") then
         "type": "Expression"
       },
       "StorageAccountEndpoint": {
-        "value": "@pipeline().parameters.TaskObject.Target.System.SystemName",
+        "value": "@pipeline().parameters.TaskObject.Target.System.SystemServer",
         "type": "Expression"
       },
       "StorageAccountContainerName": {
@@ -44,7 +44,7 @@ else if (TargetType=="AzureBlobStorage"&&TargetFormat=="Parquet") then
     "type": "DatasetReference",
     "parameters": {
       "RelativePath": {
-        "value": "@pipeline().parameters.TaskObject.Target.System.TargetRelativePath",
+        "value": "@pipeline().parameters.TaskObject.Target.Instance.TargetRelativePath",
         "type": "Expression"
       },
       "FileName": {
@@ -52,7 +52,7 @@ else if (TargetType=="AzureBlobStorage"&&TargetFormat=="Parquet") then
         "type": "Expression"
       },
       "StorageAccountEndpoint": {
-        "value": "@pipeline().parameters.TaskObject.Target.System.SystemName",
+        "value": "@pipeline().parameters.TaskObject.Target.System.SystemServer",
         "type": "Expression"
       },
       "StorageAccountContainerName": {

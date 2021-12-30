@@ -20,11 +20,11 @@ local referenceName = "GDS_AzureBlobStorage_Json_",
                 "type": "Expression"
             },
             "StorageAccountEndpoint": {
-                "value": "@pipeline().parameters.TaskObject.Source.StorageAccountName",
+                "value": "@pipeline().parameters.TaskObject.Source.System.SystemServer",
                 "type": "Expression"
             },
             "StorageAccountContainerName": {
-                "value": "@pipeline().parameters.TaskObject.Source.StorageAccountContainer",
+                "value": "@pipeline().parameters.TaskObject.Source.System.Container",
                 "type": "Expression"
             }
         }
