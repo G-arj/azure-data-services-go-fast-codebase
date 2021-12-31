@@ -1,7 +1,7 @@
 {
   "TaskObject": {
     "TaskInstanceId": 1,
-    "TaskMasterId": 1,
+    "TaskMasterId": 2,
     "TaskStatus": "Untried",
     "TaskType": "Azure Storage to SQL Database",
     "Enabled": 1,
@@ -18,31 +18,31 @@
       "Name": "adsgfadfjkcgkaibkungm",
       "ResourceGroup": "AdsTestDemo",
       "SubscriptionId": "035a1364-f00d-48e2-b582-4fe125905ee3",
-      "ADFPipeline": "GPL_AzureBlobStorage_Parquet_AzureSqlTable_NA_IRA",
+      "ADFPipeline": "GPL_AzureBlobFS_Excel_AzureSqlTable_NA_IRA",
       "TaskDatafactoryIR": "IRA"
     },
     "Source": {
       "System": {
         "SystemId": 1,
-        "SystemServer": "https://blobjkcgkaibkungm.blob.core.windows.net",
+        "SystemServer": "https://adlsjkcgkaibkungm.dfs.core.windows.net",
         "AuthenticationType": "MSI",
-        "Type": "Azure Blob",
+        "Type": "ADLS",
         "Username": "",
         "Container": "datalakeraw"
       },
       "Instance": {
         "SourceRelativePath": "/samples/"
       },
-      "DataFileName": "SalesLT.Customer.parquet",
+      "DataFileName": "yellow_tripdata_2017-03.xlsx",
       "DeleteAfterCompletion": "",
-      "FirstRowAsHeader": "false",
+      "FirstRowAsHeader": "true",
       "MaxConcorrentConnections": 0,
       "Recursively": "false",
       "RelativePath": "/samples/",
-      "SchemaFileName": "SalesLT.Customer.json",
-      "SheetName": "",
+      "SchemaFileName": "",
+      "SheetName": "yellow_tripdata_2017-03",
       "SkipLineCount": "",
-      "Type": "Parquet"
+      "Type": "Excel"
     },
     "Target": {
       "System": {
@@ -59,15 +59,15 @@
         "SourceRelativePath": "/samples/"
       },
       "AutoCreateTable": "true",
-      "AutoGenerateMerge": "true",
-      "DataFileName": "SalesLT.Customer.parquet",
+      "AutoGenerateMerge": "false",
+      "DataFileName": "yellow_tripdata_2017-03.xlsx",
       "MergeSQL": "",
       "PostCopySQL": "",
       "PreCopySQL": "",
-      "SchemaFileName": "SalesLT.Customer.json",
-      "StagingTableName": "stg_Customer1",
+      "SchemaFileName": "",
+      "StagingTableName": "stg_yellow_tripdata2",
       "StagingTableSchema": "dbo",
-      "TableName": "Customer1",
+      "TableName": "yellow_tripdata2",
       "TableSchema": "dbo",
       "Type": "Table"
     }

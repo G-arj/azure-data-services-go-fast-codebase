@@ -10,6 +10,7 @@ function(
     SchemaFileName = "SalesLT.Customer.json",
     SourceSystemAuthType = "MSI",
     SkipLineCount = "",
+    FirstRowAsHeader ="FirstRowAsHeader",    
     SheetName = "",
     MaxConcorrentConnections = 0,
     Recursively = "false",
@@ -35,6 +36,8 @@ function(
             "DataFileName": DataFilename,
             "SchemaFileName": SchemaFileName,
             "SkipLineCount": SkipLineCount,
+            "FirstRowAsHeader":FirstRowAsHeader,
+            "SheetName":SheetName,
             "MaxConcorrentConnections": MaxConcorrentConnections,
             "Recursively": Recursively,
             "DeleteAfterCompletion": DeleteAfterCompletion,
@@ -67,7 +70,7 @@ function(
 
     local TargetSystemJson = 
     {   
-        "Database": vars.AdsOpts_CD_Services_AzureSQLServer_SampleDB_Name,
+        "Database": vars.AdsOpts_CD_Services_AzureSQLServer_StagingDB_Name,
         "UsernameKeyVaultSecretName":"",
         "PasswordKeyVaultSecretName":""
     },

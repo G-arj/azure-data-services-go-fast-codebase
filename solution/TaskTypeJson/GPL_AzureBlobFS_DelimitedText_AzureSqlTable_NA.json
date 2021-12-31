@@ -185,7 +185,8 @@
             "TableName",
             "PreCopySQL",
             "PostCopySQL",
-            "AutoGenerateMerge"
+            "AutoGenerateMerge",
+            "MergeSQL"
          ],
          "type": "object"
       }

@@ -140,7 +140,7 @@ else if (SourceType=="AzureBlobFS" && SourceFormat == "Parquet" && TargetType=="
                                       "type": "Expression"
                                   },
             "wildcardFileName": {
-                                      "value": "@concat(\n    pipeline().parameters.TaskObject.Source.DataFileName,\n    '*.parquet'\n)",
+                                      "value": "@concat(\n    replace(\n        pipeline().parameters.TaskObject.Source.DataFileName,\n        '.parquet',\n        ''\n        ),\n    '*.parquet'\n)",
                                       "type": "Expression"
                                   },
             "enablePartitionDiscovery": false
@@ -303,7 +303,7 @@ else if (SourceType=="AzureBlobStorage" && SourceFormat == "Parquet" && TargetTy
                                       "type": "Expression"
                                   },
             "wildcardFileName": {
-                                      "value": "@concat(\n    pipeline().parameters.TaskObject.Source.DataFileName,\n    '*.parquet'\n)",
+                                      "value": "@concat(\n    replace(\n        pipeline().parameters.TaskObject.Source.DataFileName,\n        '.parquet',\n        ''\n        ),\n    '*.parquet'\n)",
                                       "type": "Expression"
                                   },
             "enablePartitionDiscovery": false
