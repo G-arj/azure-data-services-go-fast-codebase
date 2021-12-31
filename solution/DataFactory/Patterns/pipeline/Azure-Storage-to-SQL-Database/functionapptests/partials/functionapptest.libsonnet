@@ -32,7 +32,7 @@ function(
     {
         "Source":{
             "Type": SourceFormat,                       
-            "RelativePath": "/samples/",
+            "RelativePath": "samples/",
             "DataFileName": DataFilename,
             "SchemaFileName": SchemaFileName,
             "SkipLineCount": SkipLineCount,
@@ -54,13 +54,14 @@ function(
             "PreCopySQL":PreCopySQL,
             "PostCopySQL":PostCopySQL,
             "AutoGenerateMerge":AutoGenerateMerge,
-            "MergeSQL":MergeSQL
+            "MergeSQL":MergeSQL,
+            "DynamicMapping":{}
         }
     },
 
     local TaskInstanceJson =  
     {
-        "SourceRelativePath": "/samples/"
+        "SourceRelativePath": "samples/"
     },
 
     local SourceSystemJson = 

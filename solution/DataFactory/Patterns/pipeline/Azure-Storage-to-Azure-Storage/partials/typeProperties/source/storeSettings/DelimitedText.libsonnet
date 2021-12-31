@@ -7,7 +7,7 @@ function(SourceType = "AzureBlobStorage")
     },
     "recursive": true,
     "wildcardFolderPath": {
-        "value": "@pipeline().parameters.TaskObject.Source.RelativePath",
+        "value": "@pipeline().parameters.TaskObject.Source.Instance.SourceRelativePath",
         "type": "Expression"
     },
     "wildcardFileName": {

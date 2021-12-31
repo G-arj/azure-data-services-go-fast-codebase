@@ -54,7 +54,7 @@ else if(SourceType=="AzureBlobFS"&&SourceFormat=="DelimitedText"&&TargetType=="A
         },
         "recursive": true,
         "wildcardFolderPath": {
-          "value": "@pipeline().parameters.TaskObject.Source.RelativePath",
+          "value": "@pipeline().parameters.TaskObject.Source.Instance.SourceRelativePath",
           "type": "Expression"
         },
         "wildcardFileName": {
@@ -136,7 +136,7 @@ else if (SourceType=="AzureBlobFS" && SourceFormat == "Parquet" && TargetType=="
             "type": "AzureBlobFSReadSettings",
             "recursive": false,
             "wildcardFolderPath": {
-                                      "value": "@pipeline().parameters.TaskObject.Source.RelativePath",
+                                      "value": "@pipeline().parameters.TaskObject.Source.Instance.SourceRelativePath",
                                       "type": "Expression"
                                   },
             "wildcardFileName": {
@@ -216,7 +216,7 @@ else if(SourceType=="AzureBlobStorage"&&SourceFormat=="DelimitedText"&&TargetTyp
         },
         "recursive": true,
         "wildcardFolderPath": {
-          "value": "@pipeline().parameters.TaskObject.Source.RelativePath",
+          "value": "@pipeline().parameters.TaskObject.Source.Instance.SourceRelativePath",
           "type": "Expression"
         },
         "wildcardFileName": {
@@ -299,7 +299,7 @@ else if (SourceType=="AzureBlobStorage" && SourceFormat == "Parquet" && TargetTy
             "type": "AzureBlobStorageReadSettings",
             "recursive": true,
             "wildcardFolderPath": {
-                                      "value": "@pipeline().parameters.TaskObject.Source.RelativePath",
+                                      "value": "@pipeline().parameters.TaskObject.Source.Instance.SourceRelativePath",
                                       "type": "Expression"
                                   },
             "wildcardFileName": {

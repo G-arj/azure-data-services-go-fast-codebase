@@ -1,7 +1,7 @@
 {
   "TaskObject": {
     "TaskInstanceId": 1,
-    "TaskMasterId": 2,
+    "TaskMasterId": 5,
     "TaskStatus": "Untried",
     "TaskType": "Azure Storage to SQL Database",
     "Enabled": 1,
@@ -18,31 +18,31 @@
       "Name": "adsgfadfjkcgkaibkungm",
       "ResourceGroup": "AdsTestDemo",
       "SubscriptionId": "035a1364-f00d-48e2-b582-4fe125905ee3",
-      "ADFPipeline": "GPL_AzureBlobFS_Excel_AzureSqlTable_NA_IRA",
+      "ADFPipeline": "GPL_AzureBlobStorage_json_AzureSqlTable_NA_IRA",
       "TaskDatafactoryIR": "IRA"
     },
     "Source": {
       "System": {
         "SystemId": 1,
-        "SystemServer": "https://adlsjkcgkaibkungm.dfs.core.windows.net",
+        "SystemServer": "https://blobjkcgkaibkungm.blob.core.windows.net",
         "AuthenticationType": "MSI",
-        "Type": "ADLS",
+        "Type": "Azure Blob",
         "Username": "",
         "Container": "datalakeraw"
       },
       "Instance": {
         "SourceRelativePath": "samples/"
       },
-      "DataFileName": "yellow_tripdata_2017-03.xlsx",
+      "DataFileName": "yellow_tripdata_2017-03.json",
       "DeleteAfterCompletion": "false",
       "FirstRowAsHeader": "true",
       "MaxConcorrentConnections": 0,
       "Recursively": "false",
       "RelativePath": "samples/",
       "SchemaFileName": "",
-      "SheetName": "yellow_tripdata_2017-03",
-      "SkipLineCount": "",
-      "Type": "Excel"
+      "SheetName": "",
+      "SkipLineCount": 0,
+      "Type": "Json"
     },
     "Target": {
       "System": {
@@ -60,15 +60,15 @@
       },
       "AutoCreateTable": "true",
       "AutoGenerateMerge": "false",
-      "DataFileName": "yellow_tripdata_2017-03.xlsx",
+      "DataFileName": "yellow_tripdata_2017-03.json",
       "DynamicMapping": {},
       "MergeSQL": "",
       "PostCopySQL": "",
       "PreCopySQL": "",
       "SchemaFileName": "",
-      "StagingTableName": "stg_yellow_tripdata2",
+      "StagingTableName": "stg_yellow_tripdata5",
       "StagingTableSchema": "dbo",
-      "TableName": "yellow_tripdata2",
+      "TableName": "yellow_tripdata5",
       "TableSchema": "dbo",
       "Type": "Table"
     }

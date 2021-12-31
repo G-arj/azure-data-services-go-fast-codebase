@@ -10,7 +10,7 @@ local referenceName = "GDS_AzureBlobFS_DelimitedText_",
     "type": "DatasetReference",
     "parameters": {
       "RelativePath": {
-        "value": "@pipeline().parameters.TaskObject.Source.RelativePath",
+        "value": "@pipeline().parameters.TaskObject.Source.Instance.SourceRelativePath",
         "type": "Expression"
       },
       "FileName": {

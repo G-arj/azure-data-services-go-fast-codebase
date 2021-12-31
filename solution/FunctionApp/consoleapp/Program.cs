@@ -1,13 +1,16 @@
 ﻿using AdsGoFast.Models.Options;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Moq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using static System.Net.WebRequestMethods;
 
 namespace AdsGoFast.Console
 {
@@ -56,6 +59,8 @@ namespace AdsGoFast.Console
                 ExecutionUid = Guid.NewGuid()
             };
             LogHelper.InitializeLog(_logger, activityLogItem);
+
+           // Test_GetSQLCreateStatementFromSchema(LogHelper);
 
             var tis = GetTests();
                 
@@ -112,6 +117,21 @@ namespace AdsGoFast.Console
             
             var ts = JsonConvert.DeserializeObject<List<AdsGoFast.GetTaskInstanceJSON.BaseTask>>(tests);
             return ts;
+        }
+
+
+        public void Test_GetSQLCreateStatementFromSchema(AdsGoFast.Logging _logging)
+        {
+            string _filePath = Path.GetDirectoryName(System.AppDomain.CurrentDomain.BaseDirectory) + "..\\..\\..\\..\\UnitTests\\GetSQLCreateStatementFromSchema.json";
+            string tests = "";
+            using (var r = new StreamReader(_filePath))
+            {
+                tests = r.ReadToEnd();
+            }
+            
+
+            AdsGoFast.GetSQLCreateStatementFromSchemaCore.Execute(JObject.Parse(tests),_logging);
+
         }
   
     }

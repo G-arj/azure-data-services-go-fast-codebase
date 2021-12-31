@@ -107,7 +107,7 @@
               },
               "wildcardFolderPath": {
                 "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Source.RelativePath"
+                "value": "@pipeline().parameters.TaskObject.Source.Instance.SourceRelativePath"
               }
             },
             "type": "DelimitedTextSource"

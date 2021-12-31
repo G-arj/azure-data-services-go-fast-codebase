@@ -1,0 +1,11 @@
+﻿{
+  "TaskInstanceId": "1",
+  "ExecutionUid": "8d44cf10-28d8-4a19-9481-54b1ab9c9272",
+  "RunId": "bed09b72-53b6-4a05-b5f5-25c6def215f9",
+  "TableSchema": "dbo",
+  "TableName": "Customer1",
+  "StorageAccountName": "https://blobjkcgkaibkungm.blob.core.windows.net",
+  "StorageAccountContainer": "datalakeraw",
+  "RelativePath": "samples/",
+  "SchemaFileName": "SalesLT.Customer.json"
+}

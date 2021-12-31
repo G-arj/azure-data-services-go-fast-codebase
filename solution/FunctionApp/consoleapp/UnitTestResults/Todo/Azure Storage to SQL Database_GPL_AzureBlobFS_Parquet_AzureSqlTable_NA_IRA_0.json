@@ -5,7 +5,7 @@
     "TaskStatus": "Untried",
     "TaskType": "Azure Storage to SQL Database",
     "Enabled": 1,
-    "ExecutionUid": "8d44cf10-28d8-4a19-9481-54b1ab9c9272",
+    "ExecutionUid": "cd0a97b2-92ba-4983-8b01-b00b85b7c02c",
     "NumberOfRetries": 3,
     "DegreeOfCopyParallelism": 1,
     "KeyVaultBaseUrl": "https://adsgfkvjkcgkaibkungm.vault.azure.net",
@@ -31,14 +31,14 @@
         "Container": "datalakeraw"
       },
       "Instance": {
-        "SourceRelativePath": "/samples/"
+        "SourceRelativePath": "samples/"
       },
       "DataFileName": "SalesLT.Customer.parquet",
-      "DeleteAfterCompletion": "",
+      "DeleteAfterCompletion": "false",
       "FirstRowAsHeader": "false",
       "MaxConcorrentConnections": 0,
       "Recursively": "false",
-      "RelativePath": "/samples/",
+      "RelativePath": "samples/",
       "SchemaFileName": "SalesLT.Customer.json",
       "SheetName": "",
       "SkipLineCount": "",
@@ -56,11 +56,12 @@
         "UsernameKeyVaultSecretName": ""
       },
       "Instance": {
-        "SourceRelativePath": "/samples/"
+        "SourceRelativePath": "samples/"
       },
       "AutoCreateTable": "true",
       "AutoGenerateMerge": "true",
       "DataFileName": "SalesLT.Customer.parquet",
+      "DynamicMapping": {},
       "MergeSQL": "",
       "PostCopySQL": "",
       "PreCopySQL": "",

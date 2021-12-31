@@ -127,6 +127,74 @@ local tests =
         "Description": "FullLoad",  
         "ADFPipeline": "GPL_AzureBlobStorage_Excel_AzureSqlTable_NA_IRA", 
        
+    },
+    {
+        "Active": true,        
+        "Pattern": "Azure Storage to SQL Database",         
+        "SourceSystemAuthType": "MSI",
+        
+        "SourceFormat":"Csv",
+        "SourceType":"Azure Blob",        
+        "DataFilename":"yellow_tripdata_2017-03.csv",
+        "SchemaFileName":"", 
+        "SkipLineCount":0,
+        "FirstRowAsHeader": "true",
+        "SheetName": "",
+        "MaxConcorrentConnections":0,
+        "Recursively":"false",
+        "DeleteAfterCompletion":"false",
+        
+        "TargetFormat":"Table",
+        "TargetType": "Azure SQL", 
+        "TableSchema":"dbo",
+        "TableName":"yellow_tripdata",
+        "StagingTableSchema":"dbo",
+        "StagingTableName":"stg_yellow_tripdata",
+        "AutoCreateTable": "true",
+        "PreCopySQL": "",
+        "PostCopySQL": "",
+        "AutoGenerateMerge": "false",
+        "MergeSQL":"", 
+
+
+        
+        "Description": "FullLoad",  
+        "ADFPipeline": "GPL_AzureBlobStorage_DelimitedText_AzureSqlTable_NA_IRA", 
+       
+    },
+    {
+        "Active": true,        
+        "Pattern": "Azure Storage to SQL Database",         
+        "SourceSystemAuthType": "MSI",
+        
+        "SourceFormat":"Json",
+        "SourceType":"Azure Blob",        
+        "DataFilename":"yellow_tripdata_2017-03.json",
+        "SchemaFileName":"", 
+        "SkipLineCount":0,
+        "FirstRowAsHeader": "true",
+        "SheetName": "",
+        "MaxConcorrentConnections":0,
+        "Recursively":"false",
+        "DeleteAfterCompletion":"false",
+        
+        "TargetFormat":"Table",
+        "TargetType": "Azure SQL", 
+        "TableSchema":"dbo",
+        "TableName":"yellow_tripdata",
+        "StagingTableSchema":"dbo",
+        "StagingTableName":"stg_yellow_tripdata",
+        "AutoCreateTable": "true",
+        "PreCopySQL": "",
+        "PostCopySQL": "",
+        "AutoGenerateMerge": "false",
+        "MergeSQL":"", 
+
+
+        
+        "Description": "FullLoad",  
+        "ADFPipeline": "GPL_AzureBlobStorage_json_AzureSqlTable_NA_IRA", 
+       
     }
 ];
 
