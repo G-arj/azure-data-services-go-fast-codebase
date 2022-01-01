@@ -1,11 +1,11 @@
 {
   "TaskObject": {
     "TaskInstanceId": 1,
-    "TaskMasterId": 6,
+    "TaskMasterId": 2,
     "TaskStatus": "Untried",
     "TaskType": "Azure Storage to SQL Database",
     "Enabled": 1,
-    "ExecutionUid": "2bc86c53-ce2c-4daf-af05-7b8befeb710f",
+    "ExecutionUid": "725c1093-80a0-446d-9512-381f8939e451",
     "NumberOfRetries": 3,
     "DegreeOfCopyParallelism": 1,
     "KeyVaultBaseUrl": "https://adsgfkvjkcgkaibkungm.vault.azure.net",
@@ -18,7 +18,7 @@
       "Name": "adsgfadfjkcgkaibkungm",
       "ResourceGroup": "AdsTestDemo",
       "SubscriptionId": "035a1364-f00d-48e2-b582-4fe125905ee3",
-      "ADFPipeline": "GPL_AzureFS_DelimitedText_AzureSqlTable_NA_IRA",
+      "ADFPipeline": "GPL_AzureBlobFS_Excel_AzureSqlTable_NA_IRA",
       "TaskDatafactoryIR": "IRA"
     },
     "Source": {
@@ -33,16 +33,16 @@
       "Instance": {
         "SourceRelativePath": "samples/"
       },
-      "DataFileName": "yellow_tripdata_2017-03.csv",
+      "DataFileName": "yellow_tripdata_2017-03.xlsx",
       "DeleteAfterCompletion": "false",
       "FirstRowAsHeader": "true",
       "MaxConcorrentConnections": 0,
       "Recursively": "false",
       "RelativePath": "samples/",
       "SchemaFileName": "",
-      "SheetName": "",
-      "SkipLineCount": 0,
-      "Type": "Csv"
+      "SheetName": "yellow_tripdata_2017-03",
+      "SkipLineCount": "",
+      "Type": "Excel"
     },
     "Target": {
       "System": {
@@ -60,15 +60,15 @@
       },
       "AutoCreateTable": "true",
       "AutoGenerateMerge": "false",
-      "DataFileName": "yellow_tripdata_2017-03.csv",
+      "DataFileName": "yellow_tripdata_2017-03.xlsx",
       "DynamicMapping": {},
       "MergeSQL": "",
       "PostCopySQL": "",
       "PreCopySQL": "",
       "SchemaFileName": "",
-      "StagingTableName": "stg_yellow_tripdata6",
+      "StagingTableName": "stg_yellow_tripdata2",
       "StagingTableSchema": "dbo",
-      "TableName": "yellow_tripdata6",
+      "TableName": "yellow_tripdata2",
       "TableSchema": "dbo",
       "Type": "Table"
     }

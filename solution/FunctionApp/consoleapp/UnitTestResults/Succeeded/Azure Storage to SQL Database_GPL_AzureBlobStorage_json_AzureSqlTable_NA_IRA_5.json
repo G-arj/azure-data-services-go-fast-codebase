@@ -1,11 +1,11 @@
 {
   "TaskObject": {
     "TaskInstanceId": 1,
-    "TaskMasterId": 0,
+    "TaskMasterId": 5,
     "TaskStatus": "Untried",
     "TaskType": "Azure Storage to SQL Database",
     "Enabled": 1,
-    "ExecutionUid": "cd0a97b2-92ba-4983-8b01-b00b85b7c02c",
+    "ExecutionUid": "725c1093-80a0-446d-9512-381f8939e451",
     "NumberOfRetries": 3,
     "DegreeOfCopyParallelism": 1,
     "KeyVaultBaseUrl": "https://adsgfkvjkcgkaibkungm.vault.azure.net",
@@ -18,31 +18,31 @@
       "Name": "adsgfadfjkcgkaibkungm",
       "ResourceGroup": "AdsTestDemo",
       "SubscriptionId": "035a1364-f00d-48e2-b582-4fe125905ee3",
-      "ADFPipeline": "GPL_AzureBlobFS_Parquet_AzureSqlTable_NA_IRA",
+      "ADFPipeline": "GPL_AzureBlobStorage_json_AzureSqlTable_NA_IRA",
       "TaskDatafactoryIR": "IRA"
     },
     "Source": {
       "System": {
         "SystemId": 1,
-        "SystemServer": "https://adlsjkcgkaibkungm.dfs.core.windows.net",
+        "SystemServer": "https://blobjkcgkaibkungm.blob.core.windows.net",
         "AuthenticationType": "MSI",
-        "Type": "ADLS",
+        "Type": "Azure Blob",
         "Username": "",
         "Container": "datalakeraw"
       },
       "Instance": {
         "SourceRelativePath": "samples/"
       },
-      "DataFileName": "SalesLT.Customer.parquet",
+      "DataFileName": "yellow_tripdata_2017-03.json",
       "DeleteAfterCompletion": "false",
-      "FirstRowAsHeader": "false",
+      "FirstRowAsHeader": "true",
       "MaxConcorrentConnections": 0,
       "Recursively": "false",
       "RelativePath": "samples/",
-      "SchemaFileName": "SalesLT.Customer.json",
+      "SchemaFileName": "",
       "SheetName": "",
-      "SkipLineCount": "",
-      "Type": "Parquet"
+      "SkipLineCount": 0,
+      "Type": "Json"
     },
     "Target": {
       "System": {
@@ -59,16 +59,16 @@
         "SourceRelativePath": "samples/"
       },
       "AutoCreateTable": "true",
-      "AutoGenerateMerge": "true",
-      "DataFileName": "SalesLT.Customer.parquet",
+      "AutoGenerateMerge": "false",
+      "DataFileName": "yellow_tripdata_2017-03.json",
       "DynamicMapping": {},
       "MergeSQL": "",
       "PostCopySQL": "",
       "PreCopySQL": "",
-      "SchemaFileName": "SalesLT.Customer.json",
-      "StagingTableName": "stg_Customer0",
+      "SchemaFileName": "",
+      "StagingTableName": "stg_yellow_tripdata5",
       "StagingTableSchema": "dbo",
-      "TableName": "Customer0",
+      "TableName": "yellow_tripdata5",
       "TableSchema": "dbo",
       "Type": "Table"
     }
