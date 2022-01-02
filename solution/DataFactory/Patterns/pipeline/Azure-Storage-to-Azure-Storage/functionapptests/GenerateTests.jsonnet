@@ -1,7 +1,6 @@
 local tests =
 [
-    //GPL_AzureBlobFS_Parquet_AzureSqlTable_NA_FullLoad
-    {        
+    {
         "Active": true,        
         "Pattern": "Azure Storage to SQL Database",         
         "SourceSystemAuthType": "MSI",
@@ -33,7 +32,6 @@ local tests =
         "ADFPipeline": "GPL_AzureBlobFS_Parquet_AzureSqlTable_NA_IRA" 
        
     },
-    //GPL_AzureBlobStorage_Parquet_AzureSqlTable_NA_FullLoad
     {
         "Active": true,        
         "Pattern": "Azure Storage to SQL Database",         
@@ -66,7 +64,6 @@ local tests =
         "ADFPipeline": "GPL_AzureBlobStorage_Parquet_AzureSqlTable_NA_IRA" 
        
     },
-    //GPL_AzureBlobFS_Excel_AzureSqlTable_NA_FullLoad
     {
         "Active": true,        
         "Pattern": "Azure Storage to SQL Database",         
@@ -99,7 +96,6 @@ local tests =
         "ADFPipeline": "GPL_AzureBlobFS_Excel_AzureSqlTable_NA_IRA" 
        
     },
-    //GPL_AzureBlobStorage_Excel_AzureSqlTable_NA_FullLoad
     {
         "Active": true,        
         "Pattern": "Azure Storage to SQL Database",         
@@ -132,7 +128,6 @@ local tests =
         "ADFPipeline": "GPL_AzureBlobStorage_Excel_AzureSqlTable_NA_IRA" 
        
     },
-    //GPL_AzureBlobStorage_DelimitedText_AzureSqlTable_NA_FullLoad
     {
         "Active": true,        
         "Pattern": "Azure Storage to SQL Database",         
@@ -167,7 +162,6 @@ local tests =
         "ADFPipeline": "GPL_AzureBlobStorage_DelimitedText_AzureSqlTable_NA_IRA" 
        
     },
-    //GPL_AzureBlobStorage_json_AzureSqlTable_NA_FullLoad
     {
         "Active": true,        
         "Pattern": "Azure Storage to SQL Database",         
@@ -201,7 +195,6 @@ local tests =
         "ADFPipeline": "GPL_AzureBlobStorage_json_AzureSqlTable_NA_IRA" 
        
     },
-    //GPL_AzureBlobFS_DelimitedText_AzureSqlTable_NA_FullLoad
     {
         "Active": true,        
         "Pattern": "Azure Storage to SQL Database",         
@@ -236,7 +229,6 @@ local tests =
         "ADFPipeline": "GPL_AzureBlobFS_DelimitedText_AzureSqlTable_NA_IRA" 
        
     },
-    //GPL_AzureBlobFS_json_AzureSqlTable_NA_FullLoad
     {
         "Active": true,        
         "Pattern": "Azure Storage to SQL Database",         
