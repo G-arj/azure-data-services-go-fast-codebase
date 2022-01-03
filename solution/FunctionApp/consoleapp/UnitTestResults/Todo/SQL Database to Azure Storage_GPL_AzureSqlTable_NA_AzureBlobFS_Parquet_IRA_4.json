@@ -1,7 +1,7 @@
 {
   "TaskObject": {
     "TaskInstanceId": 1,
-    "TaskMasterId": 0,
+    "TaskMasterId": 4,
     "TaskStatus": "Untried",
     "TaskType": "SQL Database to Azure Storage",
     "Enabled": 1,
@@ -18,7 +18,7 @@
       "Name": "adsgfadfjkcgkaibkungm",
       "ResourceGroup": "AdsTestDemo",
       "SubscriptionId": "035a1364-f00d-48e2-b582-4fe125905ee3",
-      "ADFPipeline": "GPL_AzureSqlTable_NA_AzureBlobStorage_Parquet_IRA",
+      "ADFPipeline": "GPL_AzureSqlTable_NA_AzureBlobFS_Parquet_IRA",
       "TaskDatafactoryIR": "IRA"
     },
     "Source": {
@@ -33,36 +33,36 @@
         "UsernameKeyVaultSecretName": ""
       },
       "Instance": {
-        "TargetRelativePath": "/Tests/SQL Database to Azure Storage/0/"
+        "TargetRelativePath": "/Tests/SQL Database to Azure Storage/4/"
       },
       "ChunkField": "",
       "ChunkSize": 0,
-      "ExtractionSQL": "",
-      "IncrementalColumnType": "",
-      "IncrementalField": "",
-      "IncrementalType": "Full",
-      "IncrementalValue": "0",
+      "ExtractionSQL": "Select top 10 * from SalesLT.Customer",
+      "IncrementalColumnType": "int",
+      "IncrementalField": "CustomerID",
+      "IncrementalType": "Watermark",
+      "IncrementalValue": "10",
       "TableName": "Customer",
       "TableSchema": "SalesLT",
       "Type": "Table",
-      "IncrementalSQLStatement": "",
-      "SQLStatement": "SELECT * FROM SalesLT.Customer",
+      "IncrementalSQLStatement": "\r\n                        SELECT \r\n\t                        MAX([CustomerID]) AS newWatermark\r\n                        FROM \r\n\t                        [SalesLT].[Customer] \r\n                        WHERE [CustomerID] > 10\r\n                    ",
+      "SQLStatement": "Select top 10 * from SalesLT.Customer",
       "Execute": {}
     },
     "Target": {
       "System": {
         "SystemId": 3,
-        "SystemServer": "https://blobjkcgkaibkungm.blob.core.windows.net",
+        "SystemServer": "https://adlsjkcgkaibkungm.dfs.core.windows.net",
         "AuthenticationType": "MSI",
-        "Type": "Azure Blob",
+        "Type": "ADLS",
         "Username": "",
         "Container": "datalakeraw"
       },
       "Instance": {
-        "TargetRelativePath": "/Tests/SQL Database to Azure Storage/0/"
+        "TargetRelativePath": "/Tests/SQL Database to Azure Storage/4/"
       },
       "DataFileName": "SalesLT.Customer.parquet",
-      "RelativePath": "/Tests/SQL Database to Azure Storage/0",
+      "RelativePath": "/Tests/SQL Database to Azure Storage/4",
       "SchemaFileName": "SalesLT.Customer.json",
       "Type": "Parquet"
     }

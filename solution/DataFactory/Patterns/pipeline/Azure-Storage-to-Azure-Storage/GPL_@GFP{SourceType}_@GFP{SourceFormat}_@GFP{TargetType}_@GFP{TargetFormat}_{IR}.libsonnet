@@ -126,6 +126,62 @@ local pipeline = {
 					"Method": "Post"
 				}
 			}
+		},
+		{
+			"name": "Pipeline AF Log - Failed",
+			"type": "ExecutePipeline",
+			"dependsOn": [
+				{
+					"activity": "Copy AzureBlobStorage to AzureBlobStorage Failed",
+					"dependencyConditions": [
+						"Completed"
+					]
+				}
+			],
+			"userProperties": [],
+			"typeProperties": {
+				"pipeline": {
+					"referenceName": "AZ_Function_Generic",
+					"type": "PipelineReference"
+				},
+				"waitOnCompletion": true,
+				"parameters": {
+					"Body": {
+						"value": "@json(\r\n    concat('{\"TaskInstanceId\":\"', \r\n        string(pipeline().parameters.TaskObject.TaskInstanceId), \r\n        '\",\"ExecutionUid\":\"',\r\n         string(pipeline().parameters.TaskObject.ExecutionUid), \r\n         '\",\"RunId\":\"', \r\n         string(pipeline().RunId), \r\n         '\",\"LogTypeId\":1,\"LogSource\":\"ADF\",\"ActivityType\":\"Data-Movement-Master\",\"StartDateTimeOffSet\":\"'\r\n         , string(pipeline().TriggerTime), \r\n         '\",\"EndDateTimeOffSet\":\"', \r\n         string(utcnow()), '\",\"Comment\":\"', \r\n         concat(pipeline().Pipeline, 'Failed'), \r\n         '\",\"Status\":\"Failed\",\"NumberOfRetries\":\"', \r\n         string(pipeline().parameters.TaskObject.NumberOfRetries),\r\n         '\"}'\r\n    )\r\n)",
+						"type": "Expression"
+					},
+					"FunctionName": "Log",
+					"Method": "Post"
+				}
+			}
+		},
+		{
+			"name": "Pipeline AF Log - Succeed",
+			"type": "ExecutePipeline",
+			"dependsOn": [
+				{
+					"activity": "Copy AzureBlobStorage to AzureBlobStorage Succeed",
+					"dependencyConditions": [
+						"Completed"
+					]
+				}
+			],
+			"userProperties": [],
+			"typeProperties": {
+				"pipeline": {
+					"referenceName": "AZ_Function_Generic",
+					"type": "PipelineReference"
+				},
+				"waitOnCompletion": true,
+				"parameters": {
+					"Body": {
+						"value": "@json(concat('{\"TaskInstanceId\":\"', string(pipeline().parameters.TaskObject.TaskInstanceId), '\",\"ExecutionUid\":\"', string(pipeline().parameters.TaskObject.ExecutionUid), '\",\"RunId\":\"', string(pipeline().RunId), '\",\"LogTypeId\":1,\"LogSource\":\"ADF\",\"ActivityType\":\"Data-Movement-Master\",\"StartDateTimeOffSet\":\"', string(pipeline().TriggerTime), '\",\"EndDateTimeOffSet\":\"', string(utcnow()), '\",\"Comment\":\"\",\"Status\":\"Complete\",\"NumberOfRetries\":\"', string(pipeline().parameters.TaskObject.NumberOfRetries),'\"}'))",
+						"type": "Expression"
+					},
+					"FunctionName": "Log",
+					"Method": "Post"
+				}
+			}
 		}
 		],
 		"parameters": parameterDefaultValue(SourceType),

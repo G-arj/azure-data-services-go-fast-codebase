@@ -339,7 +339,81 @@ local pipeline = {
 						}
 					]
 				}
-			}
+			},			
+            {
+                "name": "Pipeline AF Log - Failed",
+                "type": "ExecutePipeline",
+                "dependsOn": [
+                    {
+                        "activity": "AF Get Information Schema SQL",
+                        "dependencyConditions": [
+                            "Failed"
+                        ]
+                    },
+                    {
+                        "activity": "AF Log - Get Metadata Failed",
+                        "dependencyConditions": [
+                            "Completed"
+                        ]
+                    },
+                    {
+                        "activity": "AF Persist Metadata and Get Mapping",
+                        "dependencyConditions": [
+                            "Failed"
+                        ]
+                    },
+                    {
+                        "activity": "Switch Load Type",
+                        "dependencyConditions": [
+                            "Failed"
+                        ]
+                    }
+                ],
+                "userProperties": [],
+                "typeProperties": {
+                    "pipeline": {
+                        "referenceName": "AZ_Function_Generic",
+                        "type": "PipelineReference"
+                    },
+                    "waitOnCompletion": true,
+                    "parameters": {
+                        "Body": {
+                            "value": "@json(\r\n    concat('{\"TaskInstanceId\":\"', \r\n        string(pipeline().parameters.TaskObject.TaskInstanceId), \r\n        '\",\"ExecutionUid\":\"',\r\n         string(pipeline().parameters.TaskObject.ExecutionUid), \r\n         '\",\"RunId\":\"', \r\n         string(pipeline().RunId), \r\n         '\",\"LogTypeId\":1,\"LogSource\":\"ADF\",\"ActivityType\":\"Data-Movement-Master\",\"StartDateTimeOffSet\":\"'\r\n         , string(pipeline().TriggerTime), \r\n         '\",\"EndDateTimeOffSet\":\"', \r\n         string(utcnow()), '\",\"Comment\":\"', \r\n         concat(pipeline().Pipeline, 'Failed'), \r\n         '\",\"Status\":\"Failed\",\"NumberOfRetries\":\"', \r\n         string(pipeline().parameters.TaskObject.NumberOfRetries),\r\n         '\"}'\r\n    )\r\n)",
+                            "type": "Expression"
+                        },
+                        "FunctionName": "Log",
+                        "Method": "Post"
+                    }
+                }
+            },
+            {
+                "name": "Pipeline AF Log - Succeed",
+                "type": "ExecutePipeline",
+                "dependsOn": [
+                    {
+                        "activity": "Switch Load Type",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "userProperties": [],
+                "typeProperties": {
+                    "pipeline": {
+                        "referenceName": "AZ_Function_Generic",
+                        "type": "PipelineReference"
+                    },
+                    "waitOnCompletion": true,
+                    "parameters": {
+                        "Body": {
+                            "value": "@json(concat('{\"TaskInstanceId\":\"', string(pipeline().parameters.TaskObject.TaskInstanceId), '\",\"ExecutionUid\":\"', string(pipeline().parameters.TaskObject.ExecutionUid), '\",\"RunId\":\"', string(pipeline().RunId), '\",\"LogTypeId\":1,\"LogSource\":\"ADF\",\"ActivityType\":\"Data-Movement-Master\",\"StartDateTimeOffSet\":\"', string(pipeline().TriggerTime), '\",\"EndDateTimeOffSet\":\"', string(utcnow()), '\",\"Comment\":\"\",\"Status\":\"Complete\",\"NumberOfRetries\":\"', string(pipeline().parameters.TaskObject.NumberOfRetries),'\"}'))",
+                            "type": "Expression"
+                        },
+                        "FunctionName": "Log",
+                        "Method": "Post"
+                    }
+                }
+            }
 		],
 		"parameters": {
 			"TaskObject": {

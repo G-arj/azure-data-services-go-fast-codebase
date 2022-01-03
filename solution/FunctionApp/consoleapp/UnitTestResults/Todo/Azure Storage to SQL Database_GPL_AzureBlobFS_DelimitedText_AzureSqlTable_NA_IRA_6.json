@@ -1,0 +1,76 @@
+{
+  "TaskObject": {
+    "TaskInstanceId": 1,
+    "TaskMasterId": 6,
+    "TaskStatus": "Untried",
+    "TaskType": "Azure Storage to SQL Database",
+    "Enabled": 1,
+    "ExecutionUid": "725c1093-80a0-446d-9512-381f8939e451",
+    "NumberOfRetries": 3,
+    "DegreeOfCopyParallelism": 1,
+    "KeyVaultBaseUrl": "https://adsgfkvjkcgkaibkungm.vault.azure.net",
+    "ScheduleMasterId": "2",
+    "TaskGroupConcurrency": "10",
+    "TaskGroupPriority": 0,
+    "TaskExecutionType": "ADF",
+    "DataFactory": {
+      "Id": 1,
+      "Name": "adsgfadfjkcgkaibkungm",
+      "ResourceGroup": "AdsTestDemo",
+      "SubscriptionId": "035a1364-f00d-48e2-b582-4fe125905ee3",
+      "ADFPipeline": "GPL_AzureBlobFS_DelimitedText_AzureSqlTable_NA_IRA",
+      "TaskDatafactoryIR": "IRA"
+    },
+    "Source": {
+      "System": {
+        "SystemId": 1,
+        "SystemServer": "https://adlsjkcgkaibkungm.dfs.core.windows.net",
+        "AuthenticationType": "MSI",
+        "Type": "ADLS",
+        "Username": "",
+        "Container": "datalakeraw"
+      },
+      "Instance": {
+        "SourceRelativePath": "samples/"
+      },
+      "DataFileName": "yellow_tripdata_2017-03.csv",
+      "DeleteAfterCompletion": "false",
+      "FirstRowAsHeader": "true",
+      "MaxConcorrentConnections": 0,
+      "Recursively": "false",
+      "RelativePath": "samples/",
+      "SchemaFileName": "",
+      "SheetName": "",
+      "SkipLineCount": 0,
+      "Type": "Csv"
+    },
+    "Target": {
+      "System": {
+        "SystemId": 3,
+        "SystemServer": "adsgfsvrjkcgkaibkungm.database.windows.net",
+        "AuthenticationType": "MSI",
+        "Type": "Azure SQL",
+        "Username": "",
+        "Database": "AdsGfStaging",
+        "PasswordKeyVaultSecretName": "",
+        "UsernameKeyVaultSecretName": ""
+      },
+      "Instance": {
+        "SourceRelativePath": "samples/"
+      },
+      "AutoCreateTable": "true",
+      "AutoGenerateMerge": "false",
+      "DataFileName": "yellow_tripdata_2017-03.csv",
+      "DynamicMapping": {},
+      "MergeSQL": "",
+      "PostCopySQL": "",
+      "PreCopySQL": "",
+      "SchemaFileName": "",
+      "StagingTableName": "stg_yellow_tripdata6",
+      "StagingTableSchema": "dbo",
+      "TableName": "yellow_tripdata6",
+      "TableSchema": "dbo",
+      "Type": "Table"
+    }
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "TaskObject": {
+    "TaskInstanceId": 1,
+    "TaskMasterId": 1,
+    "TaskStatus": "Untried",
+    "TaskType": "Azure Storage to SQL Database",
+    "Enabled": 1,
+    "ExecutionUid": "725c1093-80a0-446d-9512-381f8939e451",
+    "NumberOfRetries": 3,
+    "DegreeOfCopyParallelism": 1,
+    "KeyVaultBaseUrl": "https://adsgfkvjkcgkaibkungm.vault.azure.net",
+    "ScheduleMasterId": "2",
+    "TaskGroupConcurrency": "10",
+    "TaskGroupPriority": 0,
+    "TaskExecutionType": "ADF",
+    "DataFactory": {
+      "Id": 1,
+      "Name": "adsgfadfjkcgkaibkungm",
+      "ResourceGroup": "AdsTestDemo",
+      "SubscriptionId": "035a1364-f00d-48e2-b582-4fe125905ee3",
+      "ADFPipeline": "GPL_AzureBlobStorage_Parquet_AzureSqlTable_NA_IRA",
+      "TaskDatafactoryIR": "IRA"
+    },
+    "Source": {
+      "System": {
+        "SystemId": 1,
+        "SystemServer": "https://blobjkcgkaibkungm.blob.core.windows.net",
+        "AuthenticationType": "MSI",
+        "Type": "Azure Blob",
+        "Username": "",
+        "Container": "datalakeraw"
+      },
+      "Instance": {
+        "SourceRelativePath": "samples/"
+      },
+      "DataFileName": "SalesLT.Customer.parquet",
+      "DeleteAfterCompletion": "false",
+      "FirstRowAsHeader": "false",
+      "MaxConcorrentConnections": 0,
+      "Recursively": "false",
+      "RelativePath": "samples/",
+      "SchemaFileName": "SalesLT.Customer.json",
+      "SheetName": "",
+      "SkipLineCount": "",
+      "Type": "Parquet"
+    },
+    "Target": {
+      "System": {
+        "SystemId": 3,
+        "SystemServer": "adsgfsvrjkcgkaibkungm.database.windows.net",
+        "AuthenticationType": "MSI",
+        "Type": "Azure SQL",
+        "Username": "",
+        "Database": "AdsGfStaging",
+        "PasswordKeyVaultSecretName": "",
+        "UsernameKeyVaultSecretName": ""
+      },
+      "Instance": {
+        "SourceRelativePath": "samples/"
+      },
+      "AutoCreateTable": "true",
+      "AutoGenerateMerge": "true",
+      "DataFileName": "SalesLT.Customer.parquet",
+      "DynamicMapping": {},
+      "MergeSQL": "",
+      "PostCopySQL": "",
+      "PreCopySQL": "",
+      "SchemaFileName": "SalesLT.Customer.json",
+      "StagingTableName": "stg_Customer1",
+      "StagingTableSchema": "dbo",
+      "TableName": "Customer1",
+      "TableSchema": "dbo",
+      "Type": "Table"
+    }
+  }
+}
