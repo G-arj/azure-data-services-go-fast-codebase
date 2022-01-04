@@ -495,7 +495,7 @@
             "Method": "Post"
           },
           "pipeline": {
-            "referenceName": "AZ_Function_Generic",
+            "referenceName": "SPL_AzureFunction",
             "type": "PipelineReference"
           },
           "waitOnCompletion": true
@@ -523,7 +523,7 @@
             "Method": "Post"
           },
           "pipeline": {
-            "referenceName": "AZ_Function_Generic",
+            "referenceName": "SPL_AzureFunction",
             "type": "PipelineReference"
           },
           "waitOnCompletion": true

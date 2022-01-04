@@ -13,9 +13,9 @@ using System.Reflection;
 
 namespace AdsGoFast.Console
 {
-public class Startup 
+    public class Startup
     {
-        
+
 
         public IServiceCollection Services => services;
 

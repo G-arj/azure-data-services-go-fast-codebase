@@ -198,7 +198,7 @@ local tests =
 
         
         "Description": "FullLoad",  
-        "ADFPipeline": "GPL_AzureBlobStorage_json_AzureSqlTable_NA_IRA" 
+        "ADFPipeline": "GPL_AzureBlobStorage_Json_AzureSqlTable_NA_IRA" 
        
     },
     //GPL_AzureBlobFS_DelimitedText_AzureSqlTable_NA_FullLoad
@@ -267,7 +267,7 @@ local tests =
 
         
         "Description": "FullLoad",  
-        "ADFPipeline": "GPL_AzureBlobFS_json_AzureSqlTable_NA_IRA"
+        "ADFPipeline": "GPL_AzureBlobFS_Json_AzureSqlTable_NA_IRA"
        
     }
 

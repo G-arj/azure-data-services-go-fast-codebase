@@ -1,8 +1,10 @@
 #Move From Workflows to Function App
 $CurrentPath = (Get-Location).Path
-Set-Location "..\..\FunctionApp"
+Set-Location "..\..\FunctionApp\library"
 dotnet restore
-dotnet publish --no-restore --configuration Release --output '..\Deployment\bin\publish\unzipped\functionapp\'
+Set-Location "..\functionapp\"
+dotnet restore
+dotnet publish --no-restore --configuration Release --output '..\..\Deployment\bin\publish\unzipped\functionapp\'
 #Move back to workflows 
 Set-Location $CurrentPath
 Set-Location "../bin/publish"

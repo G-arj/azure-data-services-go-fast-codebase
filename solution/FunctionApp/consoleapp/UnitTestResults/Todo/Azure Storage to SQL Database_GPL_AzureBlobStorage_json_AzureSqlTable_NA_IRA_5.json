@@ -5,7 +5,7 @@
     "TaskStatus": "Untried",
     "TaskType": "Azure Storage to SQL Database",
     "Enabled": 1,
-    "ExecutionUid": "725c1093-80a0-446d-9512-381f8939e451",
+    "ExecutionUid": "9cc001c3-939b-4790-b1c0-f7dc22231d34",
     "NumberOfRetries": 3,
     "DegreeOfCopyParallelism": 1,
     "KeyVaultBaseUrl": "https://adsgfkvjkcgkaibkungm.vault.azure.net",
@@ -23,7 +23,7 @@
     },
     "Source": {
       "System": {
-        "SystemId": 1,
+        "SystemId": 3,
         "SystemServer": "https://blobjkcgkaibkungm.blob.core.windows.net",
         "AuthenticationType": "MSI",
         "Type": "Azure Blob",
@@ -46,7 +46,7 @@
     },
     "Target": {
       "System": {
-        "SystemId": 3,
+        "SystemId": 2,
         "SystemServer": "adsgfsvrjkcgkaibkungm.database.windows.net",
         "AuthenticationType": "MSI",
         "Type": "Azure SQL",

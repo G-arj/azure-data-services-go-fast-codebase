@@ -236,7 +236,7 @@ function(GenerateArm="true",GFPIR="IRA", SourceType="AzureBlobFS", SourceFormat=
                 "userProperties": [],
                 "typeProperties": {
                     "pipeline": {
-                        "referenceName": "AZ_Function_Generic",
+                        "referenceName": "SPL_AzureFunction",
                         "type": "PipelineReference"
                     },
                     "waitOnCompletion": true,
@@ -264,7 +264,7 @@ function(GenerateArm="true",GFPIR="IRA", SourceType="AzureBlobFS", SourceFormat=
                 "userProperties": [],
                 "typeProperties": {
                     "pipeline": {
-                        "referenceName": "AZ_Function_Generic",
+                        "referenceName": "SPL_AzureFunction",
                         "type": "PipelineReference"
                     },
                     "waitOnCompletion": true,

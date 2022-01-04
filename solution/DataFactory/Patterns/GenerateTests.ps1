@@ -1,26 +1,27 @@
 $patterns = ((Get-Content "Patterns.json") | ConvertFrom-Json).Folder | Get-Unique
+$CurDir = $PWD.ToString()
 
-foreach ($pattern in $patterns) {    
+$AllTests = @()
+$counter = 0
+foreach ($pattern in $patterns) {   
+
     Write-Host "_____________________________"
     Write-Host  $pattern
     Write-Host "_____________________________"
-    $folder = "./pipeline/" + $pattern
+    $folder = "/pipeline/" + $pattern + "/functionapptests"
 
-    $tests = (Get-Content ($folder+"/tests.json")) | ConvertFrom-Json
-
-    $adsopts = (gci env:* | sort-object name | Where-Object { $_.Name -like "AdsOpts*" })
-
-    $i = 0
-    foreach ($test in $tests) {
-        Write-Host "Test: $i"
-        $testasjson = ($test | ConvertTo-Json -Depth 100)
-        foreach ($opts in $adsopts) {
-        
-            $testasjson = $testasjson.Replace($opts.Name, $opts.Value).Replace("{TestNumber}", $i).Replace("{Pattern}", $pattern)    
-        }
-        $targetfile = $folder + "/tests/$i.json"    
-        $testasjson | set-content ($targetfile)
-        $i = $i + 1
-    }
+    Set-Location -path ($CurDir + $folder)
+    $testfile = "./tests/tests.json"
+    jsonnet "./GenerateTests.jsonnet" | Set-Content($testfile)
+    $testfilejson = Get-Content $testfile | ConvertFrom-Json | ForEach-Object {
+        $_.TaskMasterId = $counter
+        $AllTests += $_
+        $counter += 1
+    }    
 
 }
+
+Set-Location -path ($CurDir + '../../../')
+Write-Host $PWD.ToString()
+$AllTests | ConvertTo-Json -Depth 10 | Set-Content -Path  ($PWD.ToString() + '/FunctionApp/consoleapp/UnitTests/tests.json')
+Set-Location $CurDir

@@ -20,11 +20,11 @@ namespace AdsGoFast.GetTaskInstanceJSON
     /// <summary>
     /// Handles creation of Base Object that needs to be sent to ADF or AF includes internal properties etc that are not in the POCO
     /// </summary>
-    partial class ADFJsonBaseTask : BaseTask
+    public partial class ADFJsonBaseTask : BaseTask
     {
         private Logging logging { get; set; }
 
-        private JObject _JsonObjectForADF { get; set; }
+        public JObject _JsonObjectForADF { get; set; }
         private JObject _TaskMasterJson { get; set; }
         private JObject _SourceSystemJson { get; set; }
         private JObject _TargetSystemJson { get; set; }

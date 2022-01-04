@@ -8,9 +8,6 @@
     "DegreeOfCopyParallelism":1,
     "TaskGroupConcurrency":"10",
     "TaskGroupPriority":0,
-    "TaskDatafactoryIR":"IRA",
-    "SourceSystemId":1,
-    "TargetSystemId":3
-    
+    "TaskDatafactoryIR":"IRA",    
 }
 

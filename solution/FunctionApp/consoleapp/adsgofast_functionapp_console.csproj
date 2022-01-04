@@ -7,6 +7,7 @@
     <UserSecretsId>dfabf974-8d94-448c-9cb2-0b6f0fccbea5</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.0.123" />
     <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.2.7" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="3.1.13" />
@@ -17,14 +18,12 @@
     
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\functionapp\FunctionApp.csproj" />
     <ProjectReference Include="..\library\adsgofast_functionapp_lib.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="UnitTestResults\Todo\" />
   </ItemGroup>
 </Project>
